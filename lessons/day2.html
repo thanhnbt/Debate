@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buổi 2: Luật WSDC, lịch sử tranh biện, lượt nói và vai trò trong đội tranh biện.">
+  <meta name="theme-color" content="#4ed6bd">
+  <title>Day 2 · WSDC Rules & Speaking Turns</title>
+  <style>
+    :root {
+      --ink: #26335d;
+      --ink-2: #40517f;
+      --paper: #fffaf0;
+      --card: #ffffff;
+      --muted: #65739a;
+      --line: #dfe8f6;
+      --teal: #4ed6bd;
+      --teal-dark: #138f86;
+      --orange: #ff9b62;
+      --yellow: #ffd84d;
+      --sky: #55c8ff;
+      --coral: #ff7085;
+      --purple: #8c7cff;
+      --mint: #a9efcb;
+      --shadow: 0 18px 48px rgba(78, 103, 159, .16);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(78,214,189,.22), transparent 26rem),
+        radial-gradient(circle at 88% 20%, rgba(140,124,255,.18), transparent 24rem),
+        radial-gradient(circle at 50% 70%, rgba(255,216,77,.15), transparent 28rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(223,229,236,.85);
+      background: rgba(255,250,240,.92);
+      backdrop-filter: blur(18px);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, var(--teal), #38c4a8);
+      box-shadow: 0 8px 24px rgba(78,214,189,.3);
+      font-weight: 950;
+      font-size: .8rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav a, .nav button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav a:hover, .nav button:hover { background: rgba(78,214,189,.12); color: var(--ink); }
+    .nav button.active { background: var(--teal); color: white; }
+    .nav .home-link { color: var(--teal-dark); font-weight: 800; }
+
+    /* MAIN LAYOUT */
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: auto; }
+
+    .page { padding: 50px 0 80px; }
+    .page[hidden] { display: none; }
+
+    .page-header { margin-bottom: 36px; }
+    .page-header .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(78,214,189,.12);
+      color: var(--teal-dark);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .page-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 920;
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0 0 10px;
+    }
+    .page-header p { max-width: 600px; margin: 0; color: var(--muted); font-size: .95rem; }
+
+    /* CARDS */
+    .info-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .info-card h3 { font-size: 1.2rem; font-weight: 850; margin: 0 0 14px; }
+    .info-card p, .info-card li { font-size: .93rem; color: var(--ink-2); line-height: 1.7; }
+    .info-card ul { padding-left: 20px; margin: 10px 0; }
+    .info-card li { margin-bottom: 6px; }
+
+    .highlight-box {
+      padding: 18px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(78,214,189,.1), rgba(85,200,255,.1));
+      border-left: 4px solid var(--teal);
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-weight: 600; color: var(--ink); }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .review-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(11,19,36,.05);
+    }
+    .review-card h4 { margin: 0 0 8px; font-size: .95rem; font-weight: 800; }
+    .review-card p { margin: 0; font-size: .88rem; color: var(--ink-2); }
+
+    /* TWO TEAMS */
+    .two-teams {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .team-card {
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid;
+    }
+    .team-card.prop { border-color: var(--sky); background: linear-gradient(145deg, rgba(85,200,255,.08), white); }
+    .team-card.opp { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.08), white); }
+    .team-card h4 { font-size: 1.05rem; font-weight: 850; margin: 0 0 4px; }
+    .team-card .en { font-size: .82rem; color: var(--muted); margin: 0 0 10px; }
+    .team-card ul { padding-left: 16px; margin: 0; }
+    .team-card li { font-size: .88rem; margin-bottom: 4px; color: var(--ink-2); }
+
+    /* SPEAKING FLOW */
+    .speaking-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 18px 0;
+    }
+    .flow-item {
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: .82rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .flow-item.prop { background: rgba(85,200,255,.15); color: #1a7aad; }
+    .flow-item.opp { background: rgba(255,112,133,.15); color: #c4405a; }
+    .flow-item.reply { border: 2px dashed var(--muted); color: var(--muted); }
+    .flow-arrow { font-size: 1.1rem; color: var(--muted); }
+
+    /* ROLE TABLE */
+    .role-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin: 18px 0;
+    }
+    .role-table th, .role-table td { padding: 12px 16px; text-align: left; font-size: .86rem; }
+    .role-table th { background: var(--ink); color: white; font-weight: 800; font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; }
+    .role-table tr:nth-child(even) td { background: rgba(223,232,246,.25); }
+    .role-table td { border-bottom: 1px solid var(--line); }
+    .role-table tr:last-child td { border-bottom: none; }
+
+    /* STEPS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .step {
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .step-num {
+      width: 34px; height: 34px;
+      margin: 0 auto 8px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-weight: 900;
+      font-size: .85rem;
+    }
+    .step h4 { margin: 0 0 5px; font-size: .9rem; font-weight: 800; }
+    .step p { margin: 0; font-size: .8rem; color: var(--muted); }
+
+    /* VOCABULARY */
+    .vocab-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .vocab-search {
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      font-size: .9rem;
+      width: 240px;
+      max-width: 100%;
+      transition: border-color .2s;
+    }
+    .vocab-search:focus { outline: none; border-color: var(--teal); }
+    .vocab-wrap { overflow-x: auto; }
+    .vocab-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .vocab-table th {
+      padding: 12px 14px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .vocab-table td {
+      padding: 11px 14px;
+      font-size: .86rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:nth-child(even) td { background: rgba(223,232,246,.15); }
+    .vocab-table .word { font-weight: 750; color: var(--ink); }
+    .vocab-table .ipa { font-family: monospace; font-size: .78rem; color: var(--muted); }
+    .vocab-table .sound-it-out { font-weight: 700; font-size: .8rem; color: var(--teal-dark); letter-spacing: .02em; }
+    .vocab-table .meaning-en { font-size: .84rem; }
+    .vocab-table .meaning-vi { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .sound-btn {
+      width: 32px; height: 32px;
+      border: none; border-radius: 50%;
+      background: var(--teal); color: white;
+      display: inline-grid; place-items: center;
+      font-size: .8rem;
+      transition: transform .15s;
+    }
+    .sound-btn:hover { transform: scale(1.15); }
+    .api-key-status { margin-top: 12px; font-size: .82rem; color: var(--muted); }
+
+    /* QUIZ */
+    .quiz-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quiz-rule { margin: 0; font-size: .9rem; color: var(--ink-2); }
+    .quiz-progress { font-size: .82rem; font-weight: 800; color: var(--teal-dark); white-space: nowrap; }
+
+    .quiz-group { margin-bottom: 36px; }
+    .quiz-group-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(78,214,189,.08), rgba(255,216,77,.08));
+    }
+    .quiz-group-icon { font-size: 1.8rem; }
+    .quiz-group-head p { margin: 0; font-size: .75rem; font-weight: 800; color: var(--teal-dark); text-transform: uppercase; letter-spacing: .1em; }
+    .quiz-group-head h3 { margin: 2px 0 4px; font-size: 1.1rem; font-weight: 850; }
+    .quiz-group-head span { font-size: .84rem; color: var(--muted); }
+
+    .quiz-list { display: grid; gap: 16px; }
+    .quiz-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(11,19,36,.05);
+      transition: border-color .2s, background .2s;
+    }
+    .quiz-card.correct { border-color: var(--teal); background: rgba(78,214,189,.06); }
+    .quiz-card.incorrect { border-color: var(--coral); background: rgba(255,112,133,.06); }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .quiz-number {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .quiz-kind {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quiz-prompt { font-weight: 700; font-size: .92rem; margin-bottom: 14px; }
+
+    .quiz-options { display: grid; gap: 8px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .quiz-option:hover { background: rgba(78,214,189,.06); border-color: var(--teal); }
+    .quiz-option input { margin: 0; }
+
+    .spelling-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quiz-picture {
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,216,77,.2), rgba(78,214,189,.15));
+      font-size: 1.8rem;
+    }
+    .word-starter {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .first-letter {
+      font-size: 1.4rem;
+      font-weight: 950;
+      color: var(--teal-dark);
+    }
+    .word-blanks {
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+    }
+    .letter-answer {
+      display: block;
+      width: 180px;
+      padding: 8px 14px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: border-color .2s;
+    }
+    .letter-answer:focus { outline: none; border-color: var(--teal); }
+    .audio-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: .8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .audio-hint input { margin: 0; }
+
+    .question-status { margin: 8px 0 0; font-size: .82rem; font-weight: 700; }
+
+    .quiz-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .submit-quiz {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--teal), #38c4a8);
+      color: white;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 8px 24px rgba(78,214,189,.3);
+      transition: transform .15s;
+    }
+    .submit-quiz:hover { transform: translateY(-2px); }
+    .reset-quiz {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 14px;
+      background: var(--line);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .quiz-message { margin: 0; font-size: .85rem; color: var(--coral); font-weight: 700; }
+
+    .quiz-result {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(78,214,189,.1), rgba(255,216,77,.1));
+      text-align: center;
+    }
+    .quiz-score { font-size: 2.2rem; font-weight: 950; color: var(--teal-dark); }
+    .quiz-result h3 { margin: 8px 0 6px; font-size: 1.1rem; }
+    .quiz-result p { margin: 0; font-size: .88rem; color: var(--muted); }
+
+    /* HOMEWORK */
+    .homework-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #fff8e6, #fff3bf);
+      border: 2px solid var(--yellow);
+      box-shadow: 0 12px 35px rgba(255,184,81,.15);
+    }
+    .homework-card h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 850; }
+    .homework-card p { font-size: .93rem; color: var(--ink-2); margin: 0 0 10px; }
+    .homework-card ul { padding-left: 20px; }
+    .homework-card li { margin-bottom: 6px; font-size: .9rem; }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+    .footer a { color: var(--teal-dark); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .two-teams { grid-template-columns: 1fr; }
+      .speaking-flow { flex-direction: column; align-items: flex-start; }
+      .steps { grid-template-columns: 1fr; }
+      .spelling-card { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 2px; }
+      .nav a, .nav button { padding: 6px 9px; font-size: .72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">D2</span>
+      <span>English Debate Club</span>
+    </a>
+    <nav class="nav" id="mainNav">
+      <a href="../index.html" class="home-link">← Trang chủ</a>
+      <button class="active" data-page="review">Review</button>
+      <button data-page="wsdc">WSDC</button>
+      <button data-page="history">Lịch sử</button>
+      <button data-page="speaking">Lượt nói</button>
+      <button data-page="roles">Vai trò</button>
+      <button data-page="vocab">Vocabulary</button>
+      <button data-page="quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- PAGE: REVIEW -->
+  <section class="page" id="review">
+    <div class="page-header">
+      <span class="eyebrow">Nhắc lại</span>
+      <h2>Buổi trước học gì?</h2>
+      <p>Cùng ôn lại nhanh những điều quan trọng từ buổi 1 nhé!</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <h4>Tranh biện là gì?</h4>
+        <p>Tranh biện là khi hai đội thảo luận về một chủ đề, mỗi đội đưa ra lý do để thuyết phục mọi người rằng ý kiến của mình đúng.</p>
+      </div>
+      <div class="review-card">
+        <h4>Tại sao tranh biện hay?</h4>
+        <p>Giúp mình suy nghĩ rõ ràng hơn, nói chuyện tự tin hơn, và biết lắng nghe ý kiến người khác.</p>
+      </div>
+      <div class="review-card">
+        <h4>Một trận đấu có gì?</h4>
+        <p>Có 2 đội, mỗi đội 3 người. Có giám khảo chấm điểm. Mỗi người được nói trong một khoảng thời gian nhất định.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: WSDC -->
+  <section class="page" id="wsdc" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Luật chơi</span>
+      <h2>WSDC là gì?</h2>
+      <p>WSDC giống như "World Cup" của tranh biện — giải đấu tranh biện lớn nhất thế giới dành cho học sinh!</p>
+    </div>
+
+    <div class="info-card">
+      <h3>World Schools Debating Championship</h3>
+      <p>WSDC là bộ luật tranh biện được dùng ở giải Vô địch Tranh biện Học sinh Thế giới. Giống như bóng đá có luật FIFA, tranh biện có luật WSDC!</p>
+
+      <div class="two-teams">
+        <div class="team-card prop">
+          <h4>Đội Ủng hộ</h4>
+          <p class="en">Proposition / Government</p>
+          <ul>
+            <li>Đội này <strong>đồng ý</strong> với đề bài</li>
+            <li>Nhiệm vụ: chứng minh đề bài là đúng</li>
+            <li>Giống đội tấn công trong bóng đá!</li>
+          </ul>
+        </div>
+        <div class="team-card opp">
+          <h4>Đội Phản đối</h4>
+          <p class="en">Opposition</p>
+          <ul>
+            <li>Đội này <strong>không đồng ý</strong> với đề bài</li>
+            <li>Nhiệm vụ: chứng minh đề bài là sai</li>
+            <li>Giống đội phòng thủ trong bóng đá!</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>"Break" nghĩa là được đi tiếp vào vòng loại — giống như vượt qua vòng bảng trong World Cup vậy!</p>
+      </div>
+
+      <h3>Làm sao để "Break"?</h3>
+      <ul>
+        <li><strong>Số trận thắng</strong> — Thắng càng nhiều trận càng tốt</li>
+        <li><strong>Số phiếu bầu</strong> — Giám khảo bỏ phiếu cho đội nào nói hay hơn</li>
+        <li><strong>Điểm nói của team</strong> — Mỗi người được giám khảo chấm điểm riêng</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PAGE: HISTORY -->
+  <section class="page" id="history" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Lịch sử</span>
+      <h2>Tranh biện từ đâu ra?</h2>
+    </div>
+    <div class="info-card">
+      <h3>Từ Hy Lạp cổ đại — hơn 2,400 năm trước!</h3>
+      <p>Ngày xưa ở Hy Lạp, có những ông thầy rất giỏi tên là <strong>Socrates</strong>, <strong>Plato</strong> và <strong>Aristotle</strong>. Các ông ấy dạy học trò bằng cách hỏi đi hỏi lại, tranh luận qua lại để tìm ra điều đúng.</p>
+      <p>Người dân Hy Lạp cũng dùng tranh biện ở tòa án và khi bàn việc nước — ai nói hay, có lý lẽ tốt thì người đó thắng!</p>
+      <div class="highlight-box">
+        <p>Tranh biện đã hơn 2,400 tuổi rồi — còn lớn hơn cả ông bà cố của các bạn rất nhiều lần!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: SPEAKING TURNS -->
+  <section class="page" id="speaking" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Lượt nói</span>
+      <h2>Ai nói trước, ai nói sau?</h2>
+      <p>Trong mỗi trận, có 8 lượt nói theo thứ tự cố định — giống như lượt đi trong cờ vua vậy!</p>
+    </div>
+
+    <div class="info-card">
+      <h3>6 lượt nói chính + 2 lượt phản hồi</h3>
+      <p>Mỗi đội có 3 người. Mỗi người được nói <strong>8 phút</strong> trong lượt chính. Sau 6 lượt chính, có 2 lượt phản hồi (Reply) ngắn hơn — chỉ <strong>4 phút</strong>.</p>
+
+      <div class="highlight-box">
+        <p><strong>POI (Point of Information)</strong> — Từ phút 1 đến phút 7, đội đối phương có thể đứng dậy đặt câu hỏi. Người nói có quyền đồng ý hoặc từ chối!</p>
+      </div>
+
+      <h3>Thứ tự lượt nói</h3>
+      <div class="speaking-flow">
+        <span class="flow-item prop">1st Ủng hộ</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item opp">1st Phản đối</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item prop">2nd Ủng hộ</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item opp">2nd Phản đối</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item prop">3rd Ủng hộ</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item opp">3rd Phản đối</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item reply">Reply Phản đối</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item reply">Reply Ủng hộ</span>
+      </div>
+
+      <div class="highlight-box">
+        <p>Lượt phản hồi thì đội Phản đối nói trước! Vì ở lượt 1, đội Ủng hộ nói trước nên không được phản biện. Lượt Reply là cơ hội "bù lại" cho đội Ủng hộ.</p>
+      </div>
+
+      <p><strong>Lưu ý:</strong> Chỉ người nói thứ 1 hoặc thứ 2 mới được nói lượt Reply. Lượt Reply không có POI và không có phản biện.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Bảng vai trò trong đội</h3>
+      <table class="role-table">
+        <thead>
+          <tr><th>Đội Ủng hộ (Proposition)</th><th>Đội Phản đối (Opposition)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Người 1:</strong> Prime Minister (PM)</td><td><strong>Người 1:</strong> Leader of Opposition (LO)</td></tr>
+          <tr><td><strong>Người 2:</strong> Deputy Prime Minister (DPM)</td><td><strong>Người 2:</strong> Deputy Leader of Opposition (DLO)</td></tr>
+          <tr><td><strong>Người 3:</strong> Government Whip (GW)</td><td><strong>Người 3:</strong> Opposition Whip (OW)</td></tr>
+          <tr><td><strong>Reply:</strong> Reply Speaker of Proposition</td><td><strong>Reply:</strong> Reply Speaker of Opposition</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PAGE: ROLES -->
+  <section class="page" id="roles" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Vai trò</span>
+      <h2>Người nói đầu tiên làm gì?</h2>
+      <p>Người nói thứ nhất của mỗi đội có nhiệm vụ rất quan trọng — như đội trưởng ra sân đầu tiên!</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Người 1 đội Ủng hộ (Prime Minister)</h3>
+      <p>PM là người "mở màn" trận đấu. PM cần làm 4 việc — gọi là <strong>Case Setup</strong> (Thiết lập nền):</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Bối cảnh</h4>
+          <p>Vì sao vấn đề này quan trọng? Xã hội đang gặp khó khăn gì?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Định nghĩa</h4>
+          <p>Giải thích những từ khóa quan trọng trong đề bài nghĩa là gì</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Mục tiêu</h4>
+          <p>Đội mình muốn chứng minh điều gì trong trận này?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Luận điểm</h4>
+          <p>Đưa ra ý kiến và lý do đầu tiên của đội mình</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>Người 1 đội Phản đối (Leader of Opposition)</h3>
+      <p>LO là người "đáp trả" đầu tiên. LO cần làm:</p>
+      <ul>
+        <li><strong>Phản hồi Case Setup</strong> — Đồng ý hay không đồng ý với bối cảnh của đội Ủng hộ?</li>
+        <li><strong>Nếu đồng ý vấn đề đó tồn tại:</strong> Chỉ ra tại sao đội Ủng hộ sẽ không giải quyết được</li>
+        <li><strong>Nếu không đồng ý:</strong> Chỉ ra một vấn đề khác quan trọng hơn</li>
+        <li><strong>Phản biện luận điểm</strong> — Nói tại sao lý do của đội Ủng hộ chưa đúng</li>
+        <li><strong>Đưa luận điểm riêng</strong> — Lý do tại sao đội mình mới đúng</li>
+      </ul>
+    </div>
+
+    <div class="homework-card">
+      <h3>Bài tập về nhà</h3>
+      <p><strong>Nhiệm vụ:</strong> Hãy nghĩ về một vấn đề đang xảy ra xung quanh cuộc sống của em (ở trường, ở nhà, hoặc trong xã hội).</p>
+      <p>Viết ra giấy:</p>
+      <ul>
+        <li><strong>Vấn đề đó là gì?</strong> (Ví dụ: Học sinh dùng điện thoại quá nhiều)</li>
+        <li><strong>Hệ quả của nó là gì?</strong> (Ví dụ: Mắt bị mỏi, không tập trung học, ít chơi với bạn)</li>
+      </ul>
+      <p style="margin-top:14px; color:var(--teal-dark); font-weight:700;">Buổi sau chúng ta sẽ dùng vấn đề này để tập tranh biện!</p>
+    </div>
+  </section>
+
+  <!-- PAGE: VOCABULARY -->
+  <section class="page" id="vocab" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Từ vựng</span>
+      <h2>Debate Vocabulary</h2>
+      <p>Những từ tiếng Anh quan trọng cần nhớ từ buổi học hôm nay!</p>
+    </div>
+
+    <div class="vocab-controls">
+      <input class="vocab-search" id="vocabSearch" type="text" placeholder="Search vocabulary...">
+    </div>
+
+    <div class="vocab-wrap">
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Word</th><th>American IPA</th><th>SOUND IT OUT</th><th>Type</th><th>English meaning + Tiếng Việt</th><th>Audio</th></tr>
+        </thead>
+        <tbody id="vocabBody"></tbody>
+      </table>
+    </div>
+    <p class="api-key-status" id="mwApiStatus">Checking audio configuration…</p>
+  </section>
+
+  <!-- PAGE: QUIZ -->
+  <section class="page" id="quiz" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Kiểm tra</span>
+      <h2>Day 2 Quiz Challenge</h2>
+      <p>Không có gì được chấm khi bạn đang làm — kết quả chỉ hiện sau khi nộp tất cả đáp án.</p>
+    </div>
+
+    <div class="quiz-intro">
+      <p class="quiz-rule">10 concept questions · 8 picture word puzzles · Optional audio hints</p>
+      <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
+    </div>
+
+    <form id="quizForm" novalidate>
+      <section class="quiz-group" aria-labelledby="conceptQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">🧠</span>
+          <div>
+            <p>Part A</p>
+            <h3 id="conceptQuizTitle">Concept Quiz</h3>
+            <span>Tick one answer for each lesson concept.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="conceptQuizList"></div>
+      </section>
+
+      <section class="quiz-group" aria-labelledby="vocabularyQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">🧩</span>
+          <div>
+            <p>Part B</p>
+            <h3 id="vocabularyQuizTitle">Vocabulary Picture Quiz</h3>
+            <span>Use the first letter and picture. Tick the audio hint only when needed.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="vocabularyQuizList"></div>
+      </section>
+
+      <div class="quiz-actions">
+        <button class="submit-quiz" type="submit">SUBMIT ALL ANSWERS</button>
+        <button class="reset-quiz" id="resetQuiz" type="button">TRY AGAIN</button>
+        <p class="quiz-message" id="quizMessage" role="alert"></p>
+      </div>
+    </form>
+
+    <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
+      <div class="quiz-score" id="quizScore">0 / 18</div>
+      <h3 id="quizHeadline">Nice effort!</h3>
+      <p id="quizResultText"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="../index.html">← Về trang chủ</a> &nbsp;|&nbsp; English Debate Club &copy; 2025
+</footer>
+
+<script src="../config.js"></script>
+<script>
+// ═══════ TAB NAVIGATION ═══════
+const navButtons = document.querySelectorAll('#mainNav button[data-page]');
+const pages = document.querySelectorAll('.page');
+
+function showPage(id) {
+  pages.forEach(p => p.hidden = (p.id !== id));
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.page === id));
+  window.scrollTo(0, 0);
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+
+// ═══════ VOCABULARY DATA ═══════
+const vocabulary = [
+  ["proposition", "/ˌprɑːpəˈzɪʃən/", "prop-uh-ZIH-shuhn", "noun", "the team that supports the motion", "đội ủng hộ đề bài"],
+  ["opposition", "/ˌɑːpəˈzɪʃən/", "ah-puh-ZIH-shuhn", "noun", "the team that argues against the motion", "đội phản đối đề bài"],
+  ["WSDC", "", "W-S-D-C", "abbr", "World Schools Debating Championship", "Giải Vô địch Tranh biện Học sinh Thế giới"],
+  ["motion", "/ˈmoʊʃən/", "MOH-shuhn", "noun", "the topic or statement being debated", "đề bài / kiến nghị"],
+  ["break", "/breɪk/", "BRAYK", "noun", "advancing to the elimination rounds", "vào vòng loại trực tiếp"],
+  ["POI", "", "P-O-I", "abbr", "Point of Information — a question to the speaker", "câu hỏi cho người đang nói"],
+  ["rebuttal", "/rɪˈbʌtəl/", "rih-BUT-uhl", "noun", "arguing against the other team's points", "phản biện lại ý kiến đối phương"],
+  ["prime minister", "/praɪm ˈmɪnɪstər/", "PRYME MIN-ih-ster", "noun", "first speaker of the Proposition team", "người nói đầu tiên đội Ủng hộ"],
+  ["leader of opposition", "", "LEE-der uhv ah-puh-ZIH-shuhn", "noun", "first speaker of the Opposition team", "người nói đầu tiên đội Phản đối"],
+  ["deputy", "/ˈdepjəti/", "DEP-yuh-tee", "noun", "second speaker (assistant leader)", "người nói thứ hai (phó)"],
+  ["whip", "/wɪp/", "WIP", "noun", "third speaker who summarizes the team's case", "người nói thứ ba — tổng kết"],
+  ["reply speech", "/rɪˈplaɪ spiːtʃ/", "rih-PLY SPEECH", "phrase", "short final speech summarizing the debate", "bài nói phản hồi / tổng kết cuối"],
+  ["case setup", "/keɪs ˈsetʌp/", "KAYSS SET-up", "phrase", "setting up context, definitions, and arguments", "thiết lập nền — bối cảnh, định nghĩa, luận điểm"],
+  ["context", "/ˈkɑːntekst/", "KAHN-tekst", "noun", "background information about the problem", "bối cảnh"],
+  ["definition", "/ˌdefɪˈnɪʃən/", "def-ih-NIH-shuhn", "noun", "explaining what key words mean", "định nghĩa"],
+  ["argument", "/ˈɑːrɡjəmənt/", "AR-gyuh-muhnt", "noun", "a reason or point to support your side", "luận điểm / lý lẽ"],
+  ["judge", "/dʒʌdʒ/", "JUHJ", "noun", "the person who scores the debate", "giám khảo"],
+  ["ballot", "/ˈbælət/", "BAL-uht", "noun", "the judge's vote for the winning team", "phiếu bầu của giám khảo"],
+];
+
+// ═══════ MERRIAM-WEBSTER AUDIO ═══════
+const audioCache = new Map();
+const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
+const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
+const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
+const mwApiStatus = document.getElementById("mwApiStatus");
+
+mwApiStatus.textContent = hasMwApiKey
+  ? "✓ API key loaded from config.js. Merriam-Webster audio is ready."
+  : "⚙ Add your Intermediate Dictionary key to MW_API_KEY in config.js to enable audio.";
+
+function findAudioFile(value) {
+  if (!value || typeof value !== "object") return "";
+  if (typeof value.audio === "string" && value.audio) return value.audio;
+  for (const child of Object.values(value)) {
+    const found = findAudioFile(child);
+    if (found) return found;
+  }
+  return "";
+}
+
+function audioSubdirectory(filename) {
+  if (filename.startsWith("bix")) return "bix";
+  if (filename.startsWith("gg")) return "gg";
+  if (/^[^a-zA-Z]/.test(filename)) return "number";
+  return filename[0].toLowerCase();
+}
+
+async function getMerriamWebsterAudioUrl(word) {
+  if (audioCache.has(word)) return audioCache.get(word);
+  const endpoint = `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
+  const response = await fetch(endpoint);
+  if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
+  const entries = await response.json();
+  const filename = findAudioFile(entries);
+  if (!filename) throw new Error("No Merriam-Webster recording was found for this word.");
+  const folder = audioSubdirectory(filename);
+  const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
+  audioCache.set(word, url);
+  return url;
+}
+
+async function speakWord(word) {
+  if (!hasMwApiKey) {
+    mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
+    showPage('vocab');
+    throw new Error("API key missing");
+  }
+  mwApiStatus.textContent = `Loading "${word}" from Merriam-Webster…`;
+  try {
+    const url = await getMerriamWebsterAudioUrl(word);
+    const audio = new Audio(url);
+    await audio.play();
+    mwApiStatus.textContent = `▶ Playing "${word}" with Merriam-Webster audio.`;
+  } catch (error) {
+    if (error.message === "API key missing") throw error;
+    mwApiStatus.textContent = `Could not play "${word}". Check that the key is for the Intermediate Dictionary (sd3) and try again.`;
+    throw error;
+  }
+}
+
+// ═══════ RENDER VOCABULARY TABLE ═══════
+const vocabBody = document.getElementById("vocabBody");
+const vocabSearch = document.getElementById("vocabSearch");
+
+function renderVocabulary() {
+  const query = vocabSearch.value.trim().toLowerCase();
+  const matches = vocabulary.filter(row =>
+    row.join(" ").toLowerCase().includes(query)
+  );
+  vocabBody.innerHTML = "";
+  matches.forEach(([word, ipa, soundOut, type, en, vi]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="word">${word}</td>
+      <td class="ipa">${ipa}</td>
+      <td class="sound-it-out">${soundOut}</td>
+      <td>${type}</td>
+      <td><div class="meaning-en">${en}</div><div class="meaning-vi">${vi}</div></td>
+      <td>${ipa ? `<button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button>` : ''}</td>`;
+    const btn = row.querySelector("button");
+    if (btn) btn.addEventListener("click", () => speakWord(word.split(" ")[0]).catch(() => {}));
+    vocabBody.appendChild(row);
+  });
+}
+
+vocabSearch.addEventListener("input", renderVocabulary);
+renderVocabulary();
+
+// ═══════ QUIZ DATA ═══════
+const quizQuestions = [
+  { type: "choice", kind: "Concept", prompt: "WSDC là viết tắt của gì?",
+    options: ["World Schools Debating Championship", "World Students Drama Competition", "Western Speech and Debate Club", "World Speaking Development Course"], answer: 0 },
+  { type: "choice", kind: "Concept", prompt: "Trong tranh biện WSDC, mỗi đội có bao nhiêu người?",
+    options: ["2 người", "3 người", "4 người", "5 người"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Mỗi lượt nói chính kéo dài bao lâu?",
+    options: ["4 phút", "6 phút", "8 phút", "10 phút"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "POI có thể đặt từ phút mấy đến phút mấy?",
+    options: ["Phút 0 đến phút 8", "Phút 1 đến phút 7", "Phút 2 đến phút 6", "Phút 1 đến phút 8"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Lượt Reply kéo dài bao lâu?",
+    options: ["2 phút", "4 phút", "6 phút", "8 phút"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Ở lượt Reply, đội nào nói trước?",
+    options: ["Đội Ủng hộ", "Đội Phản đối", "Đội nào muốn nói trước cũng được", "Giám khảo chọn"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Người nói đầu tiên của đội Ủng hộ gọi là gì?",
+    options: ["Leader of Opposition", "Government Whip", "Prime Minister", "Deputy PM"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "'Case Setup' gồm những gì?",
+    options: ["Bối cảnh, Định nghĩa, Mục tiêu, Luận điểm", "Chào hỏi, Kể chuyện, Kết luận", "Phản biện, POI, Reply", "Tấn công, Phòng thủ, Ghi bàn"], answer: 0 },
+  { type: "choice", kind: "Concept", prompt: "Tranh biện bắt nguồn từ đâu?",
+    options: ["Trung Quốc", "La Mã", "Hy Lạp cổ đại", "Ai Cập"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "Ai KHÔNG được nói lượt Reply?",
+    options: ["Người nói thứ 1", "Người nói thứ 2", "Người nói thứ 3", "Cả 3 đều được"], answer: 2 },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "proposition",
+    emoji: "👍", imageLabel: "Thumbs up for supporting" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "opposition",
+    emoji: "👎", imageLabel: "Thumbs down for opposing" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "rebuttal",
+    emoji: "↩️", imageLabel: "Reply arrow for rebuttal" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "judge",
+    emoji: "⚖️", imageLabel: "Scales of justice" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "ballot",
+    emoji: "🗳️", imageLabel: "Ballot box for voting" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "argument",
+    emoji: "💡", imageLabel: "Light bulb for ideas" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "context",
+    emoji: "📖", imageLabel: "Book for background info" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "deputy",
+    emoji: "🤝", imageLabel: "Handshake for assistant" },
+];
+
+// ═══════ RENDER QUIZ ═══════
+const quizForm = document.getElementById("quizForm");
+const conceptQuizList = document.getElementById("conceptQuizList");
+const vocabularyQuizList = document.getElementById("vocabularyQuizList");
+const quizProgress = document.getElementById("quizProgress");
+const quizMessage = document.getElementById("quizMessage");
+const quizResult = document.getElementById("quizResult");
+const quizScore = document.getElementById("quizScore");
+const quizHeadline = document.getElementById("quizHeadline");
+const quizResultText = document.getElementById("quizResultText");
+
+quizQuestions.forEach((question, index) => {
+  const card = document.createElement("article");
+  card.className = "quiz-card";
+  card.dataset.question = String(index);
+
+  const answerArea = question.type === "choice"
+    ? `<div class="quiz-options" role="radiogroup" aria-labelledby="prompt-${index}">
+        ${question.options.map((option, oi) => `
+          <label class="quiz-option">
+            <input type="radio" name="quiz-${index}" value="${oi}">
+            <span>${String.fromCharCode(65 + oi)}. ${option}</span>
+          </label>`).join("")}
+       </div>`
+    : `<div class="spelling-card">
+        <div class="quiz-picture" role="img" aria-label="${question.imageLabel}">${question.emoji}</div>
+        <div>
+          <div class="word-starter" aria-label="Starts with ${question.word[0]} and has ${question.word.length} letters">
+            <span class="first-letter">${question.word[0].toUpperCase()}</span>
+            <span class="word-blanks">${"_ ".repeat(question.word.length - 1).trim()}</span>
+          </div>
+          <label for="quiz-${index}">Type the remaining letters</label>
+          <input class="letter-answer" id="quiz-${index}" name="quiz-${index}"
+            type="text" maxlength="${question.word.length - 1}" inputmode="text" autocomplete="off" spellcheck="false"
+            placeholder="Complete the word">
+          <label class="audio-hint">
+            <input class="audio-hint-toggle" type="checkbox" data-word="${question.word}">
+            <span>🔊 Tick to hear an audio hint</span>
+          </label>
+        </div>
+       </div>`;
+
+  card.innerHTML = `
+    <div class="quiz-topline">
+      <span class="quiz-number">${index + 1}</span>
+      <span class="quiz-kind">${question.kind}</span>
+    </div>
+    <div id="prompt-${index}" class="quiz-prompt">${question.prompt}</div>
+    ${answerArea}
+    <p class="question-status" id="status-${index}" aria-live="polite"></p>`;
+  (question.type === "choice" ? conceptQuizList : vocabularyQuizList).appendChild(card);
+});
+
+let quizHasBeenGraded = false;
+
+function isQuestionAnswered(question, index) {
+  if (question.type === "choice") return Boolean(document.querySelector(`input[name="quiz-${index}"]:checked`));
+  return Boolean(document.getElementById(`quiz-${index}`).value.trim());
+}
+
+function clearQuizFeedback() {
+  if (!quizHasBeenGraded) return;
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizHasBeenGraded = false;
+}
+
+function updateQuizProgress() {
+  const answered = quizQuestions.filter(isQuestionAnswered).length;
+  quizProgress.textContent = `${answered} of ${quizQuestions.length} answered`;
+  quizMessage.textContent = "";
+}
+
+quizForm.addEventListener("input", event => {
+  if (event.target.matches(".letter-answer")) {
+    event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "").toUpperCase();
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("change", event => {
+  if (event.target.matches(".audio-hint-toggle")) {
+    if (event.target.checked) {
+      speakWord(event.target.dataset.word).catch(() => { event.target.checked = false; });
+    }
+    return;
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const firstUnanswered = quizQuestions.findIndex((q, i) => !isQuestionAnswered(q, i));
+  if (firstUnanswered !== -1) {
+    quizMessage.textContent = `Please answer all ${quizQuestions.length} questions before submitting.`;
+    const q = quizQuestions[firstUnanswered];
+    const target = q.type === "choice"
+      ? document.querySelector(`input[name="quiz-${firstUnanswered}"]`)
+      : document.getElementById(`quiz-${firstUnanswered}`);
+    target.focus();
+    quizResult.hidden = true;
+    return;
+  }
+
+  let score = 0;
+  quizQuestions.forEach((question, index) => {
+    const card = document.querySelector(`[data-question="${index}"]`);
+    const status = document.getElementById(`status-${index}`);
+    const isCorrect = question.type === "choice"
+      ? Number(document.querySelector(`input[name="quiz-${index}"]:checked`).value) === question.answer
+      : `${question.word[0]}${document.getElementById(`quiz-${index}`).value.trim().toLowerCase()}` === question.word;
+
+    card.classList.toggle("correct", isCorrect);
+    card.classList.toggle("incorrect", !isCorrect);
+    status.textContent = isCorrect ? "✓ Correct" : "↻ Review this one";
+    status.style.color = isCorrect ? "#18885d" : "#d94f68";
+    if (isCorrect) score += 1;
+  });
+
+  const percentage = Math.round((score / quizQuestions.length) * 100);
+  quizScore.textContent = `${score} / ${quizQuestions.length}`;
+  quizHeadline.textContent =
+    percentage === 100 ? "Outstanding work! 🌟" :
+    percentage >= 75 ? "Great job! 🎉" :
+    percentage >= 50 ? "Good effort—keep practising! 💪" :
+    "Let's review and try again! 📚";
+  quizResultText.textContent = `You scored ${percentage}%. Correct answers are not revealed — review the lesson and try again!`;
+  quizResult.hidden = false;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = true;
+  quizResult.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+document.getElementById("resetQuiz").addEventListener("click", () => {
+  quizForm.reset();
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = false;
+  updateQuizProgress();
+  document.querySelector('input[name="quiz-0"]').focus();
+});
+</script>
+
+</body>
+</html>

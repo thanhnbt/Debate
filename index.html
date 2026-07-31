@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Week 1 learning hub: Introduction to Debate and World Schools Debate Format.">
+  <meta name="description" content="English Debate Club — Câu lạc bộ Tranh biện Tiếng Anh dành cho học sinh tiểu học.">
   <meta name="theme-color" content="#55c8ff">
-  <title>Day 1 · Introduction to Debate</title>
+  <title>English Debate Club</title>
   <style>
     :root {
       --ink: #26335d;
@@ -27,7 +27,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       color: var(--ink);
@@ -38,24 +38,8 @@
         var(--paper);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
+      min-height: 100vh;
     }
-
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-
-    .skip-link {
-      position: fixed;
-      top: 8px;
-      left: 8px;
-      z-index: 100;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: var(--card);
-      transform: translateY(-150%);
-    }
-    .skip-link:focus { transform: translateY(0); }
 
     .topbar {
       position: sticky;
@@ -71,7 +55,6 @@
       margin: auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 24px;
     }
     .brand {
@@ -91,1523 +74,189 @@
       background: linear-gradient(145deg, var(--yellow), #ffb951);
       box-shadow: 0 8px 24px rgba(255,184,81,.3);
     }
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav a {
-      padding: 9px 12px;
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: .92rem;
-      font-weight: 700;
-    }
-    .nav a:hover, .nav a:focus-visible {
-      color: var(--ink);
-      background: white;
-      outline: none;
-    }
 
-    .container { width: min(1180px, calc(100% - 32px)); margin: auto; }
     .hero {
-      min-height: 640px;
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      align-items: center;
-      gap: clamp(36px, 7vw, 92px);
-      padding: 70px 0 76px;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 100px 0 60px;
+      text-align: center;
     }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 18px;
-      color: var(--teal-dark);
-      font-size: .78rem;
-      font-weight: 850;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 30px;
-      height: 3px;
-      border-radius: 999px;
-      background: var(--teal);
-    }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 {
-      max-width: 760px;
-      margin-bottom: 22px;
-      font-size: clamp(3rem, 6.4vw, 6.5rem);
-      line-height: .94;
-      letter-spacing: -.065em;
-    }
-    .accent { color: var(--teal-dark); }
-    .hero-copy {
-      max-width: 650px;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      min-height: 48px;
-      padding: 0 19px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      color: var(--ink);
-      background: white;
-      font-weight: 800;
-      box-shadow: 0 8px 22px rgba(11,19,36,.07);
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(11,19,36,.12); }
-    .btn-primary {
-      color: var(--ink);
-      border-color: #2caee9;
-      background: linear-gradient(135deg, #65d4ff, #4ed6bd);
-    }
-
-    .hero-visual {
-      position: relative;
-      min-height: 455px;
-      display: grid;
-      place-items: center;
-    }
-    .debate-stage {
-      position: relative;
-      width: min(100%, 500px);
-      aspect-ratio: 1 / .92;
-      border-radius: 48% 52% 46% 54% / 55% 41% 59% 45%;
-      background: linear-gradient(145deg, #6ed8ff 0%, #8c7cff 52%, #ff83a0 100%);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .debate-stage::before,
-    .debate-stage::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-    }
-    .debate-stage::before {
-      width: 280px; height: 280px;
-      top: -85px; right: -60px;
-      background: var(--yellow);
-    }
-    .debate-stage::after {
-      width: 220px; height: 220px;
-      bottom: -95px; left: -70px;
-      background: var(--mint);
-    }
-    .speech-card {
-      position: absolute;
-      z-index: 2;
-      width: 68%;
-      padding: 25px 24px;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 22px;
-      color: white;
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(12px);
-    }
-    .speech-card.one { top: 18%; left: 10%; transform: rotate(-3deg); }
-    .speech-card.two { right: 7%; bottom: 18%; transform: rotate(4deg); }
-    .speech-label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--yellow);
-      font-size: .74rem;
-      font-weight: 900;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-    .speech-card strong { display: block; font-size: clamp(1.05rem, 2vw, 1.4rem); line-height: 1.25; }
-    .float-note {
-      position: absolute;
-      z-index: 4;
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: white;
-      box-shadow: 0 14px 34px rgba(11,19,36,.15);
-      font-size: .86rem;
-      font-weight: 850;
-    }
-    .float-note.a { top: 8%; left: -5%; }
-    .float-note.b { right: -3%; bottom: 8%; }
-
-    section { padding: 86px 0; }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 32px;
-    }
-    .section-head h2 {
-      max-width: 720px;
-      margin-bottom: 0;
-      font-size: clamp(2.2rem, 4vw, 4.2rem);
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 950;
       line-height: 1;
       letter-spacing: -.055em;
+      margin: 0 0 20px;
     }
-    .section-head p { max-width: 500px; margin-bottom: 4px; color: var(--muted); }
+    .hero h1 span { color: var(--sky); }
+    .hero p {
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
 
-    .module-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 1fr 1fr;
-      gap: 18px;
+    .sessions {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 100px;
     }
-    .module-card {
-      min-height: 245px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
+    .sessions h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      margin: 0 0 32px;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    .session-card {
+      position: relative;
+      padding: 32px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255,255,255,.78);
       box-shadow: 0 12px 35px rgba(11,19,36,.07);
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+      color: inherit;
     }
-    .module-card.active {
-      color: var(--ink);
+    .session-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(11,19,36,.12);
+    }
+    .session-card.active {
       border-color: #66c9f4;
       background: linear-gradient(145deg, #dff7ff 0%, #e6fff3 55%, #fff3bf 100%);
     }
-    .module-number {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      color: var(--ink);
-      background: var(--yellow);
-      font-weight: 950;
-    }
-    .module-card h3 { margin: 42px 0 8px; font-size: 1.4rem; line-height: 1.2; }
-    .module-card p { margin-bottom: 0; color: var(--muted); }
-    .module-card.active p { color: var(--ink-2); }
-    .module-card .status {
-      margin-top: auto;
-      padding-top: 20px;
-      font-size: .78rem;
-      font-weight: 850;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+    .session-card.coming-soon {
+      opacity: .6;
+      pointer-events: none;
     }
 
-    .slides-section {
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 10% 12%, rgba(255,216,77,.38), transparent 20rem),
-        radial-gradient(circle at 92% 85%, rgba(140,124,255,.2), transparent 24rem),
-        linear-gradient(145deg, #dff7ff 0%, #effff8 50%, #fff1f4 100%);
-    }
-    .slides-section .eyebrow { color: var(--teal-dark); }
-    .slides-section .section-head p { color: var(--muted); }
-    .viewer-shell {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 250px;
-      gap: 20px;
-    }
-    .viewer {
-      overflow: hidden;
-      border: 5px solid white;
-      border-radius: 26px;
-      background: white;
-      box-shadow: var(--shadow);
-    }
-    .slide-frame {
-      position: relative;
-      aspect-ratio: 16/9;
-      display: grid;
-      place-items: center;
-      background: #fff;
-    }
-    .slide-frame img { width: 100%; height: 100%; object-fit: contain; }
-    .slide-loader {
-      position: absolute;
-      color: var(--ink);
-      font-weight: 800;
-    }
-    .viewer-bar {
-      min-height: 76px;
-      padding: 13px 15px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      border-top: 1px solid var(--line);
-      background: white;
-    }
-    .icon-btn {
-      width: 46px;
-      height: 46px;
-      border: 1px solid #b9e6f7;
-      border-radius: 14px;
-      color: var(--ink);
-      background: #e5f8ff;
-      font-weight: 900;
-    }
-    .icon-btn:hover, .icon-btn:focus-visible { border-color: var(--teal); outline: none; }
-    .slide-meta { min-width: 0; flex: 1; padding: 0 6px; }
-    .slide-meta small { color: var(--muted); }
-    .slide-meta strong {
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .progress {
-      height: 4px;
-      margin-top: 8px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: #e9eef7;
-    }
-    .progress span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: var(--teal);
-      transition: width .25s ease;
-    }
-    .slide-nav {
-      max-height: 650px;
-      padding-right: 7px;
-      overflow-y: auto;
-      display: grid;
-      align-content: start;
-      gap: 8px;
-    }
-    .slide-jump {
-      width: 100%;
-      padding: 10px 12px;
-      display: grid;
-      grid-template-columns: 37px 1fr;
-      align-items: center;
-      gap: 11px;
-      border: 1px solid #cfe6f2;
-      border-radius: 14px;
-      color: var(--ink-2);
-      background: rgba(255,255,255,.68);
-      text-align: left;
-    }
-    .slide-jump span:first-child {
-      width: 37px; height: 37px;
-      display: grid; place-items: center;
-      border-radius: 10px;
-      color: var(--ink); background: #fff0a9;
-      font-size: .82rem; font-weight: 850;
-    }
-    .slide-jump span:last-child {
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-size: .82rem; font-weight: 700;
-    }
-    .slide-jump:hover, .slide-jump.active {
-      color: var(--ink);
-      border-color: var(--sky);
-      background: white;
-      box-shadow: 0 7px 18px rgba(85,200,255,.2);
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-    .takeaway {
-      position: relative;
-      min-height: 245px;
-      padding: 26px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--card);
-      box-shadow: 0 12px 34px rgba(78,103,159,.09);
-    }
-    .takeaway::after {
-      content: attr(data-number);
-      position: absolute;
-      right: 14px;
-      bottom: -28px;
-      color: rgba(11,19,36,.05);
-      font-size: 8rem;
-      font-weight: 950;
-      line-height: 1;
-    }
-    .takeaway-icon {
-      width: 48px; height: 48px;
-      display: grid; place-items: center;
-      margin-bottom: 42px;
-      border-radius: 14px;
-      background: linear-gradient(145deg, #e7f8ff, #dffff0);
-      font-size: 1.3rem;
-    }
-    .takeaway h3 { margin-bottom: 8px; font-size: 1.18rem; }
-    .takeaway p { position: relative; z-index: 1; margin-bottom: 0; color: var(--muted); }
-
-    .vocab-tools {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .search-box {
-      min-width: min(100%, 330px);
-      min-height: 48px;
-      padding: 0 16px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      color: var(--ink);
-      background: white;
-      outline: none;
-    }
-    .search-box:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(19,184,166,.12); }
-    .filter-btn {
-      min-height: 42px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: transparent;
-      font-size: .86rem;
-      font-weight: 800;
-    }
-    .filter-btn.active {
-      color: var(--ink);
-      border-color: #43b9e7;
-      background: linear-gradient(135deg, #8cddff, #a9efcb);
-    }
-    .vocab-wrap {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: white;
-      box-shadow: 0 14px 40px rgba(11,19,36,.07);
-    }
-    .vocab-table { width: 100%; border-collapse: collapse; }
-    .vocab-table th, .vocab-table td {
-      padding: 17px 18px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: middle;
-    }
-    .vocab-table th {
-      color: var(--muted);
-      background: linear-gradient(90deg, #eefaff, #f2fff9, #fff8d9);
-      font-size: .75rem;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-    }
-    .vocab-table tbody tr:last-child td { border-bottom: 0; }
-    .vocab-table tbody tr:hover { background: #fbfcfd; }
-    .word { font-size: 1.02rem; font-weight: 900; }
-    .ipa { color: var(--teal-dark); font-family: "Segoe UI", sans-serif; font-weight: 700; white-space: nowrap; }
-    .sound-it-out {
-      color: #6e54d9;
-      font-size: .83rem;
-      font-weight: 950;
-      letter-spacing: .035em;
-      white-space: nowrap;
-    }
-    .api-key-panel {
-      margin-bottom: 18px;
-      padding: 18px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px 16px;
-      align-items: end;
-      border: 2px solid #cdeeff;
-      border-radius: 22px;
-      background: linear-gradient(135deg, #eefaff, #f2fff9);
-    }
-    .api-key-copy h3 { margin-bottom: 4px; font-size: 1.02rem; }
-    .api-key-copy p { margin: 0; color: var(--muted); font-size: .84rem; }
-    .api-key-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .api-key-input {
-      width: min(330px, 62vw);
-      min-height: 44px;
-      padding: 0 13px;
-      border: 2px solid #cbdce9;
-      border-radius: 13px;
-      color: var(--ink);
-      background: white;
-      outline: none;
-    }
-    .api-key-input:focus { border-color: var(--sky); box-shadow: 0 0 0 4px rgba(85,200,255,.15); }
-    .api-key-button {
-      min-height: 44px;
-      padding: 0 14px;
-      border: 0;
-      border-radius: 13px;
-      color: var(--ink);
-      background: var(--yellow);
-      font-weight: 900;
-    }
-    .api-key-status {
-      grid-column: 1 / -1;
-      min-height: 20px;
-      margin: 0;
-      color: var(--teal-dark);
-      font-size: .83rem;
-      font-weight: 850;
-    }
-    .api-key-note { grid-template-columns: 1fr; align-items: start; }
-    .word-type {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 999px;
-      color: #7d4b0a;
-      background: #fff1d8;
-      font-size: .74rem;
-      font-weight: 850;
-    }
-    .sound-btn {
-      width: 40px; height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: var(--ink);
-      background: white;
-    }
-    .sound-btn:hover, .sound-btn:focus-visible { color: white; border-color: var(--teal-dark); background: var(--teal-dark); outline: none; }
-    .empty-state { padding: 40px; color: var(--muted); text-align: center; }
-
-    .quiz-section {
-      background:
-        radial-gradient(circle at 7% 15%, rgba(255,216,77,.32), transparent 23rem),
-        radial-gradient(circle at 92% 80%, rgba(85,200,255,.25), transparent 25rem),
-        #f8fbff;
-    }
-    .quiz-intro {
-      margin-bottom: 22px;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      border: 2px solid #cfeeff;
-      border-radius: 20px;
-      background: white;
-      box-shadow: 0 10px 28px rgba(78,103,159,.08);
-    }
-    .quiz-rule { margin: 0; color: var(--muted); font-weight: 700; }
-    .quiz-progress {
-      flex: 0 0 auto;
-      padding: 9px 13px;
-      border-radius: 999px;
-      color: var(--ink);
-      background: #fff0a9;
-      font-size: .84rem;
-      font-weight: 950;
-    }
-    .quiz-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-    .quiz-group {
-      margin-top: 24px;
-      padding: 22px;
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-    }
-    .concept-quiz {
-      border: 3px solid #bfe9ff;
-      background: linear-gradient(145deg, #eefaff, #f9fdff);
-    }
-    .vocabulary-quiz {
-      border: 3px solid #ffe494;
-      background: linear-gradient(145deg, #fffbed, #fff6f8);
-    }
-    .quiz-group-head {
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .quiz-group-icon {
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      background: white;
-      box-shadow: 0 8px 22px rgba(78,103,159,.12);
-      font-size: 1.75rem;
-    }
-    .quiz-group-head p {
-      margin: 0;
-      color: #6e54d9;
-      font-size: .72rem;
-      font-weight: 950;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-    .quiz-group-head h3 { margin: 1px 0; font-size: 1.5rem; }
-    .quiz-group-head span:last-child { color: var(--muted); font-size: .88rem; font-weight: 700; }
-    .quiz-card {
-      position: relative;
-      padding: 22px;
-      border: 2px solid transparent;
-      border-radius: 24px;
-      background: white;
-      box-shadow: 0 12px 34px rgba(78,103,159,.1);
-      transition: transform .18s ease, border-color .18s ease;
-    }
-    .quiz-card:hover { transform: translateY(-3px); border-color: #b7eaff; }
-    .quiz-card.correct { border-color: #52cf9a; background: #f1fff8; }
-    .quiz-card.incorrect { border-color: #ff8ca0; background: #fff5f7; }
-    .quiz-topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .quiz-number {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      color: var(--ink);
-      background: #dff7ff;
-      font-weight: 950;
-    }
-    .quiz-kind {
-      align-self: center;
-      padding: 5px 10px;
-      border-radius: 999px;
-      color: #674ead;
-      background: #eeeaff;
-      font-size: .72rem;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .quiz-card label {
-      display: block;
-      min-height: 48px;
-      margin-bottom: 13px;
-      font-weight: 850;
-      line-height: 1.45;
-    }
-    .quiz-options { display: grid; gap: 9px; }
-    .quiz-option {
-      min-height: 46px !important;
-      margin: 0 !important;
-      padding: 10px 12px;
-      display: flex !important;
-      align-items: center;
-      gap: 10px;
-      border: 2px solid #dce7f3;
-      border-radius: 14px;
-      background: #fbfdff;
-      font-weight: 750 !important;
-      cursor: pointer;
-    }
-    .quiz-option:hover { border-color: #9cddf7; background: #f0fbff; }
-    .quiz-option input { width: 19px; height: 19px; accent-color: #6557d8; }
-    .spelling-card {
-      display: grid;
-      grid-template-columns: 92px 1fr;
-      gap: 16px;
-      align-items: center;
-    }
-    .quiz-picture {
-      width: 92px;
-      height: 92px;
-      display: grid;
-      place-items: center;
-      border-radius: 24px;
-      background: linear-gradient(145deg, #fff2a8, #dff7ff);
-      box-shadow: inset 0 0 0 3px white;
-      font-size: 3rem;
-    }
-    .letter-word {
-      margin: 5px 0 12px;
-      color: #5345bc;
-      font-size: clamp(1.45rem, 4vw, 2rem);
-      font-weight: 950;
-      letter-spacing: .14em;
-    }
-    .letter-answer {
-      width: min(230px, 100%);
-      height: 52px;
-      padding: 0 13px;
-      border: 3px solid #9bdcf7;
-      border-radius: 14px;
-      color: var(--ink);
-      background: white;
-      text-align: left;
-      text-transform: uppercase;
-      font-size: 1.05rem;
-      font-weight: 950;
-      outline: none;
-    }
-    .word-starter {
-      margin: 5px 0 12px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .first-letter {
+    .session-number {
       width: 52px;
       height: 52px;
       display: grid;
       place-items: center;
-      border-radius: 14px;
-      color: white;
-      background: var(--purple);
-      font-size: 1.45rem;
+      border-radius: 16px;
       font-weight: 950;
-    }
-    .word-blanks {
-      color: #6e54d9;
       font-size: 1.2rem;
-      font-weight: 950;
-      letter-spacing: .16em;
     }
-    .meaning-cell { min-width: 270px; line-height: 1.45; }
-    .meaning-en { color: var(--ink); font-weight: 800; }
-    .meaning-vi {
-      margin-top: 7px;
-      padding-top: 7px;
-      border-top: 1px dashed #cbdbea;
-      color: var(--muted);
-      font-size: .88rem;
-      font-weight: 700;
-    }
-    .letter-answer:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(140,124,255,.14); }
-    .audio-hint {
-      min-height: auto !important;
-      margin: 10px 0 0 !important;
-      display: flex !important;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: .82rem;
-      font-weight: 800 !important;
-      cursor: pointer;
-    }
-    .audio-hint input { width: 18px; height: 18px; accent-color: var(--teal-dark); }
-    .question-status {
-      min-height: 24px;
-      margin: 10px 0 0;
-      font-size: .82rem;
-      font-weight: 900;
-    }
-    .quiz-actions {
-      margin-top: 22px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-    }
-    .submit-quiz {
-      min-height: 52px;
-      padding: 0 22px;
-      border: 0;
-      border-radius: 16px;
-      color: var(--ink);
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      box-shadow: 0 12px 26px rgba(255,157,69,.28);
-      font-weight: 950;
-    }
-    .reset-quiz {
-      min-height: 52px;
-      padding: 0 18px;
-      border: 2px solid #dce7f3;
-      border-radius: 16px;
-      color: var(--ink);
-      background: white;
-      font-weight: 900;
-    }
-    .quiz-message { margin: 0; color: #d94f68; font-weight: 850; }
-    .quiz-result {
-      margin-top: 22px;
-      padding: 25px;
-      border: 3px solid white;
-      border-radius: 26px;
-      background: linear-gradient(135deg, #dff7ff, #e5fff2, #fff3bd);
-      box-shadow: var(--shadow);
-    }
-    .quiz-result[hidden] { display: none; }
-    .quiz-score {
-      margin-bottom: 6px;
-      font-size: clamp(2.4rem, 7vw, 5rem);
-      line-height: 1;
-      letter-spacing: -.05em;
-    }
-    .quiz-result p { margin-bottom: 0; color: var(--ink-2); font-weight: 750; }
+    .session-card:nth-child(1) .session-number { background: var(--sky); color: white; }
+    .session-card:nth-child(2) .session-number { background: var(--teal); color: white; }
+    .session-card:nth-child(3) .session-number { background: var(--purple); color: white; }
+    .session-card:nth-child(4) .session-number { background: var(--coral); color: white; }
 
-    footer {
-      padding: 40px 0 52px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: .9rem;
+    .session-card h3 {
+      margin: 20px 0 8px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.25;
     }
-    .footer-inner { display: flex; justify-content: space-between; gap: 24px; }
+    .session-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .session-card.active p { color: var(--ink-2); }
 
-    @media (max-width: 900px) {
-      .nav { display: none; }
-      .hero { grid-template-columns: 1fr; padding-top: 54px; }
-      .hero-visual { min-height: 390px; }
-      .debate-stage { max-width: 430px; }
-      .module-grid, .summary-grid, .quiz-list { grid-template-columns: 1fr; }
-      .viewer-shell { grid-template-columns: 1fr; }
-      .slide-nav {
-        max-height: none;
-        padding: 0 0 6px;
-        display: flex;
-        overflow-x: auto;
-      }
-      .slide-jump { min-width: 150px; grid-template-columns: 34px 1fr; }
-      .section-head { align-items: start; flex-direction: column; }
+    .session-card .badge {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .session-card.active .badge {
+      background: rgba(85,200,255,.2);
+      color: var(--teal-dark);
+    }
+    .session-card.coming-soon .badge {
+      background: var(--line);
+      color: var(--muted);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: .85rem;
     }
 
     @media (max-width: 680px) {
-      .container, .topbar-inner { width: min(100% - 22px, 1180px); }
-      section { padding: 64px 0; }
-      .hero { min-height: auto; padding-bottom: 56px; }
-      h1 { font-size: clamp(3rem, 16vw, 4.7rem); }
-      .hero-visual { min-height: 335px; }
-      .float-note.a { left: 0; }
-      .float-note.b { right: 0; }
-      .viewer-bar { flex-wrap: wrap; }
-      .slide-meta { order: -1; flex-basis: 100%; }
-      .vocab-wrap { background: transparent; border: 0; box-shadow: none; overflow: visible; }
-      .vocab-table thead { display: none; }
-      .vocab-table, .vocab-table tbody, .vocab-table tr, .vocab-table td { display: block; width: 100%; }
-      .vocab-table tr {
-        position: relative;
-        margin-bottom: 12px;
-        padding: 18px 60px 18px 18px;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: white;
-      }
-      .vocab-table td { padding: 3px 0; border: 0; }
-      .vocab-table td:last-child { position: absolute; top: 16px; right: 14px; }
-      .footer-inner { flex-direction: column; }
-      .quiz-intro { align-items: flex-start; flex-direction: column; }
-      .api-key-panel { grid-template-columns: 1fr; }
-      .api-key-input { width: 100%; }
-      .api-key-controls { display: grid; grid-template-columns: 1fr auto; }
-      .spelling-card { grid-template-columns: 72px 1fr; }
-      .quiz-picture { width: 72px; height: 72px; border-radius: 19px; font-size: 2.35rem; }
-      .quiz-group { padding: 14px; border-radius: 22px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition: none !important; }
+      .hero { padding: 60px 0 40px; }
+      .session-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="#home" aria-label="English Learning Hub home">
-        <span class="brand-mark">D1</span>
-        <span>English Learning Hub</span>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M3 16V4l7 6 7-6v12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      English Debate Club
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Think clearly.<br><span>Speak boldly.</span></h1>
+    <p>Câu lạc bộ Tranh biện Tiếng Anh — nơi các bạn nhỏ học cách suy nghĩ logic và trình bày ý tưởng tự tin!</p>
+  </div>
+
+  <div class="sessions">
+    <h2>Các buổi học</h2>
+    <div class="session-grid">
+
+      <a href="lessons/day1.html" class="session-card active">
+        <div class="session-number">01</div>
+        <h3>Introduction to Debate</h3>
+        <p>Giới thiệu tranh biện là gì, tại sao tranh biện quan trọng, và cách một trận tranh biện diễn ra.</p>
+        <span class="badge">Đã hoàn thành</span>
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#modules">Modules</a>
-        <a href="#slides">Slides</a>
-        <a href="#summary">Summary</a>
-        <a href="#vocabulary">Vocabulary</a>
-        <a href="#quiz">Quiz</a>
-      </nav>
+
+      <a href="lessons/day2.html" class="session-card active">
+        <div class="session-number">02</div>
+        <h3>WSDC Rules & Speaking Turns</h3>
+        <p>Luật WSDC, lịch sử tranh biện, lượt nói, vai trò từng thành viên trong đội và cách xây dựng lập luận.</p>
+        <span class="badge">Đã hoàn thành</span>
+      </a>
+
+      <div class="session-card coming-soon">
+        <div class="session-number">03</div>
+        <h3>Building Strong Arguments</h3>
+        <p>Cách xây dựng luận điểm vững chắc, tìm bằng chứng và sắp xếp bài nói.</p>
+        <span class="badge">Sắp ra mắt</span>
+      </div>
+
+      <div class="session-card coming-soon">
+        <div class="session-number">04</div>
+        <h3>Rebuttal & Reply</h3>
+        <p>Kỹ năng phản biện, cách phản hồi và tổng kết trận đấu.</p>
+        <span class="badge">Sắp ra mắt</span>
+      </div>
+
     </div>
-  </header>
+  </div>
+</main>
 
-  <main id="main">
-    <div class="container" id="home">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Week 1 · Day 1</p>
-          <h1>Think clearly.<br><span class="accent">Speak boldly.</span></h1>
-          <p class="hero-copy">An interactive introduction to debate, public speaking, teamwork, critical thinking, and the World Schools Debate format.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#slides">Start the lesson <span aria-hidden="true">→</span></a>
-            <a class="btn" href="#vocabulary">Learn key vocabulary</a>
-          </div>
-        </div>
-        <div class="hero-visual" aria-label="Abstract debate illustration">
-          <div class="float-note a">Ask “Why?” first</div>
-          <div class="debate-stage">
-            <div class="speech-card one">
-              <span class="speech-label">Proposition</span>
-              <strong>Build a clear case with evidence.</strong>
-            </div>
-            <div class="speech-card two">
-              <span class="speech-label">Opposition</span>
-              <strong>Listen, respond, and compare.</strong>
-            </div>
-          </div>
-          <div class="float-note b">Content · Style · Strategy</div>
-        </div>
-      </section>
-    </div>
+<footer class="footer">
+  English Debate Club &copy; 2025 &mdash; Learning through debate
+</footer>
 
-    <section id="modules">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Course dashboard</p>
-            <h2>Choose your module</h2>
-          </div>
-          <p>Day 1 is ready. Future days can be added using the same structure without changing the navigation system.</p>
-        </div>
-        <div class="module-grid">
-          <a class="module-card active" href="#slides">
-            <span class="module-number">01</span>
-            <h3>Introduction to Debate</h3>
-            <p>Core skills, WSDC format, judging criteria, and speaker roles.</p>
-            <span class="status">33 learning slides · Ready</span>
-          </a>
-          <article class="module-card" aria-label="Day 2 coming soon">
-            <span class="module-number">02</span>
-            <h3>Building Arguments</h3>
-            <p>Claims, reasoning, examples, and a strong logical line.</p>
-            <span class="status">Coming soon</span>
-          </article>
-          <article class="module-card" aria-label="Day 3 coming soon">
-            <span class="module-number">03</span>
-            <h3>Rebuttal & Comparison</h3>
-            <p>How to respond directly and show why one case matters more.</p>
-            <span class="status">Coming soon</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slides-section" id="slides">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Original lesson deck</p>
-            <h2>Explore Day 1 slides</h2>
-          </div>
-          <p>Use the buttons, the slide list, or your ← and → keyboard keys. The introductory contact slide is omitted to protect personal information.</p>
-        </div>
-
-        <div class="viewer-shell">
-          <div class="viewer" role="region" aria-label="Day 1 slide viewer" aria-live="polite">
-            <div class="slide-frame">
-              <span class="slide-loader" id="slideLoader">Loading slide…</span>
-              <img id="slideImage" src="assets/slides/source-slide-02.png" alt="Slide 1: Introduction to Debate and World Schools Debate Format">
-            </div>
-            <div class="viewer-bar">
-              <button class="icon-btn" id="prevSlide" type="button" aria-label="Previous slide">←</button>
-              <button class="icon-btn" id="nextSlide" type="button" aria-label="Next slide">→</button>
-              <div class="slide-meta">
-                <small id="slideCounter">Slide 1 of 33</small>
-                <strong id="slideTitle">Introduction to Debate</strong>
-                <div class="progress" aria-hidden="true"><span id="slideProgress" style="width:3.03%"></span></div>
-              </div>
-              <button class="icon-btn" id="fullscreenSlide" type="button" aria-label="View slide full screen">⛶</button>
-            </div>
-          </div>
-          <div class="slide-nav" id="slideNav" aria-label="Jump to a slide"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="summary">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Day 1 summary</p>
-            <h2>Six ideas to remember</h2>
-          </div>
-          <p>Debate is a structured way to investigate a question, explain a position, answer another team, and make a meaningful comparison.</p>
-        </div>
-        <div class="summary-grid">
-          <article class="takeaway" data-number="1">
-            <div class="takeaway-icon">?</div>
-            <h3>Debate begins with “Why?”</h3>
-            <p>It is not only about being right or wrong. Strong debaters explain their choices and search for the best-supported solution.</p>
-          </article>
-          <article class="takeaway" data-number="2">
-            <div class="takeaway-icon">◉</div>
-            <h3>Public speaking creates impact</h3>
-            <p>A speech may educate, entertain, or influence. Clear delivery helps an audience understand and remember your case.</p>
-          </article>
-          <article class="takeaway" data-number="3">
-            <div class="takeaway-icon">↔</div>
-            <h3>Teamwork is essential</h3>
-            <p>A debate case is built together. Speakers share goals, divide responsibilities, support one another, and stay consistent.</p>
-          </article>
-          <article class="takeaway" data-number="4">
-            <div class="takeaway-icon">⌁</div>
-            <h3>Critical thinking uses evidence</h3>
-            <p>Ask questions, check assumptions, evaluate facts, and remain willing to correct your own reasoning.</p>
-          </article>
-          <article class="takeaway" data-number="5">
-            <div class="takeaway-icon">3v3</div>
-            <h3>WSDC is a team format</h3>
-            <p>Proposition and Opposition each use three main speakers. Main speeches, reply speeches, and POIs have different purposes.</p>
-          </article>
-          <article class="takeaway" data-number="6">
-            <div class="takeaway-icon">40</div>
-            <h3>Judges balance three criteria</h3>
-            <p>Content is what you say (40%), style is how you say it (40%), and strategy is why and when you say it (20%).</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="vocabulary">
-      <div class="container">
-        <div class="section-head">
-          <div>
-          <p class="eyebrow">Vocabulary + phonetics</p>
-          <h2>Speak the language of debate</h2>
-          </div>
-          <p>Use American IPA, then read the uppercase SOUND IT OUT guide aloud. Select the speaker button to hear a US English model.</p>
-        </div>
-        <div class="vocab-tools">
-          <input class="search-box" id="vocabSearch" type="search" placeholder="Search word or meaning…" aria-label="Search vocabulary">
-          <button class="filter-btn active" type="button" data-filter="all">All</button>
-          <button class="filter-btn" type="button" data-filter="noun">Nouns</button>
-          <button class="filter-btn" type="button" data-filter="verb">Verbs</button>
-          <button class="filter-btn" type="button" data-filter="adjective">Adjectives</button>
-          <button class="filter-btn" type="button" data-filter="phrase">Phrases</button>
-        </div>
-        <div class="api-key-panel api-key-note">
-          <div class="api-key-copy">
-            <h3>🔊 Merriam-Webster Intermediate Dictionary Audio</h3>
-            <p>Audio uses the <code>sd3</code> endpoint. Set <code>MW_API_KEY</code> once in <code>config.js</code>; no key is entered on this page.</p>
-          </div>
-          <p class="api-key-status" id="mwApiStatus" role="status">Checking audio configuration…</p>
-        </div>
-        <div class="vocab-wrap">
-          <table class="vocab-table">
-            <thead>
-              <tr><th>Word</th><th>American IPA</th><th>SOUND IT OUT</th><th>Type</th><th>English meaning + Tiếng Việt</th><th>Audio</th></tr>
-            </thead>
-            <tbody id="vocabBody"></tbody>
-          </table>
-          <div class="empty-state" id="emptyVocab" hidden>No matching vocabulary found.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="quiz-section" id="quiz">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Check your learning</p>
-            <h2>Day 1 Quiz Challenge</h2>
-          </div>
-          <p>Tick one choice or complete a word from its first letter. Nothing is marked while you work—the result appears only after all answers are submitted together.</p>
-        </div>
-
-        <div class="quiz-intro">
-          <p class="quiz-rule">⭐ 10 concept questions · 8 picture word puzzles · Optional audio hints</p>
-          <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
-        </div>
-        <form id="quizForm" novalidate>
-          <section class="quiz-group concept-quiz" aria-labelledby="conceptQuizTitle">
-            <div class="quiz-group-head">
-              <span class="quiz-group-icon">🧠</span>
-              <div>
-                <p>Part A</p>
-                <h3 id="conceptQuizTitle">Concept Quiz</h3>
-                <span>Tick one answer for each lesson concept.</span>
-              </div>
-            </div>
-            <div class="quiz-list" id="conceptQuizList"></div>
-          </section>
-
-          <section class="quiz-group vocabulary-quiz" aria-labelledby="vocabularyQuizTitle">
-            <div class="quiz-group-head">
-              <span class="quiz-group-icon">🧩</span>
-              <div>
-                <p>Part B</p>
-                <h3 id="vocabularyQuizTitle">Vocabulary Picture Quiz</h3>
-                <span>Use the first letter and picture. Tick the audio hint only when needed.</span>
-              </div>
-            </div>
-            <div class="quiz-list" id="vocabularyQuizList"></div>
-          </section>
-          <div class="quiz-actions">
-            <button class="submit-quiz" type="submit">SUBMIT ALL ANSWERS</button>
-            <button class="reset-quiz" id="resetQuiz" type="button">TRY AGAIN</button>
-            <p class="quiz-message" id="quizMessage" role="alert"></p>
-          </div>
-        </form>
-        <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
-          <div class="quiz-score" id="quizScore">0 / 18</div>
-          <h3 id="quizHeadline">Nice effort!</h3>
-          <p id="quizResultText"></p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <span>Day 1 · Introduction to Debate</span>
-      <span>Responsive · Keyboard friendly · GitHub Pages ready</span>
-    </div>
-  </footer>
-
-  <script src="config.js"></script>
-  <script>
-    /*
-     ╔══════════════════════════════════════════════════════════╗
-     ║  ★ MERRIAM-WEBSTER API KEY                               ║
-     ║  1. Register: https://dictionaryapi.com/register         ║
-     ║  2. Product: Intermediate Dictionary                     ║
-     ║  3. Enter the key in the website's API-key box           ║
-     ║  Endpoint: /api/v3/references/sd3/json/{word}            ║
-     ╚══════════════════════════════════════════════════════════╝
-    */
-
-    const slideTitles = [
-      "Introduction to Debate", "Today’s Content", "Find the Different Word: Colors",
-      "Find the Different Word: Pronouns", "Find the Different Word: Concepts",
-      "Find the Different Word: Family", "Find the Different Word: Society",
-      "Ice-breaking Game: Aerostat", "Why Are We Playing This Game?", "Skills",
-      "Public Speaking", "What Is Public Speaking?", "Teamwork", "What Is Teamwork?",
-      "Critical Thinking", "What Is Critical Thinking?", "Assumptions About Critical Thinking",
-      "How to Practise Critical Thinking", "World Schools Debate Format", "WSDC Debate Flow",
-      "WSDC Format and Debate Flow", "Judging Criteria", "Judging Criteria: Detail",
-      "WSDC Scoring Table", "Other Debate Formats", "Speaker’s Role", "Speaker Roles: Overview",
-      "First Speakers", "Second Speaker", "Third Speaker", "Reply Speaker", "Conclusion", "Thank You"
-    ];
-
-    const slides = slideTitles.map((title, index) => ({
-      title,
-      sourceNumber: index + 2,
-      src: `assets/slides/source-slide-${String(index + 2).padStart(2, "0")}.png`
-    }));
-
-    const vocabulary = [
-      ["debate", "/dɪˈbeɪt/", "dih-BAYT", "noun / verb", "a formal discussion in which people present opposing arguments", "cuộc tranh biện; tranh luận có cấu trúc"],
-      ["motion", "/ˈmoʊʃən/", "MOH-shuhn", "noun", "the statement or topic that teams agree or disagree with", "kiến nghị / chủ đề chính thức được tranh biện"],
-      ["proposition", "/ˌprɑːpəˈzɪʃən/", "prop-uh-ZIH-shuhn", "noun", "the team that supports the motion", "đội ủng hộ motion; đội Proposition"],
-      ["opposition", "/ˌɑːpəˈzɪʃən/", "ah-puh-ZIH-shuhn", "noun", "the team that argues against the motion", "đội phản đối motion; đội Opposition"],
-      ["public speaking", "/ˈpʌblɪk ˈspiːkɪŋ/", "PUB-lik SPEE-king", "phrase", "speaking clearly to an audience", "kỹ năng nói trước công chúng"],
-      ["audience", "/ˈɔːdiəns/", "AW-dee-uhns", "noun", "the people who listen to or watch a speaker", "khán giả; người nghe bài nói"],
-      ["influence", "/ˈɪnfluəns/", "IN-floo-uhns", "noun / verb", "the power to affect what someone thinks or does", "sự ảnh hưởng; tác động đến suy nghĩ hoặc hành động"],
-      ["teamwork", "/ˈtiːmwɜːrk/", "TEEM-wurk", "noun", "people working together toward the same goal", "sự phối hợp hiệu quả trong một đội"],
-      ["critical thinking", "/ˈkrɪtɪkəl ˈθɪŋkɪŋ/", "KRIT-ih-kuhl THING-king", "phrase", "carefully examining information before making a judgment", "tư duy phản biện: phân tích và đánh giá có lý do"],
-      ["skeptical", "/ˈskeptɪkəl/", "SKEP-tih-kuhl", "adjective", "not easily convinced without good evidence", "hoài nghi có cơ sở; chưa vội tin khi thiếu bằng chứng"],
-      ["unbiased", "/ʌnˈbaɪəst/", "un-BY-uhst", "adjective", "fair and not favoring one side", "không thiên vị; đánh giá công bằng"],
-      ["evidence", "/ˈevɪdəns/", "EV-ih-duhns", "noun", "facts or information that support an idea", "bằng chứng hỗ trợ cho một nhận định"],
-      ["judgment", "/ˈdʒʌdʒmənt/", "JUHJ-muhnt", "noun", "an opinion or decision formed after careful thought", "sự phán đoán sau khi cân nhắc thông tin"],
-      ["argument", "/ˈɑːrɡjəmənt/", "AR-gyuh-muhnt", "noun", "a claim supported by reasons and evidence", "luận điểm gồm nhận định, lý lẽ và bằng chứng"],
-      ["rebuttal", "/rɪˈbʌtəl/", "rih-BUT-uhl", "noun", "a response that explains why another argument is weak or incorrect", "phần phản biện trực tiếp lập luận của đối phương"],
-      ["extension", "/ɪkˈstenʃən/", "ik-STEN-shuhn", "noun", "a new development or improvement of the team’s argument", "phần phát triển hoặc cải thiện lập luận của đội"],
-      ["summarize", "/ˈsʌməraɪz/", "SUM-uh-ryz", "verb", "to give the main points in a shorter form", "tóm tắt các ý quan trọng"],
-      ["compare", "/kəmˈper/", "kuhm-PAIR", "verb", "to examine how two things are similar or different", "so sánh hai phía để chỉ ra điểm giống và khác nhau"],
-      ["strategy", "/ˈstrætədʒi/", "STRAT-uh-jee", "noun", "a plan for choosing what to say and when to say it", "chiến lược lựa chọn nội dung, thời điểm và ưu tiên"],
-      ["judging criteria", "/ˈdʒʌdʒɪŋ kraɪˈtɪriə/", "JUHJ-ing kry-TEER-ee-uh", "phrase", "the standards used to evaluate a debate", "các tiêu chí chấm: content, style và strategy"],
-      ["point of information", "/pɔɪnt əv ˌɪnfərˈmeɪʃən/", "POYNT uhv in-fer-MAY-shuhn", "phrase", "a short question or challenge offered during a main speech", "POI: câu hỏi hoặc phản hồi ngắn trong bài nói chính"],
-      ["reply speech", "/rɪˈplaɪ spiːtʃ/", "rih-PLY SPEECH", "phrase", "a closing speech that compares and summarizes the debate", "bài nói kết thúc để so sánh và tổng kết trận tranh biện"]
-    ];
-
-    const quizQuestions = [
-      {
-        type: "choice", kind: "Concept", prompt: "Which judging criterion means WHAT you say?",
-        options: ["Content", "Style", "Strategy", "Teamwork"], answer: 0
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "Which judging criterion means HOW you say it?",
-        options: ["Evidence", "Style", "Motion", "Content"], answer: 1
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "How many main speakers does each WSDC team have?",
-        options: ["2", "3", "4", "5"], answer: 1
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "How long is one main speech?",
-        options: ["4 minutes", "6 minutes", "8 minutes", "10 minutes"], answer: 2
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "Who cannot deliver the reply speech?",
-        options: ["First speaker", "Second speaker", "Third speaker", "Any speaker"], answer: 2
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "What is a short question offered during a main speech?",
-        options: ["POI", "Motion", "Rebuttal", "Summary"], answer: 0
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "What does critical thinking help you do?",
-        options: ["Check facts before judging", "Always win", "Trust everything", "Speak the fastest"], answer: 0
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "What does teamwork mean?",
-        options: ["Working together toward one goal", "Working alone", "Interrupting others", "Memorizing every word"], answer: 0
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "Which team supports the motion?",
-        options: ["Proposition", "Opposition", "Judges", "Audience"], answer: 0
-      },
-      {
-        type: "choice", kind: "Concept", prompt: "What is the main job of a reply speech?",
-        options: ["Compare and summarize the debate", "Add a brand-new argument", "Give POIs", "Define every word"], answer: 0
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "debate",
-        emoji: "🎤", imageLabel: "Microphone for debate"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "audience",
-        emoji: "👥", imageLabel: "People listening"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "evidence",
-        emoji: "🔎", imageLabel: "Magnifying glass finding evidence"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "motion",
-        emoji: "📜", imageLabel: "Debate motion paper"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "teamwork",
-        emoji: "🤝", imageLabel: "Hands showing teamwork"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "rebuttal",
-        emoji: "↩️", imageLabel: "Reply arrow for rebuttal"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "opposition",
-        emoji: "⚖️", imageLabel: "Two sides showing opposition"
-      },
-      {
-        type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "strategy",
-        emoji: "♟️", imageLabel: "Chess piece showing strategy"
-      }
-    ];
-
-    const slideImage = document.querySelector("#slideImage");
-    const slideLoader = document.querySelector("#slideLoader");
-    const slideCounter = document.querySelector("#slideCounter");
-    const slideTitle = document.querySelector("#slideTitle");
-    const slideProgress = document.querySelector("#slideProgress");
-    const slideNav = document.querySelector("#slideNav");
-    let currentSlide = 0;
-
-    slides.forEach((slide, index) => {
-      const button = document.createElement("button");
-      button.className = "slide-jump";
-      button.type = "button";
-      button.innerHTML = `<span>${String(index + 1).padStart(2, "0")}</span><span>${slide.title}</span>`;
-      button.addEventListener("click", () => showSlide(index));
-      slideNav.appendChild(button);
-    });
-
-    function showSlide(index) {
-      currentSlide = (index + slides.length) % slides.length;
-      const slide = slides[currentSlide];
-      slideLoader.hidden = false;
-      slideImage.src = slide.src;
-      slideImage.alt = `Slide ${currentSlide + 1}: ${slide.title}`;
-      slideCounter.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
-      slideTitle.textContent = slide.title;
-      slideProgress.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
-      [...slideNav.children].forEach((item, itemIndex) => {
-        item.classList.toggle("active", itemIndex === currentSlide);
-        item.setAttribute("aria-current", itemIndex === currentSlide ? "true" : "false");
-      });
-      slideNav.children[currentSlide]?.scrollIntoView({ block: "nearest", inline: "nearest" });
-    }
-
-    slideImage.addEventListener("load", () => { slideLoader.hidden = true; });
-    document.querySelector("#prevSlide").addEventListener("click", () => showSlide(currentSlide - 1));
-    document.querySelector("#nextSlide").addEventListener("click", () => showSlide(currentSlide + 1));
-    document.querySelector("#fullscreenSlide").addEventListener("click", () => {
-      document.querySelector(".slide-frame").requestFullscreen?.();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") showSlide(currentSlide - 1);
-      if (event.key === "ArrowRight") showSlide(currentSlide + 1);
-    });
-    showSlide(0);
-
-    const vocabBody = document.querySelector("#vocabBody");
-    const emptyVocab = document.querySelector("#emptyVocab");
-    const searchInput = document.querySelector("#vocabSearch");
-    const mwApiStatus = document.querySelector("#mwApiStatus");
-    const audioCache = new Map();
-    let activeFilter = "all";
-    const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
-    const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
-    const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
-
-    mwApiStatus.textContent = hasMwApiKey
-      ? "✓ API key loaded from config.js. Merriam-Webster audio is ready."
-      : "⚙ Add your Intermediate Dictionary key to MW_API_KEY in config.js to enable audio.";
-
-    function findAudioFile(value) {
-      if (!value || typeof value !== "object") return "";
-      if (typeof value.audio === "string" && value.audio) return value.audio;
-      for (const child of Object.values(value)) {
-        const found = findAudioFile(child);
-        if (found) return found;
-      }
-      return "";
-    }
-
-    function audioSubdirectory(filename) {
-      if (filename.startsWith("bix")) return "bix";
-      if (filename.startsWith("gg")) return "gg";
-      if (/^[^a-zA-Z]/.test(filename)) return "number";
-      return filename[0].toLowerCase();
-    }
-
-    async function getMerriamWebsterAudioUrl(word) {
-      if (audioCache.has(word)) return audioCache.get(word);
-      const endpoint =
-        `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
-      const response = await fetch(endpoint);
-      if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
-      const entries = await response.json();
-      const filename = findAudioFile(entries);
-      if (!filename) throw new Error("No Merriam-Webster recording was found for this word.");
-      const folder = audioSubdirectory(filename);
-      const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
-      audioCache.set(word, url);
-      return url;
-    }
-
-    async function speakWord(word) {
-      if (!hasMwApiKey) {
-        mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
-        document.querySelector("#vocabulary").scrollIntoView({ behavior: "smooth", block: "start" });
-        throw new Error("API key missing");
-      }
-      mwApiStatus.textContent = `Loading “${word}” from Merriam-Webster…`;
-      try {
-        const url = await getMerriamWebsterAudioUrl(word);
-        const audio = new Audio(url);
-        await audio.play();
-        mwApiStatus.textContent = `▶ Playing “${word}” with Merriam-Webster audio.`;
-      } catch (error) {
-        if (error.message === "API key missing") throw error;
-        mwApiStatus.textContent =
-          `Could not play “${word}”. Check that the key is for the Intermediate Dictionary (sd3) and try again.`;
-        throw error;
-      }
-    }
-
-    function renderVocabulary() {
-      const query = searchInput.value.trim().toLowerCase();
-      const matches = vocabulary.filter(([word, ipa, soundOut, type, englishMeaning, vietnameseMeaning]) => {
-        const typeMatch = activeFilter === "all" || type.includes(activeFilter);
-        const textMatch = `${word} ${ipa} ${soundOut} ${type} ${englishMeaning} ${vietnameseMeaning}`.toLowerCase().includes(query);
-        return typeMatch && textMatch;
-      });
-      vocabBody.innerHTML = "";
-      matches.forEach(([word, ipa, soundOut, type, englishMeaning, vietnameseMeaning]) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td class="word">${word}</td>
-          <td class="ipa">${ipa}</td>
-          <td class="sound-it-out">${soundOut}</td>
-          <td><span class="word-type">${type}</span></td>
-          <td class="meaning-cell">
-            <div class="meaning-en">${englishMeaning}</div>
-            <div class="meaning-vi">${vietnameseMeaning}</div>
-          </td>
-          <td><button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button></td>`;
-        row.querySelector("button").addEventListener("click", () => {
-          speakWord(word).catch(() => {});
-        });
-        vocabBody.appendChild(row);
-      });
-      emptyVocab.hidden = matches.length !== 0;
-    }
-
-    searchInput.addEventListener("input", renderVocabulary);
-    document.querySelectorAll(".filter-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        activeFilter = button.dataset.filter;
-        document.querySelectorAll(".filter-btn").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-        renderVocabulary();
-      });
-    });
-    renderVocabulary();
-
-    const quizForm = document.querySelector("#quizForm");
-    const conceptQuizList = document.querySelector("#conceptQuizList");
-    const vocabularyQuizList = document.querySelector("#vocabularyQuizList");
-    const quizProgress = document.querySelector("#quizProgress");
-    const quizMessage = document.querySelector("#quizMessage");
-    const quizResult = document.querySelector("#quizResult");
-    const quizScore = document.querySelector("#quizScore");
-    const quizHeadline = document.querySelector("#quizHeadline");
-    const quizResultText = document.querySelector("#quizResultText");
-
-    quizQuestions.forEach((question, index) => {
-      const card = document.createElement("article");
-      card.className = "quiz-card";
-      card.dataset.question = String(index);
-
-      const answerArea = question.type === "choice"
-        ? `<div class="quiz-options" role="radiogroup" aria-labelledby="prompt-${index}">
-            ${question.options.map((option, optionIndex) => `
-              <label class="quiz-option">
-                <input type="radio" name="quiz-${index}" value="${optionIndex}">
-                <span>${String.fromCharCode(65 + optionIndex)}. ${option}</span>
-              </label>`).join("")}
-           </div>`
-        : `<div class="spelling-card">
-            <div class="quiz-picture" role="img" aria-label="${question.imageLabel}">${question.emoji}</div>
-            <div>
-              <div class="word-starter" aria-label="Starts with ${question.word[0]} and has ${question.word.length} letters">
-                <span class="first-letter">${question.word[0].toUpperCase()}</span>
-                <span class="word-blanks">${"_ ".repeat(question.word.length - 1).trim()}</span>
-              </div>
-              <label for="quiz-${index}">Type the remaining letters</label>
-              <input class="quiz-answer letter-answer" id="quiz-${index}" name="quiz-${index}"
-                type="text" maxlength="${question.word.length - 1}" inputmode="text" autocomplete="off" spellcheck="false"
-                placeholder="Complete the word"
-                aria-describedby="status-${index}">
-              <label class="audio-hint">
-                <input class="audio-hint-toggle" type="checkbox" data-word="${question.word}">
-                <span>🔊 Tick to hear an audio hint</span>
-              </label>
-            </div>
-           </div>`;
-
-      card.innerHTML = `
-        <div class="quiz-topline">
-          <span class="quiz-number">${index + 1}</span>
-          <span class="quiz-kind">${question.kind}</span>
-        </div>
-        <div id="prompt-${index}" class="quiz-prompt">${question.prompt}</div>
-        ${answerArea}
-        <p class="question-status" id="status-${index}" aria-live="polite"></p>`;
-      (question.type === "choice" ? conceptQuizList : vocabularyQuizList).appendChild(card);
-    });
-
-    let quizHasBeenGraded = false;
-
-    function isQuestionAnswered(question, index) {
-      if (question.type === "choice") {
-        return Boolean(document.querySelector(`input[name="quiz-${index}"]:checked`));
-      }
-      return Boolean(document.querySelector(`#quiz-${index}`).value.trim());
-    }
-
-    function clearQuizFeedback() {
-      if (!quizHasBeenGraded) return;
-      document.querySelectorAll(".quiz-card").forEach(card => {
-        card.classList.remove("correct", "incorrect");
-        card.querySelector(".question-status").textContent = "";
-      });
-      quizResult.hidden = true;
-      quizHasBeenGraded = false;
-    }
-
-    function updateQuizProgress() {
-      const answered = quizQuestions.filter(isQuestionAnswered).length;
-      quizProgress.textContent = `${answered} of ${quizQuestions.length} answered`;
-      quizMessage.textContent = "";
-    }
-
-    quizForm.addEventListener("input", event => {
-      if (event.target.matches(".letter-answer")) {
-        event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "").toUpperCase();
-      }
-      clearQuizFeedback();
-      updateQuizProgress();
-    });
-
-    quizForm.addEventListener("change", event => {
-      if (event.target.matches(".audio-hint-toggle")) {
-        if (event.target.checked) {
-          speakWord(event.target.dataset.word).catch(() => {
-            event.target.checked = false;
-          });
-        }
-        return;
-      }
-      clearQuizFeedback();
-      updateQuizProgress();
-    });
-
-    quizForm.addEventListener("submit", event => {
-      event.preventDefault();
-      const firstUnansweredIndex = quizQuestions.findIndex(
-        (question, index) => !isQuestionAnswered(question, index)
-      );
-
-      if (firstUnansweredIndex !== -1) {
-        quizMessage.textContent = `Please answer all ${quizQuestions.length} questions before submitting.`;
-        const question = quizQuestions[firstUnansweredIndex];
-        const target = question.type === "choice"
-          ? document.querySelector(`input[name="quiz-${firstUnansweredIndex}"]`)
-          : document.querySelector(`#quiz-${firstUnansweredIndex}`);
-        target.focus();
-        quizResult.hidden = true;
-        return;
-      }
-
-      let score = 0;
-      quizQuestions.forEach((question, index) => {
-        const card = document.querySelector(`[data-question="${index}"]`);
-        const status = document.querySelector(`#status-${index}`);
-        const isCorrect = question.type === "choice"
-          ? Number(document.querySelector(`input[name="quiz-${index}"]:checked`).value) === question.answer
-          : `${question.word[0]}${document.querySelector(`#quiz-${index}`).value.trim().toLowerCase()}` === question.word;
-
-        card.classList.toggle("correct", isCorrect);
-        card.classList.toggle("incorrect", !isCorrect);
-        status.textContent = isCorrect ? "✓ Correct" : "↻ Review this one";
-        status.style.color = isCorrect ? "#18885d" : "#d94f68";
-        if (isCorrect) score += 1;
-      });
-
-      const percentage = Math.round((score / quizQuestions.length) * 100);
-      quizScore.textContent = `${score} / ${quizQuestions.length}`;
-      quizHeadline.textContent =
-        percentage === 100 ? "Outstanding work! 🌟" :
-        percentage >= 75 ? "Great job! 🎉" :
-        percentage >= 50 ? "Good effort—keep practising! 💪" :
-        "Let’s review and try again! 📚";
-      quizResultText.textContent =
-        `You scored ${percentage}%. Answers were marked only after the final submission. Correct answers are not revealed.`;
-      quizResult.hidden = false;
-      quizMessage.textContent = "";
-      quizHasBeenGraded = true;
-      quizResult.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-
-    document.querySelector("#resetQuiz").addEventListener("click", () => {
-      quizForm.reset();
-      document.querySelectorAll(".quiz-card").forEach(card => {
-        card.classList.remove("correct", "incorrect");
-        card.querySelector(".question-status").textContent = "";
-      });
-      quizResult.hidden = true;
-      quizMessage.textContent = "";
-      quizHasBeenGraded = false;
-      updateQuizProgress();
-      document.querySelector('input[name="quiz-0"]').focus();
-    });
-  </script>
 </body>
 </html>
