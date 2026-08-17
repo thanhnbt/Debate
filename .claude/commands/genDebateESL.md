@@ -245,7 +245,106 @@ quizForm.addEventListener("submit", event => {
    - `.summary-grid` + `.takeaway` — grid cards tóm tắt
    - `.takeaway-icon` — emoji hoặc text icon trong card
 
-### Phase 7: Update Landing Page
+### Phase 6b: Generate Homework (BẮT BUỘC nếu source có BTVN)
+
+**Rules KHÔNG ĐƯỢC VI PHẠM:**
+
+1. **Highlight từ khóa** trong motion để học sinh tự nhận diện loại kiến nghị:
+   ```html
+   <mark style="background:rgba(255,112,133,.25); padding:2px 6px; border-radius:6px; font-weight:900;">as parents</mark>
+   ```
+
+2. **Detective Step** — Hướng dẫn trẻ tự tư duy xác định loại motion:
+   - Hiển thị motion với keyword được highlight
+   - Đặt câu hỏi "What type is this motion?" để trẻ tự tìm manh mối
+   - Giải thích tại sao (ví dụ: "as X" → Actor Motion)
+
+3. **Case Building Steps** — Liệt kê các bước, mỗi bước có:
+   - Instruction chung chung (luôn hiển thị) — KHÔNG gợi ý đáp án cụ thể
+   - Nút `🔑 Gợi ý` có password gate (mật khẩu: `000000`, dành cho phụ huynh)
+   - Hint ẩn chỉ hiện khi nhập đúng mật khẩu — chỉ gợi ý chung, KHÔNG cho đáp án
+
+4. **Sub-steps phải đầy đủ** theo source data:
+   - Context: `1a. Identify problems`, `1b. Consequences`
+   - Definition: `2a. Define keywords`, `2b. Characterisation`
+   - Policy/Model (THW): `4a. What would you do?`, `4b. Punishment (Optional)`
+   - Declaration of Interests (Actor): `Point out and explain the main interests of X`
+
+5. **Password gate JS pattern:**
+   ```javascript
+   document.querySelectorAll(".hint-btn").forEach(btn => {
+     btn.addEventListener("click", () => {
+       const hintId = btn.dataset.hint;
+       const hintDiv = document.getElementById(hintId);
+       const errorP = btn.parentElement.querySelector(".hint-error");
+       if (!hintDiv || btn.classList.contains("unlocked")) return;
+       const pass = prompt("Nhập mật khẩu (dành cho phụ huynh):");
+       if (pass === null) return;
+       if (pass === "000000") {
+         hintDiv.hidden = false;
+         btn.textContent = "✓ Đã mở";
+         btn.classList.add("unlocked");
+         errorP.hidden = true;
+       } else {
+         errorP.textContent = "Sai mật khẩu. Hãy nhờ ba mẹ nhập giúp nhé!";
+         errorP.hidden = false;
+       }
+     });
+   });
+   ```
+
+6. **CSS cho hint system:**
+   ```css
+   .hint-btn {
+     margin-top: 12px; padding: 8px 18px;
+     border: 2px solid var(--coral); border-radius: 12px;
+     background: white; color: var(--coral-dark);
+     font-weight: 800; font-size: .82rem;
+   }
+   .hint-btn.unlocked { border-color: var(--teal); color: var(--teal-dark); pointer-events: none; }
+   .hint-content { margin-top: 12px; }
+   .hint-error { color: var(--coral); font-size: .8rem; font-weight: 700; margin-top: 6px; }
+   ```
+
+### Phase 7: QA — Rà soát nội dung HTML vs Source Data (BẮT BUỘC)
+
+**Mục đích:** Đảm bảo KHÔNG thiếu sót, KHÔNG sai lệch nội dung so với tài liệu đầu vào.
+
+**Quy trình:**
+
+1. **Re-extract source data** — Đọc lại toàn bộ `datainput/buoi N/data.docx` (hoặc `.pptx`)
+2. **So sánh từng mục** — Đối chiếu line-by-line giữa source và HTML đã generate:
+
+   | Hạng mục | Kiểm tra |
+   |----------|----------|
+   | **Vocabulary** | Mọi từ trong source đều có trong `const vocabulary`? Nghĩa VI khớp? |
+   | **Nội dung bài học** | Mọi concept/rule/step trong source đều xuất hiện trong HTML? |
+   | **Sub-steps** | Các bước con (1a/1b, 2a/2b, 4a/4b…) đầy đủ cho TẤT CẢ mục, không bỏ sót loại nào? |
+   | **Ví dụ** | Mọi example/motion mẫu trong source đều được liệt kê? |
+   | **Homework/BTVN** | Đề bài khớp chính xác? Hướng dẫn đúng loại motion? |
+   | **Ghi chú đặc biệt** | Các note/warning trong source (ví dụ: special cases cho actor) đều có? |
+
+3. **Liệt kê kết quả QA** — Output checklist ngắn gọn cho user review:
+   ```
+   QA RESULT:
+   ✅ Vocabulary: 10/10 từ từ source + 8 từ bổ sung liên quan
+   ✅ Motion types: 3/3 loại đầy đủ (THW, THBT/THS/THO, TH as X)
+   ✅ Case building sub-steps: đầy đủ cho cả 3 loại
+   ✅ Examples: 5/5 motion mẫu từ source
+   ✅ Homework: đề bài khớp, đúng loại Actor Motion
+   ✅ Special notes: community care cho parents/leaders
+   ⚠️ [Nếu có thiếu sót — ghi rõ cái gì thiếu và fix ngay]
+   ```
+
+4. **Fix ngay** nếu phát hiện thiếu — KHÔNG báo xong rồi để đó
+
+**Rules KHÔNG ĐƯỢC VI PHẠM:**
+- PHẢI chạy QA TRƯỚC khi báo hoàn thành cho user
+- Nếu source có mà HTML không có → đó là bug, phải fix
+- Nếu HTML có mà source không có → OK nếu là bổ sung hợp lý (vocab mở rộng, metaphor…), nhưng KHÔNG được bịa concept/rule mới
+- QA phải cover TẤT CẢ motion types / sections, không chỉ kiểm tra 1 loại rồi assume các loại khác đúng
+
+### Phase 8: Update Landing Page
 
 Trong `index.html`:
 1. Tìm session card number N (đang `class="session-card coming-soon"`)
@@ -310,5 +409,8 @@ Trong `index.html`:
 - [ ] Landing page `index.html` updated (card activated)
 - [ ] Mobile responsive tested (768px breakpoint)
 - [ ] Slides (nếu có pptx): images extracted to `assets/slides/buoiN/`
+- [ ] Homework (nếu có): keyword highlight, detective step, password-gated hints (000000)
+- [ ] Sub-steps đầy đủ: 1a/1b (Context), 2a/2b (Definition), 4a/4b (Policy nếu THW)
+- [ ] Homework hints chỉ gợi ý chung, KHÔNG cho đáp án cụ thể — trẻ phải tự tư duy
 - [ ] Không có từ/câu nào vượt quá trình độ A2/B1
 - [ ] Mọi thuật ngữ debate đều có Vietnamese translation
