@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Day 5: Debate Practice — practice case building with a real THBT motion and learn to strengthen arguments with descriptive reasoning.">
+  <meta name="theme-color" content="#ff9b62">
+  <title>Day 5 · Debate Practice</title>
+  <style>
+    :root {
+      --ink: #26335d;
+      --ink-2: #40517f;
+      --paper: #fffaf0;
+      --card: #ffffff;
+      --muted: #65739a;
+      --line: #dfe8f6;
+      --teal: #4ed6bd;
+      --teal-dark: #138f86;
+      --orange: #ff9b62;
+      --orange-dark: #c06a2f;
+      --yellow: #ffd84d;
+      --sky: #55c8ff;
+      --coral: #ff7085;
+      --coral-dark: #c4405a;
+      --purple: #8c7cff;
+      --purple-dark: #5a4fcf;
+      --mint: #a9efcb;
+      --shadow: 0 18px 48px rgba(78, 103, 159, .16);
+      --radius: 28px;
+      --accent: var(--orange);
+      --accent-dark: var(--orange-dark);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 6%, rgba(255,155,98,.22), transparent 26rem),
+        radial-gradient(circle at 90% 22%, rgba(255,216,77,.18), transparent 24rem),
+        radial-gradient(circle at 50% 68%, rgba(169,239,203,.15), transparent 28rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(223,229,236,.85);
+      background: rgba(255,250,240,.92);
+      backdrop-filter: blur(18px);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, var(--orange), #e88a4a);
+      box-shadow: 0 8px 24px rgba(255,155,98,.3);
+      font-weight: 950;
+      font-size: .8rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav a, .nav button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav a:hover, .nav button:hover { background: rgba(255,155,98,.12); color: var(--ink); }
+    .nav button.active { background: var(--orange); color: white; }
+    .nav .home-link { color: var(--orange-dark); font-weight: 800; }
+
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: auto; }
+
+    .page { padding: 50px 0 80px; }
+    .page[hidden] { display: none; }
+
+    .page-header { margin-bottom: 36px; }
+    .page-header .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(255,155,98,.12);
+      color: var(--orange-dark);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .page-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 920;
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0 0 10px;
+    }
+    .page-header p { max-width: 600px; margin: 0; color: var(--muted); font-size: .95rem; }
+    .vi { color: var(--muted); font-style: italic; }
+    .vi-hint { display: block; font-size: .85rem; color: var(--muted); font-style: italic; }
+
+    .section-label {
+      display: block;
+      margin-bottom: 16px;
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--orange-dark);
+    }
+
+    .summary-section { margin-bottom: 36px; }
+
+    .info-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .info-card h3 { font-size: 1.2rem; font-weight: 850; margin: 0 0 14px; }
+    .info-card p, .info-card li { font-size: .93rem; color: var(--ink-2); line-height: 1.7; }
+    .info-card ul { padding-left: 20px; margin: 10px 0; }
+    .info-card li { margin-bottom: 6px; }
+
+    .highlight-box {
+      padding: 18px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,155,98,.1), rgba(85,200,255,.1));
+      border-left: 4px solid var(--orange);
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-weight: 600; color: var(--ink); }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .review-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(11,19,36,.05);
+    }
+    .review-card h4 { margin: 0 0 8px; font-size: .95rem; font-weight: 800; }
+    .review-card p { margin: 0 0 6px; font-size: .88rem; color: var(--ink-2); }
+
+    .motion-box {
+      padding: 20px 28px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,155,98,.1), rgba(255,216,77,.1));
+      border: 2px solid var(--orange);
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .two-teams {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .team-card {
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid;
+    }
+    .team-card.prop { border-color: var(--sky); background: linear-gradient(145deg, rgba(85,200,255,.08), white); }
+    .team-card.opp { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.08), white); }
+    .team-card h4 { font-size: 1.05rem; font-weight: 850; margin: 0 0 4px; }
+    .team-card .en { font-size: .82rem; color: var(--muted); margin: 0 0 10px; }
+    .team-card ul { padding-left: 16px; margin: 0; }
+    .team-card li { font-size: .88rem; margin-bottom: 4px; color: var(--ink-2); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .step {
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .step-num {
+      width: 34px; height: 34px;
+      margin: 0 auto 8px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      font-weight: 900;
+      font-size: .85rem;
+    }
+    .step h4 { margin: 0 0 5px; font-size: .9rem; font-weight: 800; }
+    .step p { margin: 0; font-size: .8rem; color: var(--muted); }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .takeaway {
+      padding: 20px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 18px rgba(11,19,36,.05);
+    }
+    .takeaway-icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+    .takeaway h4 { margin: 0 0 6px; font-size: .92rem; font-weight: 800; }
+    .takeaway p { margin: 0; font-size: .84rem; color: var(--ink-2); }
+
+    .skill-card {
+      padding: 28px;
+      border-radius: 22px;
+      border: 2px solid;
+      background: white;
+      margin-bottom: 18px;
+    }
+    .skill-card.reasoning { border-color: var(--purple); background: linear-gradient(145deg, rgba(140,124,255,.06), white); }
+    .skill-card.visualize { border-color: var(--sky); background: linear-gradient(145deg, rgba(85,200,255,.06), white); }
+    .skill-card.negative { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.06), white); }
+    .skill-card.complete { border-color: var(--teal); background: linear-gradient(145deg, rgba(78,214,189,.06), white); }
+    .skill-card h4 { font-size: 1.05rem; font-weight: 850; margin: 0 0 6px; }
+    .skill-card .label-en { font-size: .82rem; color: var(--muted); margin: 0 0 10px; }
+    .skill-card p { font-size: .9rem; color: var(--ink-2); margin: 0 0 8px; line-height: 1.6; }
+    .skill-card ul { padding-left: 16px; margin: 8px 0; }
+    .skill-card li { font-size: .88rem; margin-bottom: 4px; color: var(--ink-2); }
+    .skill-card .example-box {
+      margin-top: 12px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.03);
+      font-size: .88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .skill-card .example-box strong { color: var(--orange-dark); }
+
+    .chain-arrow {
+      display: block;
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--orange);
+      margin: 4px 0;
+    }
+
+    .homework-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #fff8e6, #fff3bf);
+      border: 2px solid var(--yellow);
+      box-shadow: 0 12px 35px rgba(255,184,81,.15);
+    }
+    .homework-card h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 850; }
+    .homework-card p { font-size: .93rem; color: var(--ink-2); margin: 0 0 10px; }
+    .homework-card ul { padding-left: 20px; }
+    .homework-card li { margin-bottom: 6px; font-size: .9rem; }
+    .homework-card .motion-text {
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: rgba(255,155,98,.1);
+      font-weight: 750;
+      font-size: 1rem;
+      color: var(--orange-dark);
+      margin: 14px 0;
+      text-align: center;
+    }
+
+    .hw-side-label {
+      display: inline-block;
+      margin: 24px 0 12px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hw-side-label.prop { background: rgba(85,200,255,.15); color: #1a7fae; }
+    .hw-side-label.opp { background: rgba(255,112,133,.15); color: var(--coral-dark); }
+
+    .vocab-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .vocab-search {
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      font-size: .9rem;
+      width: 240px;
+      max-width: 100%;
+      transition: border-color .2s;
+    }
+    .vocab-search:focus { outline: none; border-color: var(--orange); }
+    .vocab-wrap { overflow-x: auto; }
+    .vocab-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .vocab-table th {
+      padding: 12px 14px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .vocab-table td {
+      padding: 11px 14px;
+      font-size: .86rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:nth-child(even) td { background: rgba(223,232,246,.15); }
+    .vocab-table .word { font-weight: 750; color: var(--ink); }
+    .vocab-table .ipa { font-family: monospace; font-size: .78rem; color: var(--muted); }
+    .vocab-table .sound-it-out { font-weight: 700; font-size: .8rem; color: var(--orange-dark); letter-spacing: .02em; }
+    .vocab-table .meaning-en { font-size: .84rem; }
+    .vocab-table .meaning-vi { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .sound-btn {
+      width: 32px; height: 32px;
+      border: none; border-radius: 50%;
+      background: var(--orange); color: white;
+      display: inline-grid; place-items: center;
+      font-size: .8rem;
+      transition: transform .15s;
+    }
+    .sound-btn:hover { transform: scale(1.15); }
+    .api-key-status { margin-top: 12px; font-size: .82rem; color: var(--muted); }
+
+    .quiz-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quiz-rule { margin: 0; font-size: .9rem; color: var(--ink-2); }
+    .quiz-progress { font-size: .82rem; font-weight: 800; color: var(--orange-dark); white-space: nowrap; }
+
+    .quiz-group { margin-bottom: 36px; }
+    .quiz-group-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,155,98,.08), rgba(255,216,77,.08));
+    }
+    .quiz-group-icon { font-size: 1.8rem; }
+    .quiz-group-head p { margin: 0; font-size: .75rem; font-weight: 800; color: var(--orange-dark); text-transform: uppercase; letter-spacing: .1em; }
+    .quiz-group-head h3 { margin: 2px 0 4px; font-size: 1.1rem; font-weight: 850; }
+    .quiz-group-head span { font-size: .84rem; color: var(--muted); }
+
+    .quiz-list { display: grid; gap: 16px; }
+    .quiz-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(11,19,36,.05);
+      transition: border-color .2s, background .2s;
+    }
+    .quiz-card.correct { border-color: var(--teal); background: rgba(78,214,189,.06); }
+    .quiz-card.incorrect { border-color: var(--coral); background: rgba(255,112,133,.06); }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .quiz-number {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .quiz-kind {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--orange-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quiz-prompt { font-weight: 700; font-size: .92rem; margin-bottom: 14px; }
+
+    .quiz-options { display: grid; gap: 8px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .quiz-option:hover { background: rgba(255,155,98,.06); border-color: var(--orange); }
+    .quiz-option input { margin: 0; }
+
+    .spelling-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quiz-picture {
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,216,77,.2), rgba(255,155,98,.15));
+      font-size: 1.8rem;
+    }
+    .word-starter {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .first-letter {
+      font-size: 1.4rem;
+      font-weight: 950;
+      color: var(--orange-dark);
+    }
+    .word-blanks {
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+    }
+    .letter-answer {
+      display: block;
+      width: 180px;
+      padding: 8px 14px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: border-color .2s;
+    }
+    .letter-answer:focus { outline: none; border-color: var(--orange); }
+    .audio-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: .8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .audio-hint input { margin: 0; }
+
+    .question-status { margin: 8px 0 0; font-size: .82rem; font-weight: 700; }
+
+    .quiz-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .submit-quiz {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--orange), #e88a4a);
+      color: white;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 8px 24px rgba(255,155,98,.3);
+      transition: transform .15s;
+    }
+    .submit-quiz:hover { transform: translateY(-2px); }
+    .reset-quiz {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 14px;
+      background: var(--line);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .quiz-message { margin: 0; font-size: .85rem; color: var(--coral); font-weight: 700; }
+
+    .quiz-result {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,155,98,.1), rgba(255,216,77,.1));
+      text-align: center;
+    }
+    .quiz-score { font-size: 2.2rem; font-weight: 950; color: var(--orange-dark); }
+    .quiz-result h3 { margin: 8px 0 6px; font-size: 1.1rem; }
+    .quiz-result p { margin: 0; font-size: .88rem; color: var(--muted); }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+    .footer a { color: var(--orange-dark); font-weight: 700; }
+
+    .hint-btn {
+      margin-top: 12px;
+      padding: 8px 18px;
+      border: 2px solid var(--coral);
+      border-radius: 12px;
+      background: white;
+      color: var(--coral-dark);
+      font-weight: 800;
+      font-size: .82rem;
+      transition: background .15s, border-color .15s;
+    }
+    .hint-btn:hover { background: rgba(255,112,133,.08); }
+    .hint-btn.unlocked {
+      border-color: var(--teal);
+      color: var(--teal-dark);
+      pointer-events: none;
+    }
+    .hint-content { margin-top: 12px; }
+    .hint-content ul { padding-left: 20px; margin: 0; }
+    .hint-content li { font-size: .9rem; color: var(--ink-2); margin-bottom: 6px; }
+    .hint-error { color: var(--coral); font-size: .8rem; font-weight: 700; margin-top: 6px; }
+
+    @media (max-width: 768px) {
+      .two-teams { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .spelling-card { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 2px; }
+      .nav a, .nav button { padding: 6px 9px; font-size: .72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">D5</span>
+      <span>English Debate Club</span>
+    </a>
+    <nav class="nav" id="mainNav">
+      <a href="../index.html" class="home-link">&larr; Home</a>
+      <button class="active" data-page="review">Review</button>
+      <button data-page="practice">Practice</button>
+      <button data-page="skills">Level Up</button>
+      <button data-page="summary">Summary</button>
+      <button data-page="homework">Homework</button>
+      <button data-page="vocab">Vocabulary</button>
+      <button data-page="quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ════════ PAGE: REVIEW ════════ -->
+  <section class="page" id="review">
+    <div class="page-header">
+      <span class="eyebrow">Recap / Ôn bài</span>
+      <h2>What did we learn last time?</h2>
+      <p>A quick review of Day 4 before we practise today!</p>
+      <span class="vi-hint">Ôn nhanh Buổi 4 trước khi thực hành hôm nay!</span>
+    </div>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <h4>🗂️ Three Motion Types</h4>
+        <p>THW (Policy) &mdash; THBT/THS/THO (Value) &mdash; TH, as X (Actor). Each type needs a different recipe!</p>
+        <p class="vi">Ba loại kiến nghị, mỗi loại cần công thức xây lập luận khác nhau!</p>
+      </div>
+      <div class="review-card">
+        <h4>🏛️ THW = Policy + Model</h4>
+        <p>Policy motions add an EXTRA step: explain your plan and any punishments.</p>
+        <p class="vi">Kiến nghị chính sách thêm bước: giải thích kế hoạch và hình phạt.</p>
+      </div>
+      <div class="review-card">
+        <h4>🎭 Actor = Declaration of Interests</h4>
+        <p>Actor motions add a SPECIAL step: say what X cares about most, including their community!</p>
+        <p class="vi">Kiến nghị theo vai thêm bước đặc biệt: nói X quan tâm điều gì nhất, kể cả cộng đồng!</p>
+      </div>
+      <div class="review-card">
+        <h4>💎 Value = Basic Recipe</h4>
+        <p>Value motions (THBT, THS, THO) follow the basic 4 steps: Context &rarr; Definition &rarr; Goals &rarr; Arguments.</p>
+        <p class="vi">Kiến nghị giá trị theo 4 bước cơ bản: Bối cảnh &rarr; Định nghĩa &rarr; Mục tiêu &rarr; Lập luận.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: PRACTICE ════════ -->
+  <section class="page" id="practice" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Practice / Thực hành</span>
+      <h2>Today&rsquo;s Practice Motion</h2>
+      <p>Let&rsquo;s analyse a real motion and see how both sides built their cases!</p>
+      <span class="vi-hint">Hãy phân tích một kiến nghị thật và xem cả hai phe xây dựng lập luận!</span>
+    </div>
+
+    <!-- The motion -->
+    <div class="motion-box">
+      &ldquo;This house believes that <mark style="background:rgba(78,214,189,.25); padding:2px 6px; border-radius:6px; font-weight:900;">students</mark>, not <mark style="background:rgba(255,155,98,.25); padding:2px 6px; border-radius:6px; font-weight:900;">governments</mark>, should decide which <mark style="background:rgba(140,124,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">subjects</mark> are taught at school.&rdquo;
+    </div>
+
+    <!-- Detective step -->
+    <div class="info-card">
+      <h3>🔍 Detective Step: What type is this motion?</h3>
+      <span class="vi-hint">Bước thám tử: Đây là loại kiến nghị gì?</span>
+
+      <p>Look at the keywords carefully. Can you find the clue?</p>
+      <p class="vi">Nhìn kỹ các từ khóa. Em có thấy manh mối không?</p>
+
+      <div class="highlight-box">
+        <p>💎 The motion starts with <strong style="color:var(--orange-dark);">&ldquo;This house believes that&hellip;&rdquo;</strong> &rarr; <strong>THBT</strong> &rarr; This is a <strong>Value Motion</strong>!</p>
+        <p class="vi">Kiến nghị bắt đầu bằng &ldquo;This house believes that&hellip;&rdquo; &rarr; THBT &rarr; Đây là <strong>kiến nghị giá trị</strong>!</p>
+      </div>
+
+      <p>So we follow the <strong>Value Motion recipe</strong> &mdash; 4 steps, no extra policy or declaration needed.</p>
+      <p class="vi">Chúng ta theo <strong>công thức kiến nghị giá trị</strong> &mdash; 4 bước, không cần bước chính sách hay tuyên bố lợi ích.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Context</h4>
+          <p>1a. Identify problems<br>1b. Consequences</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Definition</h4>
+          <p>2a. Define keywords<br>2b. Characterisation</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Goals / Metrics</h4>
+          <p>What do you want to achieve?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Argumentation</h4>
+          <p>Your team&rsquo;s reasons</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Both sides -->
+    <div class="info-card">
+      <h3>⚔️ How Both Teams Approached It</h3>
+      <span class="vi-hint">Cả hai đội đã tiếp cận như thế nào</span>
+
+      <div class="two-teams">
+        <div class="team-card prop">
+          <h4>🟦 Proposition (Agree)</h4>
+          <p class="en">Phe Ủng hộ: YES, students should choose!</p>
+          <ul>
+            <li><strong>Context:</strong> Some subjects are too hard &rarr; students lose energy and focus</li>
+            <li><strong>Argument:</strong> Students choose subjects they like &rarr; happier &rarr; less stress &rarr; more confidence</li>
+            <li><strong>Suggestion:</strong> Students can try different subjects and adjust over time &rarr; discover interests and strengths</li>
+          </ul>
+        </div>
+        <div class="team-card opp">
+          <h4>🟥 Opposition (Disagree)</h4>
+          <p class="en">Phe Phản đối: NO, governments should decide!</p>
+          <ul>
+            <li><strong>Context:</strong> The job market is very competitive and demanding</li>
+            <li><strong>Argument:</strong> Jobs need many skills &rarr; learning many subjects = more qualified</li>
+            <li><strong>Suggestion:</strong> Students may not really choose independently &mdash; parents and family can influence their choices</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>⚠️ <strong>Both teams had good ideas!</strong> But both were missing important parts. Let&rsquo;s find out what they need to level up! &rarr; Go to the <strong>Level Up</strong> tab.</p>
+        <p class="vi">Cả hai đội đều có ý tưởng tốt! Nhưng cả hai đều thiếu phần quan trọng. Hãy tìm hiểu cách nâng cấp! &rarr; Xem tab <strong>Level Up</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: SKILLS (LEVEL UP) ════════ -->
+  <section class="page" id="skills" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Level Up / Nâng cấp</span>
+      <h2>4 Skills to Strengthen Your Arguments</h2>
+      <p>After practice, here are 4 important skills to make your case building MUCH better!</p>
+      <span class="vi-hint">Sau khi thực hành, đây là 4 kỹ năng quan trọng để lập luận GIỎI hơn!</span>
+    </div>
+
+    <!-- Skill 1: Descriptive Reasoning -->
+    <div class="skill-card reasoning">
+      <h4>🔗 Skill 1: Descriptive Reasoning Layers</h4>
+      <p class="label-en">Lập luận mô tả theo chuỗi</p>
+      <p>Don&rsquo;t just say ONE thing. Build a <strong>chain</strong> &mdash; like dominoes falling! One thing leads to the next, and the next, and the next.</p>
+      <p class="vi">Đừng chỉ nói MỘT điều. Hãy xây một <strong>chuỗi</strong> &mdash; như xếp domino! Một việc dẫn đến việc tiếp theo, rồi tiếp theo nữa.</p>
+
+      <div class="highlight-box">
+        <p>🎯 <strong>Rule:</strong> Always add &ldquo;because&rdquo; and &ldquo;therefore&rdquo; to connect your ideas. Each step should lead to the next!</p>
+        <p class="vi">Luôn thêm &ldquo;vì&rdquo; và &ldquo;cho nên&rdquo; để nối các ý tưởng. Mỗi bước phải dẫn đến bước tiếp theo!</p>
+      </div>
+
+      <div class="example-box">
+        <p style="margin:0 0 4px; font-weight:800; color:var(--coral-dark); font-size:.8rem;">❌ WEAK (just one point):</p>
+        <p style="margin:0; font-size:.88rem;">&ldquo;Students will be happy if they choose subjects.&rdquo;</p>
+      </div>
+
+      <div class="example-box" style="margin-top:10px; border-left:3px solid var(--teal);">
+        <p style="margin:0 0 4px; font-weight:800; color:var(--teal-dark); font-size:.8rem;">✅ STRONG (a chain of reasoning):</p>
+        <p style="margin:0; font-size:.88rem;">&ldquo;If students choose subjects they are interested in, they will have <strong>more motivation</strong> to study. If they study harder, they will get <strong>better scores</strong>. If they get good scores, they will be <strong>praised</strong>. This creates a <strong>chain of support</strong> that helps them <strong>excel</strong>.&rdquo;</p>
+        <p class="vi" style="margin-top:6px; font-size:.84rem;">Nếu học sinh chọn môn yêu thích → có động lực hơn → điểm cao hơn → được khen → tạo chuỗi hỗ trợ → vượt trội.</p>
+      </div>
+    </div>
+
+    <!-- Skill 2: Visualize Consequences -->
+    <div class="skill-card visualize">
+      <h4>👁️ Skill 2: Visualize Your Consequences</h4>
+      <p class="label-en">Minh họa hậu quả cụ thể</p>
+      <p>Don&rsquo;t just say &ldquo;it&rsquo;s bad.&rdquo; Paint a <strong>picture</strong>! Show the judge exactly HOW it is bad, with specific examples &mdash; like a detective showing evidence.</p>
+      <p class="vi">Đừng chỉ nói &ldquo;nó xấu.&rdquo; Hãy vẽ một <strong>bức tranh</strong>! Cho giám khảo thấy chính xác NÓ xấu như thế nào, với ví dụ cụ thể &mdash; như thám tử trưng bày bằng chứng.</p>
+
+      <div class="example-box">
+        <p style="margin:0 0 4px; font-weight:800; color:var(--coral-dark); font-size:.8rem;">❌ WEAK (too general):</p>
+        <p style="margin:0; font-size:.88rem;">&ldquo;Students will miss out on other subjects.&rdquo;</p>
+      </div>
+
+      <div class="example-box" style="margin-top:10px; border-left:3px solid var(--teal);">
+        <p style="margin:0 0 4px; font-weight:800; color:var(--teal-dark); font-size:.8rem;">✅ STRONG (painted a picture):</p>
+        <p style="margin:0; font-size:.88rem;">&ldquo;If students only choose subjects they like, they may focus too much on one area. For example, subjects with <strong>group projects</strong> and <strong>presentations</strong> develop <strong>teamwork</strong>, <strong>communication</strong>, and <strong>collaboration</strong>. These skills are important in almost every future career.&rdquo;</p>
+        <p class="vi" style="margin-top:6px; font-size:.84rem;">Nếu chỉ chọn môn yêu thích → tập trung quá vào một lĩnh vực. Ví dụ: các môn có làm nhóm và thuyết trình giúp phát triển kỹ năng teamwork, giao tiếp — rất cần cho nghề nghiệp.</p>
+      </div>
+    </div>
+
+    <!-- Skill 3: Complete Case Setup -->
+    <div class="skill-card complete">
+      <h4>📋 Skill 3: Complete Your Case Setup</h4>
+      <p class="label-en">Hoàn thiện phần mở bài</p>
+      <p>Many teams forget to add <strong>Definition</strong>, <strong>Goals</strong>, and <strong>Metrics</strong>. Think of it like building a house &mdash; you need the walls AND the roof, not just the door!</p>
+      <p class="vi">Nhiều đội quên thêm Định nghĩa, Mục tiêu, Thước đo. Giống xây nhà &mdash; cần tường VÀ mái, không chỉ cánh cửa!</p>
+
+      <div class="highlight-box">
+        <p>🏗️ <strong>Always include:</strong> Context (problems + consequences) + Definition (keywords + characterisation) + Goals / Metrics + Arguments.</p>
+        <p class="vi">Luôn bao gồm: Bối cảnh (vấn đề + hậu quả) + Định nghĩa (từ khóa + đặc tả) + Mục tiêu / Thước đo + Lập luận.</p>
+      </div>
+
+      <div class="example-box">
+        <p style="margin:0; font-size:.88rem;"><strong>Definition example:</strong> &ldquo;By <em>students</em>, we mean students aged 12 and older who can understand the value of different subjects. By <em>decide</em>, we mean having the right to choose at least 50% of their subjects.&rdquo;</p>
+        <p class="vi" style="margin-top:6px; font-size:.84rem;">Ví dụ định nghĩa: &ldquo;Học sinh&rdquo; là từ 12 tuổi trở lên. &ldquo;Quyết định&rdquo; là được chọn ít nhất 50% môn học.</p>
+      </div>
+    </div>
+
+    <!-- Skill 4: Negative Arguments -->
+    <div class="skill-card negative">
+      <h4>🛡️ Skill 4: Negative Arguments</h4>
+      <p class="label-en">Lập luận phản bác</p>
+      <p>Don&rsquo;t just say why YOUR idea is good &mdash; also explain why the OTHER team&rsquo;s idea is <strong>bad</strong>! It&rsquo;s like a shield and a sword: you protect your idea AND attack the other side.</p>
+      <p class="vi">Đừng chỉ nói ý mình tốt &mdash; hãy giải thích tại sao ý đối phương <strong>xấu</strong>! Giống có cả khiên và kiếm: vừa bảo vệ ý mình VÀ tấn công đối phương.</p>
+
+      <div class="example-box">
+        <p style="margin:0 0 4px; font-weight:800; color:var(--orange-dark); font-size:.8rem;">🛡️ Opposition's negative argument against Proposition:</p>
+        <p style="margin:0; font-size:.88rem;">&ldquo;Even if students are allowed to choose, their choices can be <strong>heavily influenced by parents</strong> and family expectations. Parents may tell students which subjects to choose based on the career THEY want. So giving students the power to choose does not mean they make <strong>truly independent</strong> choices.&rdquo;</p>
+        <p class="vi" style="margin-top:6px; font-size:.84rem;">Ngay cả khi học sinh được chọn, cha mẹ vẫn có thể ảnh hưởng nặng. Cha mẹ có thể bắt chọn theo nghề họ muốn → cho quyền chọn không có nghĩa là thực sự độc lập.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: SUMMARY ════════ -->
+  <section class="page" id="summary" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Day 5 Summary / Tóm tắt buổi 5</span>
+      <h2>Practice Makes Progress</h2>
+      <p>Hãy ôn lại những điều quan trọng nhất từ buổi thực hành hôm nay!</p>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">🎯 Part 1 — Today&rsquo;s Motion / Kiến nghị hôm nay</span>
+
+      <div class="info-card">
+        <h3>We practised with a real THBT motion!</h3>
+        <span class="vi-hint">Chúng ta đã thực hành với một kiến nghị THBT thật!</span>
+
+        <p>Today&rsquo;s motion was about who should decide school subjects &mdash; students or governments. Like choosing a restaurant: should kids pick the food, or should parents plan the menu?</p>
+        <p class="vi">Kiến nghị hôm nay về ai nên chọn môn học &mdash; học sinh hay chính phủ. Giống chọn nhà hàng: trẻ nên chọn món, hay cha mẹ lên thực đơn?</p>
+
+        <div class="summary-grid">
+          <div class="takeaway">
+            <span class="takeaway-icon">🟦</span>
+            <h4>Proposition said YES</h4>
+            <p>Students choose &rarr; happier &rarr; more motivated &rarr; discover strengths &rarr; clear career path.</p>
+            <p class="vi">Học sinh chọn → vui hơn → có động lực → khám phá sở trường → định hướng nghề.</p>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-icon">🟥</span>
+            <h4>Opposition said NO</h4>
+            <p>Only choose favourites &rarr; miss important skills &rarr; not ready for competitive jobs.</p>
+            <p class="vi">Chỉ chọn yêu thích → thiếu kỹ năng → chưa sẵn sàng cho thị trường việc làm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">🔗 Part 2 — Reasoning Chains / Chuỗi lập luận</span>
+
+      <div class="info-card">
+        <h3>Build a chain, not just a point!</h3>
+        <span class="vi-hint">Xây chuỗi, không chỉ một điểm!</span>
+
+        <p>Think of dominoes: one falls, then the next, then the next. Your argument should work the same way. Each point leads to the next.</p>
+        <p class="vi">Nghĩ về domino: một cái ngã, rồi cái tiếp theo. Lập luận cũng phải giống vậy. Mỗi điểm dẫn đến điểm tiếp theo.</p>
+
+        <div class="highlight-box">
+          <p>🧩 <strong>Formula:</strong> Point &rarr; because &rarr; effect &rarr; therefore &rarr; bigger effect &rarr; so &rarr; conclusion</p>
+          <p class="vi">Công thức: Ý chính → vì → hiệu quả → cho nên → hiệu quả lớn hơn → vậy → kết luận</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">👁️ Part 3 — Show, Don&rsquo;t Tell / Minh họa, đừng chỉ nói</span>
+
+      <div class="info-card">
+        <h3>Paint a picture for the judge!</h3>
+        <span class="vi-hint">Vẽ bức tranh cho giám khảo!</span>
+
+        <p>Imagine you are a movie director. Don&rsquo;t just tell the audience &ldquo;it&rsquo;s scary&rdquo; &mdash; SHOW them the scary scene! In debate, give <strong>specific examples</strong> that help the judge SEE the problem.</p>
+        <p class="vi">Tưởng tượng em là đạo diễn phim. Đừng chỉ nói &ldquo;nó đáng sợ&rdquo; &mdash; HÃY cho khán giả thấy cảnh đáng sợ! Trong tranh biện, cho <strong>ví dụ cụ thể</strong> giúp giám khảo NHÌN THẤY vấn đề.</p>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">🛡️ Part 4 — Attack &amp; Defend / Tấn công &amp; Phòng thủ</span>
+
+      <div class="info-card">
+        <h3>Use BOTH a sword and a shield!</h3>
+        <span class="vi-hint">Dùng CẢ kiếm và khiên!</span>
+
+        <p>A great debater does two things: explains why their idea is GOOD (shield) AND why the other team&rsquo;s idea is BAD (sword). You need both to win!</p>
+        <p class="vi">Người tranh biện giỏi làm hai việc: giải thích ý mình TỐT (khiên) VÀ ý đối phương XẤU (kiếm). Cần cả hai để thắng!</p>
+
+        <div class="two-teams">
+          <div class="team-card prop">
+            <h4>🛡️ Shield (Your idea)</h4>
+            <p class="en">Bảo vệ ý tưởng của mình</p>
+            <ul>
+              <li>Strong reasoning chain</li>
+              <li>Specific examples</li>
+              <li>Clear goals &amp; metrics</li>
+            </ul>
+          </div>
+          <div class="team-card opp">
+            <h4>⚔️ Sword (Their idea)</h4>
+            <p class="en">Tấn công ý tưởng đối phương</p>
+            <ul>
+              <li>Show their idea&rsquo;s weaknesses</li>
+              <li>Find hidden problems</li>
+              <li>Give counter-examples</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">⭐ Part 5 — Key Takeaways / Điểm quan trọng</span>
+
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 1:</strong> Always build a CHAIN of reasoning &mdash; one point leads to the next, like dominoes.</p>
+        <p class="vi">Luôn xây CHUỖI lập luận &mdash; một ý dẫn đến ý tiếp theo, như domino.</p>
+      </div>
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 2:</strong> VISUALIZE your consequences &mdash; paint a picture with specific examples.</p>
+        <p class="vi">MINH HỌA hậu quả &mdash; vẽ bức tranh bằng ví dụ cụ thể.</p>
+      </div>
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 3:</strong> Never skip Definition, Goals, or Metrics &mdash; your case setup must be COMPLETE.</p>
+        <p class="vi">Đừng bỏ Định nghĩa, Mục tiêu, hay Thước đo &mdash; phần mở bài phải ĐẦY ĐỦ.</p>
+      </div>
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 4:</strong> Use NEGATIVE arguments &mdash; explain why the other team&rsquo;s idea is bad, not just why yours is good.</p>
+        <p class="vi">Dùng LẬP LUẬN PHẢN BÁC &mdash; giải thích tại sao ý đối phương xấu, không chỉ nói ý mình tốt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: HOMEWORK ════════ -->
+  <section class="page" id="homework" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Homework / Bài tập về nhà</span>
+      <h2>Rewrite Your Case Setup</h2>
+      <p>Use the skills you learned today to make your arguments STRONGER!</p>
+      <span class="vi-hint">Dùng kỹ năng hôm nay để làm lập luận MẠNH hơn!</span>
+    </div>
+
+    <!-- The motion -->
+    <div class="homework-card">
+      <h3>📝 Your Motion / Kiến nghị của em</h3>
+      <div class="motion-text">&ldquo;This house <mark style="background:rgba(78,214,189,.25); padding:2px 6px; border-radius:6px; font-weight:900;">believes that</mark> <mark style="background:rgba(140,124,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">students</mark>, not governments, should decide which subjects are taught at school.&rdquo;</div>
+      <p><strong>Type:</strong> 💎 THBT &rarr; <strong>Value Motion</strong> &rarr; 4 case building steps</p>
+      <p class="vi">Loại: THBT → Kiến nghị giá trị → 4 bước xây dựng lập luận</p>
+    </div>
+
+    <div class="info-card" style="margin-top:22px;">
+      <h3>📋 What to do / Cần làm gì</h3>
+      <p>Rewrite the case setup for <strong>BOTH sides</strong> (Proposition AND Opposition). Use <strong>descriptive reasoning chains</strong> and <strong>specific examples</strong> to make your arguments stronger!</p>
+      <p class="vi">Viết lại phần mở bài cho <strong>CẢ HAI PHE</strong> (Ủng hộ VÀ Phản đối). Dùng <strong>chuỗi lập luận mô tả</strong> và <strong>ví dụ cụ thể</strong> để làm lập luận mạnh hơn!</p>
+
+      <div class="highlight-box">
+        <p>💡 <strong>Remember:</strong> Use ALL 4 skills from today: reasoning chains 🔗, visualization 👁️, complete setup 📋, and negative arguments 🛡️!</p>
+        <p class="vi">Nhớ dùng CẢ 4 kỹ năng: chuỗi lập luận 🔗, minh họa 👁️, mở bài đầy đủ 📋, và phản bác 🛡️!</p>
+      </div>
+    </div>
+
+    <!-- ─── PROPOSITION SIDE ─── -->
+    <span class="hw-side-label prop">🟦 Proposition — Phe Ủng hộ (YES, students should choose)</span>
+
+    <div class="info-card">
+      <h3>📋 Step 1: Context / Bối cảnh</h3>
+      <p>What problems exist in education today? What are the consequences?</p>
+      <p class="vi">Giáo dục ngày nay có vấn đề gì? Hậu quả là gì?</p>
+      <p><em>Remember: Be SPECIFIC! Paint a picture of the problem.</em></p>
+      <p class="vi"><em>Nhớ: Cụ thể! Vẽ bức tranh về vấn đề.</em></p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-1">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-1" hidden>
+        <ul>
+          <li>❓ Think about how students feel when they study subjects they don&rsquo;t enjoy. <span class="vi">(Học sinh cảm thấy thế nào khi học môn không thích?)</span></li>
+          <li>❓ What problems happen because of that? Use a reasoning chain! <span class="vi">(Vấn đề gì xảy ra? Dùng chuỗi lập luận!)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 2: Definition / Định nghĩa</h3>
+      <p>Find the keywords in the motion and explain what they mean clearly.</p>
+      <p class="vi">Tìm từ khóa trong kiến nghị và giải thích rõ ràng.</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-2">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-2" hidden>
+        <ul>
+          <li>❓ What does &ldquo;students&rdquo; mean here? All ages, or a specific group? <span class="vi">(Học sinh ở đây là ai? Mọi lứa tuổi hay nhóm cụ thể?)</span></li>
+          <li>❓ What does &ldquo;decide&rdquo; mean? Full control, or partial choice? <span class="vi">(Quyết định nghĩa là gì? Toàn quyền hay chọn một phần?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 3: Goals &amp; Metrics / Mục tiêu &amp; Thước đo</h3>
+      <p>What is the ideal outcome you want to achieve?</p>
+      <p class="vi">Kết quả lý tưởng em muốn đạt được là gì?</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-3">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-3" hidden>
+        <ul>
+          <li>❓ Think about what &ldquo;success&rdquo; looks like for students. <span class="vi">(Thành công trông như thế nào với học sinh?)</span></li>
+          <li>❓ How would you measure if your idea is working? <span class="vi">(Làm sao đo lường ý tưởng có hiệu quả?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 4: Argumentation / Lập luận</h3>
+      <p>Give 2&ndash;3 strong reasons, each with a reasoning chain!</p>
+      <p class="vi">Đưa ra 2&ndash;3 lý do mạnh, mỗi lý do có chuỗi lập luận!</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-4">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-4" hidden>
+        <ul>
+          <li>❓ Build each argument as a chain: IF &rarr; THEN &rarr; BECAUSE &rarr; THEREFORE. <span class="vi">(Xây mỗi lập luận thành chuỗi: NẾU → THÌ → VÌ → CHO NÊN.)</span></li>
+          <li>❓ Don&rsquo;t forget to add a negative argument against the other side! <span class="vi">(Đừng quên thêm lập luận phản bác đối phương!)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <!-- ─── OPPOSITION SIDE ─── -->
+    <span class="hw-side-label opp">🟥 Opposition — Phe Phản đối (NO, governments should decide)</span>
+
+    <div class="info-card">
+      <h3>📋 Step 1: Context / Bối cảnh</h3>
+      <p>What is the current situation that makes your side important?</p>
+      <p class="vi">Tình hình hiện tại nào khiến phe em quan trọng?</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-1">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-1" hidden>
+        <ul>
+          <li>❓ Think about the world of work and jobs today. What is it like? <span class="vi">(Thế giới công việc ngày nay như thế nào?)</span></li>
+          <li>❓ What do employers look for in new workers? <span class="vi">(Nhà tuyển dụng tìm gì ở nhân viên mới?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 2: Definition / Định nghĩa</h3>
+      <p>Define the same keywords, but from your side&rsquo;s perspective.</p>
+      <p class="vi">Định nghĩa cùng từ khóa, nhưng từ góc nhìn phe em.</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-2">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-2" hidden>
+        <ul>
+          <li>❓ What does &ldquo;should decide&rdquo; really mean? Is it safe for students to have full control? <span class="vi">(Nên quyết định thật sự nghĩa là gì? Học sinh tự quyết có an toàn?)</span></li>
+          <li>❓ What does a good education system look like? <span class="vi">(Hệ thống giáo dục tốt trông như thế nào?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 3: Goals &amp; Metrics / Mục tiêu &amp; Thước đo</h3>
+      <p>What should education achieve? How do you measure success?</p>
+      <p class="vi">Giáo dục nên đạt được gì? Đo lường thành công bằng cách nào?</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-3">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-3" hidden>
+        <ul>
+          <li>❓ Think about the BIG picture: what is the ultimate purpose of school? <span class="vi">(Nghĩ bức tranh LỚN: mục đích cuối cùng của trường học là gì?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 4: Argumentation / Lập luận</h3>
+      <p>Give 2&ndash;3 strong reasons, each with a reasoning chain! Don&rsquo;t forget to add a negative argument.</p>
+      <p class="vi">Đưa ra 2&ndash;3 lý do mạnh, mỗi lý do có chuỗi lập luận! Đừng quên thêm lập luận phản bác.</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-4">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-4" hidden>
+        <ul>
+          <li>❓ Think about what students might MISS if they only choose what they like. Use specific examples! <span class="vi">(Học sinh có thể BỎ LỠ gì nếu chỉ chọn môn thích? Dùng ví dụ cụ thể!)</span></li>
+          <li>❓ Can students really make independent choices? Who else might influence them? <span class="vi">(Học sinh có thể tự chọn thật sự không? Ai có thể ảnh hưởng?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: VOCABULARY ════════ -->
+  <section class="page" id="vocab" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Vocabulary / Từ vựng</span>
+      <h2>Debate Vocabulary</h2>
+      <p>Key English words you need to remember from today&rsquo;s lesson!</p>
+    </div>
+
+    <div class="vocab-controls">
+      <input class="vocab-search" id="vocabSearch" type="text" placeholder="Search vocabulary...">
+    </div>
+
+    <div class="vocab-wrap">
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Word</th><th>American IPA</th><th>SOUND IT OUT</th><th>Type</th><th>English meaning + Vietnamese</th><th>Audio</th></tr>
+        </thead>
+        <tbody id="vocabBody"></tbody>
+      </table>
+    </div>
+    <p class="api-key-status" id="mwApiStatus">Checking audio configuration&hellip;</p>
+  </section>
+
+  <!-- ════════ PAGE: QUIZ ════════ -->
+  <section class="page" id="quiz" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Quiz</span>
+      <h2>Day 5 Quiz Challenge</h2>
+      <p>Nothing is graded while you work &mdash; results only appear after you submit all answers.</p>
+    </div>
+
+    <div class="quiz-intro">
+      <p class="quiz-rule">10 concept questions &middot; 8 picture word puzzles &middot; Optional audio hints</p>
+      <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
+    </div>
+
+    <form id="quizForm" novalidate>
+      <section class="quiz-group" aria-labelledby="conceptQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129504;</span>
+          <div>
+            <p>Part A</p>
+            <h3 id="conceptQuizTitle">Concept Quiz</h3>
+            <span>Tick one answer for each lesson concept.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="conceptQuizList"></div>
+      </section>
+
+      <section class="quiz-group" aria-labelledby="vocabularyQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129513;</span>
+          <div>
+            <p>Part B</p>
+            <h3 id="vocabularyQuizTitle">Vocabulary Picture Quiz</h3>
+            <span>Use the first letter and picture. Tick the audio hint only when needed.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="vocabularyQuizList"></div>
+      </section>
+
+      <div class="quiz-actions">
+        <button class="submit-quiz" type="submit">SUBMIT ALL ANSWERS</button>
+        <button class="reset-quiz" id="resetQuiz" type="button">TRY AGAIN</button>
+        <p class="quiz-message" id="quizMessage" role="alert"></p>
+      </div>
+    </form>
+
+    <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
+      <div class="quiz-score" id="quizScore">0 / 18</div>
+      <h3 id="quizHeadline">Nice effort!</h3>
+      <p id="quizResultText"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="../index.html">&larr; Back to Home</a> &nbsp;|&nbsp; English Debate Club &copy; 2025
+</footer>
+
+<script src="../config.js"></script>
+<script>
+// ═══════ TAB NAVIGATION ═══════
+const navButtons = document.querySelectorAll('#mainNav button[data-page]');
+const pages = document.querySelectorAll('.page');
+
+function showPage(id) {
+  pages.forEach(p => p.hidden = (p.id !== id));
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.page === id));
+  window.scrollTo(0, 0);
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+
+// ═══════ VOCABULARY DATA ═══════
+const vocabulary = [
+  ["subject", "/ˈsʌbdʒɪkt/", "SUB-jekt", "noun", "a topic or class you study at school", "môn học"],
+  ["government", "/ˈɡʌvərnmənt/", "GUH-vern-muhnt", "noun", "the group of people who make rules for a country", "chính phủ"],
+  ["consequence", "/ˈkɑːnsɪˌkwens/", "KAHN-sih-kwens", "noun", "what happens because of something", "hậu quả"],
+  ["motivation", "/ˌmoʊtɪˈveɪʃən/", "moh-tih-VAY-shuhn", "noun", "the feeling that makes you want to do something", "động lực"],
+  ["mechanism", "/ˈmekəˌnɪzəm/", "MEK-uh-nih-zuhm", "noun", "a process or system that makes something work", "cơ chế"],
+  ["career", "/kəˈrɪr/", "kuh-REER", "noun", "the job or work you do for a long time", "nghề nghiệp / sự nghiệp"],
+  ["orientation", "/ˌɔːriənˈteɪʃən/", "or-ee-en-TAY-shuhn", "noun", "direction or guidance toward a goal", "định hướng"],
+  ["competitive", "/kəmˈpetɪtɪv/", "kuhm-PEH-tih-tiv", "adjective", "having a lot of competition; trying hard to win", "cạnh tranh"],
+  ["diversity", "/dɪˈvɜːrsɪti/", "dih-VER-sih-tee", "noun", "having many different types or kinds", "sự đa dạng"],
+  ["skill set", "", "SKIL SET", "phrase", "a group of abilities that you have", "bộ kỹ năng"],
+  ["qualified", "/ˈkwɑːlɪˌfaɪd/", "KWAH-lih-fyed", "adjective", "having the right skills or knowledge for something", "đủ tiêu chuẩn / đủ năng lực"],
+  ["collaboration", "/kəˌlæbəˈreɪʃən/", "kuh-lab-uh-RAY-shuhn", "noun", "working together with others as a team", "sự hợp tác"],
+  ["well-rounded", "", "WEL ROWN-did", "adjective", "good at many different things, not just one", "toàn diện"],
+  ["reasoning", "/ˈriːzənɪŋ/", "REE-zuh-ning", "noun", "thinking carefully and logically about something", "suy luận / lý luận"],
+  ["visualize", "/ˈvɪʒuəˌlaɪz/", "VIH-zhoo-uh-lyz", "verb", "to create a clear picture in your mind or for others", "hình dung / minh họa"],
+  ["descriptive", "/dɪˈskrɪptɪv/", "dih-SKRIP-tiv", "adjective", "giving many details to paint a clear picture", "mô tả chi tiết"],
+  ["strengthen", "/ˈstreŋθən/", "STRENG-thuhn", "verb", "to make something stronger", "củng cố / làm mạnh hơn"],
+  ["excel", "/ɪkˈsel/", "ik-SEL", "verb", "to be very good at something", "xuất sắc / vượt trội"],
+  ["influence", "/ˈɪnfluəns/", "IN-floo-uhns", "noun / verb", "the power to change how someone thinks or acts", "ảnh hưởng"],
+  ["independent", "/ˌɪndɪˈpendənt/", "in-dih-PEN-duhnt", "adjective", "able to think and act on your own", "độc lập"],
+];
+
+// ═══════ MERRIAM-WEBSTER AUDIO ═══════
+const audioCache = new Map();
+const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
+const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
+const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
+const mwApiStatus = document.getElementById("mwApiStatus");
+
+mwApiStatus.textContent = hasMwApiKey
+  ? "✓ API key loaded from config.js. Merriam-Webster audio is ready."
+  : "⚙ Add your Intermediate Dictionary key to MW_API_KEY in config.js to enable audio.";
+
+function findAudioFile(value) {
+  if (!value || typeof value !== "object") return "";
+  if (typeof value.audio === "string" && value.audio) return value.audio;
+  for (const child of Object.values(value)) {
+    const found = findAudioFile(child);
+    if (found) return found;
+  }
+  return "";
+}
+
+function audioSubdirectory(filename) {
+  if (filename.startsWith("bix")) return "bix";
+  if (filename.startsWith("gg")) return "gg";
+  if (/^[^a-zA-Z]/.test(filename)) return "number";
+  return filename[0].toLowerCase();
+}
+
+async function getMerriamWebsterAudioUrl(word) {
+  if (audioCache.has(word)) return audioCache.get(word);
+  const endpoint = `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
+  const response = await fetch(endpoint);
+  if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
+  const entries = await response.json();
+  const filename = findAudioFile(entries);
+  if (!filename) throw new Error("No Merriam-Webster recording was found for this word.");
+  const folder = audioSubdirectory(filename);
+  const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
+  audioCache.set(word, url);
+  return url;
+}
+
+async function speakWord(word) {
+  if (!hasMwApiKey) {
+    mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
+    showPage('vocab');
+    throw new Error("API key missing");
+  }
+  mwApiStatus.textContent = `Loading "${word}" from Merriam-Webster…`;
+  try {
+    const url = await getMerriamWebsterAudioUrl(word);
+    const audio = new Audio(url);
+    await audio.play();
+    mwApiStatus.textContent = `▶ Playing "${word}" with Merriam-Webster audio.`;
+  } catch (error) {
+    if (error.message === "API key missing") throw error;
+    mwApiStatus.textContent = `Could not play "${word}". Check that the key is for the Intermediate Dictionary (sd3) and try again.`;
+    throw error;
+  }
+}
+
+// ═══════ RENDER VOCABULARY TABLE ═══════
+const vocabBody = document.getElementById("vocabBody");
+const vocabSearch = document.getElementById("vocabSearch");
+
+function renderVocabulary() {
+  const query = vocabSearch.value.trim().toLowerCase();
+  const matches = vocabulary.filter(row =>
+    row.join(" ").toLowerCase().includes(query)
+  );
+  vocabBody.innerHTML = "";
+  matches.forEach(([word, ipa, soundOut, type, en, vi]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="word">${word}</td>
+      <td class="ipa">${ipa}</td>
+      <td class="sound-it-out">${soundOut}</td>
+      <td>${type}</td>
+      <td><div class="meaning-en">${en}</div><div class="meaning-vi">${vi}</div></td>
+      <td>${ipa ? `<button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button>` : ''}</td>`;
+    const btn = row.querySelector("button");
+    if (btn) btn.addEventListener("click", () => speakWord(word.split(" ")[0]).catch(() => {}));
+    vocabBody.appendChild(row);
+  });
+}
+
+vocabSearch.addEventListener("input", renderVocabulary);
+renderVocabulary();
+
+// ═══════ QUIZ DATA ═══════
+const quizQuestions = [
+  { type: "choice", kind: "Concept", prompt: "What type of motion is 'THBT students should decide which subjects are taught at school'?",
+    options: ["Policy motion (THW)", "Value motion (THBT)", "Actor motion (TH, as X)", "Speaker motion"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "How many case building steps does a THBT (value) motion need?",
+    options: ["3 steps", "4 steps", "5 steps", "6 steps"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What is 'descriptive reasoning'?",
+    options: ["Shouting your point loudly", "Explaining your argument step by step with details", "Reading from your notes", "Using big words to confuse others"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Why should you 'visualize' the consequences in your context?",
+    options: ["To make your speech longer", "To help the judge SEE how serious the problem is", "To use more pictures", "To confuse the other team"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What was the Proposition's main idea about students choosing subjects?",
+    options: ["Students will get more homework", "Students will be happier and more motivated", "Students will play more games", "Students will have fewer classes"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What was the Opposition's main concern?",
+    options: ["Students are too young to go to school", "It costs too much money", "Students might miss important skills from other subjects", "Teachers will lose their jobs"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "What is a 'chain of supporting mechanism'?",
+    options: ["A list of random facts", "One good result leads to another good result", "A type of debate format", "A scoring system"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What is a 'negative argument'?",
+    options: ["Being negative about debate", "Explaining why the OTHER team's idea is bad", "Arguing with the judge", "Refusing to debate"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What parts do teams sometimes forget in their case setup?",
+    options: ["The team name", "Definition, goals, and metrics", "The judge's name", "The motion number"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Can student choices really be 'independent' when choosing subjects?",
+    options: ["Yes, always — students are completely free", "Not always — parents and family can influence their choices", "Only with teacher help", "Only in some countries"], answer: 1 },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "consequence",
+    emoji: "🌊", imageLabel: "Wave for consequence (ripple effect)" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "motivation",
+    emoji: "🔥", imageLabel: "Fire for motivation" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "career",
+    emoji: "💼", imageLabel: "Briefcase for career" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "diversity",
+    emoji: "🌈", imageLabel: "Rainbow for diversity" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "reasoning",
+    emoji: "🧠", imageLabel: "Brain for reasoning" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "visualize",
+    emoji: "👁️", imageLabel: "Eye for visualize" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "strengthen",
+    emoji: "💪", imageLabel: "Flexed arm for strengthen" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "influence",
+    emoji: "🧲", imageLabel: "Magnet for influence" },
+];
+
+// ═══════ RENDER QUIZ ═══════
+const quizForm = document.getElementById("quizForm");
+const conceptQuizList = document.getElementById("conceptQuizList");
+const vocabularyQuizList = document.getElementById("vocabularyQuizList");
+const quizProgress = document.getElementById("quizProgress");
+const quizMessage = document.getElementById("quizMessage");
+const quizResult = document.getElementById("quizResult");
+const quizScore = document.getElementById("quizScore");
+const quizHeadline = document.getElementById("quizHeadline");
+const quizResultText = document.getElementById("quizResultText");
+
+quizQuestions.forEach((question, index) => {
+  const card = document.createElement("article");
+  card.className = "quiz-card";
+  card.dataset.question = String(index);
+
+  const answerArea = question.type === "choice"
+    ? `<div class="quiz-options" role="radiogroup" aria-labelledby="prompt-${index}">
+        ${question.options.map((option, oi) => `
+          <label class="quiz-option">
+            <input type="radio" name="quiz-${index}" value="${oi}">
+            <span>${String.fromCharCode(65 + oi)}. ${option}</span>
+          </label>`).join("")}
+       </div>`
+    : `<div class="spelling-card">
+        <div class="quiz-picture" role="img" aria-label="${question.imageLabel}">${question.emoji}</div>
+        <div>
+          <div class="word-starter" aria-label="Starts with ${question.word[0]} and has ${question.word.length} letters">
+            <span class="first-letter">${question.word[0].toUpperCase()}</span>
+            <span class="word-blanks">${"_ ".repeat(question.word.length - 1).trim()}</span>
+          </div>
+          <label for="quiz-${index}">Type the remaining letters</label>
+          <input class="letter-answer" id="quiz-${index}" name="quiz-${index}"
+            type="text" maxlength="${question.word.length - 1}" inputmode="text" autocomplete="off" spellcheck="false"
+            placeholder="Complete the word">
+          <label class="audio-hint">
+            <input class="audio-hint-toggle" type="checkbox" data-word="${question.word}">
+            <span>🔊 Tick to hear an audio hint</span>
+          </label>
+        </div>
+       </div>`;
+
+  card.innerHTML = `
+    <div class="quiz-topline">
+      <span class="quiz-number">${index + 1}</span>
+      <span class="quiz-kind">${question.kind}</span>
+    </div>
+    <div id="prompt-${index}" class="quiz-prompt">${question.prompt}</div>
+    ${answerArea}
+    <p class="question-status" id="status-${index}" aria-live="polite"></p>`;
+  (question.type === "choice" ? conceptQuizList : vocabularyQuizList).appendChild(card);
+});
+
+let quizHasBeenGraded = false;
+
+function isQuestionAnswered(question, index) {
+  if (question.type === "choice") return Boolean(document.querySelector(`input[name="quiz-${index}"]:checked`));
+  return Boolean(document.getElementById(`quiz-${index}`).value.trim());
+}
+
+function clearQuizFeedback() {
+  if (!quizHasBeenGraded) return;
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizHasBeenGraded = false;
+}
+
+function updateQuizProgress() {
+  const answered = quizQuestions.filter(isQuestionAnswered).length;
+  quizProgress.textContent = `${answered} of ${quizQuestions.length} answered`;
+  quizMessage.textContent = "";
+}
+
+quizForm.addEventListener("input", event => {
+  if (event.target.matches(".letter-answer")) {
+    event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "").toUpperCase();
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("change", event => {
+  if (event.target.matches(".audio-hint-toggle")) {
+    if (event.target.checked) {
+      speakWord(event.target.dataset.word).catch(() => { event.target.checked = false; });
+    }
+    return;
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const firstUnanswered = quizQuestions.findIndex((q, i) => !isQuestionAnswered(q, i));
+  if (firstUnanswered !== -1) {
+    quizMessage.textContent = `Please answer all ${quizQuestions.length} questions before submitting.`;
+    const q = quizQuestions[firstUnanswered];
+    const target = q.type === "choice"
+      ? document.querySelector(`input[name="quiz-${firstUnanswered}"]`)
+      : document.getElementById(`quiz-${firstUnanswered}`);
+    target.focus();
+    quizResult.hidden = true;
+    return;
+  }
+
+  let score = 0;
+  quizQuestions.forEach((question, index) => {
+    const card = document.querySelector(`[data-question="${index}"]`);
+    const status = document.getElementById(`status-${index}`);
+    const isCorrect = question.type === "choice"
+      ? Number(document.querySelector(`input[name="quiz-${index}"]:checked`).value) === question.answer
+      : `${question.word[0]}${document.getElementById(`quiz-${index}`).value.trim().toLowerCase()}` === question.word;
+
+    card.classList.toggle("correct", isCorrect);
+    card.classList.toggle("incorrect", !isCorrect);
+    status.textContent = isCorrect ? "✓ Correct" : "↻ Review this one";
+    status.style.color = isCorrect ? "#18885d" : "#d94f68";
+    if (isCorrect) score += 1;
+  });
+
+  const percentage = Math.round((score / quizQuestions.length) * 100);
+  quizScore.textContent = `${score} / ${quizQuestions.length}`;
+  quizHeadline.textContent =
+    percentage === 100 ? "Outstanding work! 🌟" :
+    percentage >= 75 ? "Great job! 🎉" :
+    percentage >= 50 ? "Good effort—keep practising! 💪" :
+    "Let's review and try again! 📚";
+  quizResultText.textContent = `You scored ${percentage}%. Correct answers are not revealed — review the lesson and try again!`;
+  quizResult.hidden = false;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = true;
+  quizResult.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+document.getElementById("resetQuiz").addEventListener("click", () => {
+  quizForm.reset();
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = false;
+  updateQuizProgress();
+  document.querySelector('input[name="quiz-0"]').focus();
+});
+
+// ═══════ HOMEWORK HINT PASSWORD GATE ═══════
+document.querySelectorAll(".hint-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const hintId = btn.dataset.hint;
+    const hintDiv = document.getElementById(hintId);
+    const errorP = btn.parentElement.querySelector(".hint-error");
+    if (!hintDiv || btn.classList.contains("unlocked")) return;
+
+    const pass = prompt("Nhập mật khẩu (dành cho phụ huynh):");
+    if (pass === null) return;
+
+    if (pass === "000000") {
+      hintDiv.hidden = false;
+      btn.textContent = "✓ Đã mở";
+      btn.classList.add("unlocked");
+      errorP.hidden = true;
+    } else {
+      errorP.textContent = "Sai mật khẩu. Hãy nhờ ba mẹ nhập giúp nhé!";
+      errorP.hidden = false;
+    }
+  });
+});
+</script>
+
+</body>
+</html>

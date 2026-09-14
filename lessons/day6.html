@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Day 6: Actor Motion Practice — practise building cases for actor motions, learn Declaration of Interests, and debate STEM vs ESL.">
+  <meta name="theme-color" content="#8c7cff">
+  <title>Day 6 · Actor Motion Practice</title>
+  <style>
+    :root {
+      --ink: #26335d;
+      --ink-2: #40517f;
+      --paper: #fffaf0;
+      --card: #ffffff;
+      --muted: #65739a;
+      --line: #dfe8f6;
+      --teal: #4ed6bd;
+      --teal-dark: #138f86;
+      --orange: #ff9b62;
+      --orange-dark: #c06a2f;
+      --yellow: #ffd84d;
+      --sky: #55c8ff;
+      --coral: #ff7085;
+      --coral-dark: #c4405a;
+      --purple: #8c7cff;
+      --purple-dark: #5a4fcf;
+      --mint: #a9efcb;
+      --shadow: 0 18px 48px rgba(78, 103, 159, .16);
+      --radius: 28px;
+      --accent: var(--purple);
+      --accent-dark: var(--purple-dark);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 6%, rgba(140,124,255,.22), transparent 26rem),
+        radial-gradient(circle at 90% 22%, rgba(85,200,255,.18), transparent 24rem),
+        radial-gradient(circle at 50% 68%, rgba(169,239,203,.15), transparent 28rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(223,229,236,.85);
+      background: rgba(255,250,240,.92);
+      backdrop-filter: blur(18px);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, var(--purple), #6a5ce0);
+      box-shadow: 0 8px 24px rgba(140,124,255,.3);
+      font-weight: 950;
+      font-size: .8rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav a, .nav button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav a:hover, .nav button:hover { background: rgba(140,124,255,.12); color: var(--ink); }
+    .nav button.active { background: var(--purple); color: white; }
+    .nav .home-link { color: var(--purple-dark); font-weight: 800; }
+
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: auto; }
+
+    .page { padding: 50px 0 80px; }
+    .page[hidden] { display: none; }
+
+    .page-header { margin-bottom: 36px; }
+    .page-header .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(140,124,255,.12);
+      color: var(--purple-dark);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .page-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 920;
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0 0 10px;
+    }
+    .page-header p { max-width: 600px; margin: 0; color: var(--muted); font-size: .95rem; }
+    .vi { color: var(--muted); font-style: italic; }
+    .vi-hint { display: block; font-size: .85rem; color: var(--muted); font-style: italic; }
+
+    .section-label {
+      display: block;
+      margin-bottom: 16px;
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--purple-dark);
+    }
+
+    .summary-section { margin-bottom: 36px; }
+
+    .info-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .info-card h3 { font-size: 1.2rem; font-weight: 850; margin: 0 0 14px; }
+    .info-card p, .info-card li { font-size: .93rem; color: var(--ink-2); line-height: 1.7; }
+    .info-card ul { padding-left: 20px; margin: 10px 0; }
+    .info-card li { margin-bottom: 6px; }
+
+    .highlight-box {
+      padding: 18px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(140,124,255,.1), rgba(85,200,255,.1));
+      border-left: 4px solid var(--purple);
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-weight: 600; color: var(--ink); }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .review-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(11,19,36,.05);
+    }
+    .review-card h4 { margin: 0 0 8px; font-size: .95rem; font-weight: 800; }
+    .review-card p { margin: 0 0 6px; font-size: .88rem; color: var(--ink-2); }
+
+    .motion-box {
+      padding: 20px 28px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(140,124,255,.1), rgba(169,239,203,.1));
+      border: 2px solid var(--purple);
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .two-teams {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .team-card {
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid;
+    }
+    .team-card.prop { border-color: var(--sky); background: linear-gradient(145deg, rgba(85,200,255,.08), white); }
+    .team-card.opp { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.08), white); }
+    .team-card h4 { font-size: 1.05rem; font-weight: 850; margin: 0 0 4px; }
+    .team-card .en { font-size: .82rem; color: var(--muted); margin: 0 0 10px; }
+    .team-card ul { padding-left: 16px; margin: 0; }
+    .team-card li { font-size: .88rem; margin-bottom: 4px; color: var(--ink-2); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .step {
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .step-num {
+      width: 34px; height: 34px;
+      margin: 0 auto 8px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--purple);
+      color: white;
+      font-weight: 900;
+      font-size: .85rem;
+    }
+    .step h4 { margin: 0 0 5px; font-size: .9rem; font-weight: 800; }
+    .step p { margin: 0; font-size: .8rem; color: var(--muted); }
+    .step.special { border-color: var(--purple); background: linear-gradient(145deg, rgba(140,124,255,.06), white); }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .takeaway {
+      padding: 20px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 18px rgba(11,19,36,.05);
+    }
+    .takeaway-icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+    .takeaway h4 { margin: 0 0 6px; font-size: .92rem; font-weight: 800; }
+    .takeaway p { margin: 0; font-size: .84rem; color: var(--ink-2); }
+
+    .tri-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .tri-item {
+      padding: 22px;
+      border-radius: 18px;
+      border: 2px solid var(--line);
+      background: white;
+      text-align: center;
+    }
+    .tri-item.mentality { border-color: var(--purple); }
+    .tri-item.motivation { border-color: var(--orange); }
+    .tri-item.interests { border-color: var(--teal); }
+    .tri-item .tri-icon { font-size: 1.6rem; display: block; margin-bottom: 8px; }
+    .tri-item h4 { margin: 0 0 6px; font-size: .95rem; font-weight: 850; }
+    .tri-item p { margin: 0; font-size: .84rem; color: var(--ink-2); }
+
+    .model-speech {
+      padding: 28px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(140,124,255,.06), rgba(78,214,189,.04));
+      border: 2px solid var(--purple);
+      margin: 20px 0;
+    }
+    .model-speech h4 { margin: 0 0 12px; font-size: 1.05rem; font-weight: 850; }
+    .model-speech p { font-size: .9rem; color: var(--ink-2); margin: 0 0 10px; line-height: 1.7; }
+    .model-speech .speech-label {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .model-speech .speech-label.ctx { background: rgba(85,200,255,.15); color: #1a7fae; }
+    .model-speech .speech-label.doi { background: rgba(140,124,255,.15); color: var(--purple-dark); }
+
+    .homework-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #fff8e6, #fff3bf);
+      border: 2px solid var(--yellow);
+      box-shadow: 0 12px 35px rgba(255,184,81,.15);
+    }
+    .homework-card h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 850; }
+    .homework-card p { font-size: .93rem; color: var(--ink-2); margin: 0 0 10px; }
+    .homework-card .motion-text {
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: rgba(140,124,255,.08);
+      font-weight: 750;
+      font-size: 1rem;
+      color: var(--purple-dark);
+      margin: 14px 0;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .hw-side-label {
+      display: inline-block;
+      margin: 24px 0 12px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hw-side-label.prop { background: rgba(85,200,255,.15); color: #1a7fae; }
+    .hw-side-label.opp { background: rgba(255,112,133,.15); color: var(--coral-dark); }
+
+    .vocab-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .vocab-search {
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      font-size: .9rem;
+      width: 240px;
+      max-width: 100%;
+      transition: border-color .2s;
+    }
+    .vocab-search:focus { outline: none; border-color: var(--purple); }
+    .vocab-wrap { overflow-x: auto; }
+    .vocab-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .vocab-table th {
+      padding: 12px 14px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .vocab-table td {
+      padding: 11px 14px;
+      font-size: .86rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:nth-child(even) td { background: rgba(223,232,246,.15); }
+    .vocab-table .word { font-weight: 750; color: var(--ink); }
+    .vocab-table .ipa { font-family: monospace; font-size: .78rem; color: var(--muted); }
+    .vocab-table .sound-it-out { font-weight: 700; font-size: .8rem; color: var(--purple-dark); letter-spacing: .02em; }
+    .vocab-table .meaning-en { font-size: .84rem; }
+    .vocab-table .meaning-vi { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .sound-btn {
+      width: 32px; height: 32px;
+      border: none; border-radius: 50%;
+      background: var(--purple); color: white;
+      display: inline-grid; place-items: center;
+      font-size: .8rem;
+      transition: transform .15s;
+    }
+    .sound-btn:hover { transform: scale(1.15); }
+    .api-key-status { margin-top: 12px; font-size: .82rem; color: var(--muted); }
+
+    .quiz-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quiz-rule { margin: 0; font-size: .9rem; color: var(--ink-2); }
+    .quiz-progress { font-size: .82rem; font-weight: 800; color: var(--purple-dark); white-space: nowrap; }
+
+    .quiz-group { margin-bottom: 36px; }
+    .quiz-group-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(140,124,255,.08), rgba(169,239,203,.08));
+    }
+    .quiz-group-icon { font-size: 1.8rem; }
+    .quiz-group-head p { margin: 0; font-size: .75rem; font-weight: 800; color: var(--purple-dark); text-transform: uppercase; letter-spacing: .1em; }
+    .quiz-group-head h3 { margin: 2px 0 4px; font-size: 1.1rem; font-weight: 850; }
+    .quiz-group-head span { font-size: .84rem; color: var(--muted); }
+
+    .quiz-list { display: grid; gap: 16px; }
+    .quiz-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(11,19,36,.05);
+      transition: border-color .2s, background .2s;
+    }
+    .quiz-card.correct { border-color: var(--teal); background: rgba(78,214,189,.06); }
+    .quiz-card.incorrect { border-color: var(--coral); background: rgba(255,112,133,.06); }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .quiz-number {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .quiz-kind {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--purple-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quiz-prompt { font-weight: 700; font-size: .92rem; margin-bottom: 14px; }
+
+    .quiz-options { display: grid; gap: 8px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .quiz-option:hover { background: rgba(140,124,255,.06); border-color: var(--purple); }
+    .quiz-option input { margin: 0; }
+
+    .spelling-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quiz-picture {
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(140,124,255,.15), rgba(169,239,203,.15));
+      font-size: 1.8rem;
+    }
+    .word-starter {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .first-letter {
+      font-size: 1.4rem;
+      font-weight: 950;
+      color: var(--purple-dark);
+    }
+    .word-blanks {
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+    }
+    .letter-answer {
+      display: block;
+      width: 180px;
+      padding: 8px 14px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: border-color .2s;
+    }
+    .letter-answer:focus { outline: none; border-color: var(--purple); }
+    .audio-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: .8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .audio-hint input { margin: 0; }
+
+    .question-status { margin: 8px 0 0; font-size: .82rem; font-weight: 700; }
+
+    .quiz-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .submit-quiz {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--purple), #6a5ce0);
+      color: white;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 8px 24px rgba(140,124,255,.3);
+      transition: transform .15s;
+    }
+    .submit-quiz:hover { transform: translateY(-2px); }
+    .reset-quiz {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 14px;
+      background: var(--line);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .quiz-message { margin: 0; font-size: .85rem; color: var(--coral); font-weight: 700; }
+
+    .quiz-result {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(140,124,255,.1), rgba(169,239,203,.1));
+      text-align: center;
+    }
+    .quiz-score { font-size: 2.2rem; font-weight: 950; color: var(--purple-dark); }
+    .quiz-result h3 { margin: 8px 0 6px; font-size: 1.1rem; }
+    .quiz-result p { margin: 0; font-size: .88rem; color: var(--muted); }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+    .footer a { color: var(--purple-dark); font-weight: 700; }
+
+    .hint-btn {
+      margin-top: 12px;
+      padding: 8px 18px;
+      border: 2px solid var(--coral);
+      border-radius: 12px;
+      background: white;
+      color: var(--coral-dark);
+      font-weight: 800;
+      font-size: .82rem;
+      transition: background .15s, border-color .15s;
+    }
+    .hint-btn:hover { background: rgba(255,112,133,.08); }
+    .hint-btn.unlocked {
+      border-color: var(--teal);
+      color: var(--teal-dark);
+      pointer-events: none;
+    }
+    .hint-content { margin-top: 12px; }
+    .hint-content ul { padding-left: 20px; margin: 0; }
+    .hint-content li { font-size: .9rem; color: var(--ink-2); margin-bottom: 6px; }
+    .hint-error { color: var(--coral); font-size: .8rem; font-weight: 700; margin-top: 6px; }
+
+    @media (max-width: 768px) {
+      .two-teams { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .tri-card { grid-template-columns: 1fr; }
+      .spelling-card { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 2px; }
+      .nav a, .nav button { padding: 6px 9px; font-size: .72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">D6</span>
+      <span>English Debate Club</span>
+    </a>
+    <nav class="nav" id="mainNav">
+      <a href="../index.html" class="home-link">&larr; Home</a>
+      <button class="active" data-page="review">Review</button>
+      <button data-page="practice">Practice</button>
+      <button data-page="doi">Declaration</button>
+      <button data-page="summary">Summary</button>
+      <button data-page="homework">Homework</button>
+      <button data-page="vocab">Vocabulary</button>
+      <button data-page="quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ════════ PAGE: REVIEW ════════ -->
+  <section class="page" id="review">
+    <div class="page-header">
+      <span class="eyebrow">Recap / Ôn bài</span>
+      <h2>What did we learn last time?</h2>
+      <p>A quick review of Day 5 before we practise actor motions today!</p>
+      <span class="vi-hint">Ôn nhanh Buổi 5 trước khi thực hành kiến nghị theo vai hôm nay!</span>
+    </div>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <h4>🔗 Reasoning Chains</h4>
+        <p>Build a chain like dominoes! One point leads to the next: IF &rarr; THEN &rarr; BECAUSE &rarr; THEREFORE.</p>
+        <p class="vi">Xây chuỗi như domino! Một ý dẫn đến ý tiếp: NẾU → THÌ → VÌ → CHO NÊN.</p>
+      </div>
+      <div class="review-card">
+        <h4>👁️ Visualization</h4>
+        <p>Paint a picture for the judge! Use specific examples so they can SEE the problem.</p>
+        <p class="vi">Vẽ bức tranh cho giám khảo! Dùng ví dụ cụ thể để họ THẤY vấn đề.</p>
+      </div>
+      <div class="review-card">
+        <h4>📋 Complete Setup</h4>
+        <p>Never skip Definition, Goals, or Metrics. Your case setup must be COMPLETE!</p>
+        <p class="vi">Đừng bỏ Định nghĩa, Mục tiêu, hay Thước đo. Mở bài phải ĐẦY ĐỦ!</p>
+      </div>
+      <div class="review-card">
+        <h4>🛡️ Negative Arguments</h4>
+        <p>Use both a sword AND a shield: say why your idea is good AND why theirs is bad!</p>
+        <p class="vi">Dùng cả kiếm VÀ khiên: nói ý mình tốt VÀ ý đối phương xấu!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: PRACTICE ════════ -->
+  <section class="page" id="practice" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Practice / Thực hành</span>
+      <h2>Actor Motion: STEM vs ESL</h2>
+      <p>Today we practise an Actor Motion &mdash; you must think as a specific person!</p>
+      <span class="vi-hint">Hôm nay thực hành kiến nghị theo vai &mdash; em phải suy nghĩ như một người cụ thể!</span>
+    </div>
+
+    <!-- The motion -->
+    <div class="motion-box">
+      &ldquo;TH, <mark style="background:rgba(255,112,133,.25); padding:2px 6px; border-radius:6px; font-weight:900;">as Vietnamese parents</mark>, would <mark style="background:rgba(140,124,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">prioritize</mark> their children learning <mark style="background:rgba(85,200,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">STEM</mark> (Science, Technology, Engineering, Math) over learning <mark style="background:rgba(255,155,98,.25); padding:2px 6px; border-radius:6px; font-weight:900;">ESL</mark> (English as a Second Language).&rdquo;
+    </div>
+
+    <!-- Detective step -->
+    <div class="info-card">
+      <h3>🔍 Detective Step: What type is this motion?</h3>
+      <span class="vi-hint">Bước thám tử: Đây là loại kiến nghị gì?</span>
+
+      <p>Look at the keywords. Can you find the clue?</p>
+      <p class="vi">Nhìn kỹ các từ khóa. Em có thấy manh mối không?</p>
+
+      <div class="highlight-box">
+        <p>🎭 The motion says <strong style="color:var(--coral-dark);">&ldquo;TH, as Vietnamese parents&rdquo;</strong> &rarr; It has <strong>&ldquo;as X&rdquo;</strong> &rarr; This is an <strong>Actor Motion</strong>!</p>
+        <p class="vi">Kiến nghị có chữ &ldquo;as Vietnamese parents&rdquo; → Có &ldquo;as X&rdquo; → Đây là <strong>kiến nghị theo vai</strong>!</p>
+      </div>
+
+      <p>The actor is <strong>&ldquo;Vietnamese parents&rdquo;</strong>. We must think about what is best for THEM and their families &mdash; not for everyone in general.</p>
+      <p class="vi">Nhân vật là <strong>&ldquo;phụ huynh Việt Nam&rdquo;</strong>. Phải nghĩ về điều gì tốt nhất cho HỌ và gia đình — không phải cho tất cả mọi người nói chung.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Context</h4>
+          <p>Background info</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Definition</h4>
+          <p>2a. Keywords<br>2b. Characterise</p>
+        </div>
+        <div class="step special">
+          <div class="step-num">3</div>
+          <h4>Declaration of Interests</h4>
+          <p>What does X care about?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Goals / Metrics</h4>
+          <p>What to achieve?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <h4>Argumentation</h4>
+          <p>Your team&rsquo;s reasons</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Both sides -->
+    <div class="info-card">
+      <h3>⚔️ How Both Teams Approached It</h3>
+      <span class="vi-hint">Cả hai đội đã tiếp cận như thế nào</span>
+
+      <div class="two-teams">
+        <div class="team-card prop">
+          <h4>🟦 Proposition (STEM first)</h4>
+          <p class="en">Phe Ủng hộ: YES, STEM should come first!</p>
+          <ul>
+            <li><strong>Context:</strong> Vietnam needs science, technology, and innovation to develop</li>
+            <li><strong>Definition:</strong> STEM = Science, Technology, Engineering, Math. ESL = English as a Second Language</li>
+            <li><strong>Declaration:</strong> Parents want children to have many job opportunities</li>
+            <li><strong>Argument:</strong> Without investment in STEM, Vietnam may miss future opportunities</li>
+          </ul>
+        </div>
+        <div class="team-card opp">
+          <h4>🟥 Opposition (ESL first)</h4>
+          <p class="en">Phe Phản đối: NO, ESL should come first!</p>
+          <ul>
+            <li><strong>Context:</strong> Education in Europe and other countries is very strong</li>
+            <li><strong>Declaration:</strong> Parents want children to learn at good universities with a bright future</li>
+            <li><strong>Argument:</strong> Good universities mostly teach in English &rarr; English is the key to better education</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model speech -->
+    <div class="model-speech">
+      <h4>✨ Model Case Setup (Proposition)</h4>
+      <span class="vi-hint">Bài mẫu: phần mở bài mạnh (phe Ủng hộ)</span>
+
+      <span class="speech-label ctx">Context</span>
+      <p>&ldquo;Vietnam is currently in a <strong>global technology race</strong> and is falling behind countries such as the US, China, and Singapore. As Vietnam invests more in technology and STEM infrastructure, the job market is creating <strong>more opportunities</strong> in these fields. Therefore, young people need <strong>stronger STEM skills</strong> to prepare for future careers and contribute to the country&rsquo;s technological development.&rdquo;</p>
+      <p class="vi">Việt Nam đang trong cuộc đua công nghệ toàn cầu và đang tụt lại. Khi VN đầu tư nhiều hơn vào công nghệ, thị trường việc làm tạo nhiều cơ hội hơn → giới trẻ cần kỹ năng STEM mạnh hơn.</p>
+
+      <span class="speech-label doi">Declaration of Interests</span>
+      <p>&ldquo;Parents care about their <strong>children&rsquo;s future</strong>. They want them to have <strong>stable jobs</strong> with good opportunities for growth. They also want their children to enter good or even <strong>top-tier universities</strong>, which often provide more <strong>funding and opportunities</strong> for STEM majors.&rdquo;</p>
+      <p class="vi">Phụ huynh quan tâm tương lai con cái. Muốn con có việc làm ổn định, cơ hội phát triển. Muốn con vào đại học hàng đầu — nơi STEM có nhiều quỹ học bổng hơn.</p>
+
+      <div class="highlight-box">
+        <p>💡 <strong>Notice:</strong> The model speech uses reasoning chains AND specific examples to paint a clear picture!</p>
+        <p class="vi">Bài mẫu dùng chuỗi lập luận VÀ ví dụ cụ thể để vẽ bức tranh rõ ràng!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: DECLARATION OF INTERESTS ════════ -->
+  <section class="page" id="doi" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Key Concept / Khái niệm chính</span>
+      <h2>Declaration of Interests</h2>
+      <p>The SPECIAL step that makes actor motions different from all other types!</p>
+      <span class="vi-hint">Bước ĐẶC BIỆT khiến kiến nghị theo vai khác biệt với mọi loại khác!</span>
+    </div>
+
+    <div class="info-card">
+      <h3>🎭 Understanding Your Actor&rsquo;s Role</h3>
+      <span class="vi-hint">Hiểu vai trò của nhân vật</span>
+
+      <p>To explain someone&rsquo;s role in a debate, you need to understand <strong>three things</strong> about them. Think of it like becoming a character in a movie &mdash; you need to know HOW they think, WHAT drives them, and WHAT they care about.</p>
+      <p class="vi">Để giải thích vai trò của ai đó, bạn cần hiểu <strong>ba điều</strong> về họ. Giống như đóng vai trong phim — cần biết họ NGHĨ gì, ĐỘNG LỰC là gì, và QUAN TÂM gì.</p>
+
+      <div class="tri-card">
+        <div class="tri-item mentality">
+          <span class="tri-icon">🧠</span>
+          <h4>Mentality</h4>
+          <p>How does X think?<br>What is their mindset?</p>
+          <p class="vi">X suy nghĩ thế nào? Tư duy của họ ra sao?</p>
+        </div>
+        <div class="tri-item motivation">
+          <span class="tri-icon">🔥</span>
+          <h4>Motivation</h4>
+          <p>What pushes X to act?<br>What are their goals?</p>
+          <p class="vi">Điều gì thúc đẩy X hành động? Mục tiêu là gì?</p>
+        </div>
+        <div class="tri-item interests">
+          <span class="tri-icon">💎</span>
+          <h4>Interests</h4>
+          <p>What does X care about?<br>What matters most to X?</p>
+          <p class="vi">X quan tâm điều gì? Điều gì quan trọng nhất?</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>🎯 <strong>Key rule:</strong> These three things &mdash; mentality, motivation, and interests &mdash; are the sources of analysis for your arguments in actor motions!</p>
+        <p class="vi">Ba điều này — tư duy, động lực, lợi ích — là nguồn phân tích cho lập luận trong kiến nghị theo vai!</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>👨‍👩‍👧‍👦 Example: Vietnamese Parents</h3>
+      <span class="vi-hint">Ví dụ: Phụ huynh Việt Nam</span>
+
+      <p>Let&rsquo;s understand &ldquo;Vietnamese parents&rdquo; using the three things:</p>
+      <p class="vi">Hãy hiểu &ldquo;phụ huynh Việt Nam&rdquo; qua ba điều:</p>
+
+      <div class="tri-card">
+        <div class="tri-item mentality">
+          <span class="tri-icon">🧠</span>
+          <h4>Mentality</h4>
+          <p>Vietnamese parents think long-term. They plan for their children&rsquo;s future from a young age.</p>
+          <p class="vi">Phụ huynh VN nghĩ dài hạn. Họ lên kế hoạch cho tương lai con từ nhỏ.</p>
+        </div>
+        <div class="tri-item motivation">
+          <span class="tri-icon">🔥</span>
+          <h4>Motivation</h4>
+          <p>They want their children to have a better life &mdash; a good education and a stable career.</p>
+          <p class="vi">Muốn con có cuộc sống tốt hơn — học tốt và nghề nghiệp ổn định.</p>
+        </div>
+        <div class="tri-item interests">
+          <span class="tri-icon">💎</span>
+          <h4>Interests</h4>
+          <p>Job opportunities, university quality, family pride, children&rsquo;s happiness and growth.</p>
+          <p class="vi">Cơ hội việc làm, chất lượng đại học, niềm tự hào gia đình, hạnh phúc và phát triển của con.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>⚠️ <strong>Remember from Day 4:</strong> When X is &ldquo;parents&rdquo;, you care about their <strong>children and community (family)</strong> too, not just the parents alone!</p>
+        <p class="vi">Nhớ từ Buổi 4: Khi X là &ldquo;phụ huynh&rdquo;, phải quan tâm đến <strong>con cái và cộng đồng (gia đình)</strong>, không chỉ phụ huynh!</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>🔑 How Declaration of Interests Helps Your Arguments</h3>
+      <span class="vi-hint">Tuyên bố lợi ích giúp lập luận như thế nào</span>
+
+      <p>Once you understand X&rsquo;s mentality, motivation, and interests, you can build <strong>stronger arguments</strong>. These become the building blocks for your reasoning chains!</p>
+      <p class="vi">Khi hiểu tư duy, động lực, và lợi ích của X, em có thể xây <strong>lập luận mạnh hơn</strong>. Đây là khối xây cho chuỗi lập luận!</p>
+
+      <div class="two-teams">
+        <div class="team-card prop">
+          <h4>🟦 Using it for Proposition</h4>
+          <p class="en">&ldquo;Parents want stable jobs for their children. STEM fields offer more jobs in Vietnam&rsquo;s growing tech sector. Therefore, parents should prioritize STEM.&rdquo;</p>
+        </div>
+        <div class="team-card opp">
+          <h4>🟥 Using it for Opposition</h4>
+          <p class="en">&ldquo;Parents want the best education. Top universities worldwide teach in English. Therefore, parents should prioritize ESL to access better education.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: SUMMARY ════════ -->
+  <section class="page" id="summary" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Day 6 Summary / Tóm tắt buổi 6</span>
+      <h2>Actor Motions in Action</h2>
+      <p>Hãy ôn lại những điều quan trọng nhất từ buổi thực hành hôm nay!</p>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">🎭 Part 1 — Actor Motion Recap / Ôn kiến nghị theo vai</span>
+
+      <div class="info-card">
+        <h3>You ARE the character!</h3>
+        <span class="vi-hint">Em LÀ nhân vật đó!</span>
+
+        <p>In actor motions, you &ldquo;wear a costume&rdquo; and become someone else. Today you were <strong>Vietnamese parents</strong> &mdash; and you had to think about what&rsquo;s best for THEM and their children.</p>
+        <p class="vi">Trong kiến nghị theo vai, em &ldquo;mặc trang phục&rdquo; và trở thành người khác. Hôm nay em là <strong>phụ huynh Việt Nam</strong> — và phải nghĩ điều gì tốt nhất cho HỌ và con cái.</p>
+
+        <div class="summary-grid">
+          <div class="takeaway">
+            <span class="takeaway-icon">🟦</span>
+            <h4>STEM First (Prop)</h4>
+            <p>Vietnam needs tech &rarr; more STEM jobs &rarr; parents want stable careers for their children.</p>
+            <p class="vi">VN cần công nghệ → nhiều việc STEM hơn → phụ huynh muốn con có nghề ổn định.</p>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-icon">🟥</span>
+            <h4>ESL First (Opp)</h4>
+            <p>Good universities teach in English &rarr; English = key to better education &rarr; parents want the best schools.</p>
+            <p class="vi">Đại học tốt dạy bằng tiếng Anh → tiếng Anh = chìa khóa → phụ huynh muốn trường tốt nhất.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">🧠🔥💎 Part 2 — The Actor Analysis Triangle / Tam giác phân tích vai</span>
+
+      <div class="info-card">
+        <h3>Three keys to understand any actor!</h3>
+        <span class="vi-hint">Ba chìa khóa để hiểu bất kỳ nhân vật nào!</span>
+
+        <p>Think of it like a recipe with three secret ingredients. Without ALL three, your Declaration of Interests is not complete.</p>
+        <p class="vi">Giống công thức với ba nguyên liệu bí mật. Thiếu một, Tuyên bố lợi ích chưa đầy đủ.</p>
+
+        <div class="highlight-box">
+          <p>🧠 <strong>Mentality</strong> (How they think) + 🔥 <strong>Motivation</strong> (What drives them) + 💎 <strong>Interests</strong> (What they care about) = Strong Declaration!</p>
+          <p class="vi">Tư duy + Động lực + Lợi ích = Tuyên bố mạnh!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">📋 Part 3 — Actor Motion Recipe / Công thức kiến nghị theo vai</span>
+
+      <div class="info-card">
+        <h3>5 steps for actor motions!</h3>
+        <span class="vi-hint">5 bước cho kiến nghị theo vai!</span>
+
+        <p>Remember: actor motions have ONE MORE step than value motions. The special step is <strong>Declaration of Interests</strong> &mdash; step 3!</p>
+        <p class="vi">Nhớ: kiến nghị theo vai có THÊM MỘT bước so với kiến nghị giá trị. Bước đặc biệt là <strong>Tuyên bố lợi ích</strong> — bước 3!</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Context</h4>
+            <p>Background</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Definition</h4>
+            <p>Keywords</p>
+          </div>
+          <div class="step special">
+            <div class="step-num">3</div>
+            <h4>Declaration</h4>
+            <p>X&rsquo;s interests</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h4>Goals</h4>
+            <p>Metrics</p>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <h4>Arguments</h4>
+            <p>Reasons</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <span class="section-label">⭐ Part 4 — Key Takeaways / Điểm quan trọng</span>
+
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 1:</strong> Actor motions need a Declaration of Interests &mdash; explain what X cares about using mentality, motivation, and interests.</p>
+        <p class="vi">Kiến nghị theo vai cần Tuyên bố lợi ích — giải thích X quan tâm gì dựa vào tư duy, động lực, lợi ích.</p>
+      </div>
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 2:</strong> When X is &ldquo;parents&rdquo;, always consider their children and family &mdash; not just the parents themselves.</p>
+        <p class="vi">Khi X là phụ huynh, luôn xét con cái và gia đình — không chỉ phụ huynh.</p>
+      </div>
+      <div class="highlight-box">
+        <p>🎯 <strong>Takeaway 3:</strong> Use the model speech as a guide &mdash; combine context, declaration, AND reasoning chains for a strong case.</p>
+        <p class="vi">Dùng bài mẫu làm hướng dẫn — kết hợp bối cảnh, tuyên bố, VÀ chuỗi lập luận cho bài mạnh.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: HOMEWORK ════════ -->
+  <section class="page" id="homework" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Homework / Bài tập về nhà</span>
+      <h2>Prepare Your Case</h2>
+      <p>Build a full case for this actor motion &mdash; for BOTH sides!</p>
+      <span class="vi-hint">Xây dựng bài đầy đủ cho kiến nghị theo vai này — cho CẢ HAI PHE!</span>
+    </div>
+
+    <!-- The motion -->
+    <div class="homework-card">
+      <h3>📝 Your Motion / Kiến nghị của em</h3>
+      <div class="motion-text">&ldquo;TH, <mark style="background:rgba(255,112,133,.25); padding:2px 6px; border-radius:6px; font-weight:900;">as Vietnamese parents</mark>, would prioritize their children learning STEM over learning ESL.&rdquo;</div>
+      <p><strong>Type:</strong> 🎭 TH, as X &rarr; <strong>Actor Motion</strong> &rarr; 5 case building steps (includes Declaration of Interests!)</p>
+      <p class="vi">Loại: TH, as X → Kiến nghị theo vai → 5 bước (có Tuyên bố lợi ích!)</p>
+    </div>
+
+    <div class="info-card" style="margin-top:22px;">
+      <h3>📋 What to do / Cần làm gì</h3>
+      <p>Prepare the full case setup for <strong>BOTH sides</strong> (Proposition AND Opposition). Remember to use <strong>all 5 steps</strong> including Declaration of Interests!</p>
+      <p class="vi">Chuẩn bị mở bài đầy đủ cho <strong>CẢ HAI PHE</strong>. Nhớ dùng <strong>đủ 5 bước</strong> kể cả Tuyên bố lợi ích!</p>
+
+      <div class="highlight-box">
+        <p>💡 <strong>Remember:</strong> Understand the actor&rsquo;s mentality 🧠, motivation 🔥, and interests 💎 to write a strong Declaration of Interests!</p>
+        <p class="vi">Nhớ hiểu tư duy 🧠, động lực 🔥, và lợi ích 💎 của nhân vật để viết Tuyên bố lợi ích mạnh!</p>
+      </div>
+    </div>
+
+    <!-- ─── PROPOSITION SIDE ─── -->
+    <span class="hw-side-label prop">🟦 Proposition — Phe Ủng hộ (YES, STEM first)</span>
+
+    <div class="info-card">
+      <h3>📋 Step 1: Context / Bối cảnh</h3>
+      <p>What is happening in Vietnam and the world that makes STEM important?</p>
+      <p class="vi">Điều gì đang xảy ra ở Việt Nam và thế giới khiến STEM quan trọng?</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-1">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-1" hidden>
+        <ul>
+          <li>❓ Think about technology and innovation in the world today. <span class="vi">(Nghĩ về công nghệ và đổi mới trên thế giới.)</span></li>
+          <li>❓ Where does Vietnam stand compared to other countries? <span class="vi">(Việt Nam đang ở đâu so với các nước khác?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 2: Definition / Định nghĩa</h3>
+      <p>Define the key terms: STEM, ESL, and &ldquo;prioritize.&rdquo;</p>
+      <p class="vi">Định nghĩa các từ khóa: STEM, ESL, và &ldquo;ưu tiên.&rdquo;</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-2">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-2" hidden>
+        <ul>
+          <li>❓ What does each letter in STEM stand for? <span class="vi">(Mỗi chữ trong STEM có nghĩa gì?)</span></li>
+          <li>❓ Does &ldquo;prioritize&rdquo; mean STOP learning ESL, or just focus MORE on STEM? <span class="vi">(Ưu tiên có nghĩa NGỪNG học ESL, hay chỉ TẬP TRUNG HƠN vào STEM?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 3: Declaration of Interests / Tuyên bố lợi ích</h3>
+      <p>As Vietnamese parents, what do you care about most for your children?</p>
+      <p class="vi">Là phụ huynh Việt Nam, em quan tâm điều gì nhất cho con cái?</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-3">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-3" hidden>
+        <ul>
+          <li>❓ Think about mentality, motivation, and interests of Vietnamese parents. <span class="vi">(Nghĩ về tư duy, động lực, lợi ích của phụ huynh VN.)</span></li>
+          <li>❓ What future do they want for their children? <span class="vi">(Họ muốn tương lai gì cho con?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 4: Goals &amp; Metrics / Mục tiêu &amp; Thước đo</h3>
+      <p>What do you want to achieve by prioritizing STEM?</p>
+      <p class="vi">Em muốn đạt được gì khi ưu tiên STEM?</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-4">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-4" hidden>
+        <ul>
+          <li>❓ Think about careers, jobs, and contributions to Vietnam&rsquo;s development. <span class="vi">(Nghĩ về nghề nghiệp, việc làm, đóng góp cho sự phát triển VN.)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 5: Argumentation / Lập luận</h3>
+      <p>Give 2&ndash;3 strong reasons with reasoning chains!</p>
+      <p class="vi">Đưa ra 2&ndash;3 lý do mạnh với chuỗi lập luận!</p>
+      <button class="hint-btn" type="button" data-hint="hint-prop-5">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-prop-5" hidden>
+        <ul>
+          <li>❓ Build each argument as a chain: IF &rarr; THEN &rarr; BECAUSE &rarr; THEREFORE. <span class="vi">(Xây chuỗi: NẾU → THÌ → VÌ → CHO NÊN.)</span></li>
+          <li>❓ Think about job market, university opportunities, and Vietnam&rsquo;s future. <span class="vi">(Nghĩ về thị trường việc làm, cơ hội đại học, và tương lai VN.)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <!-- ─── OPPOSITION SIDE ─── -->
+    <span class="hw-side-label opp">🟥 Opposition — Phe Phản đối (NO, ESL first)</span>
+
+    <div class="info-card">
+      <h3>📋 Step 1: Context / Bối cảnh</h3>
+      <p>What is happening in the world that makes English important?</p>
+      <p class="vi">Điều gì đang xảy ra trên thế giới khiến tiếng Anh quan trọng?</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-1">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-1" hidden>
+        <ul>
+          <li>❓ Think about education and communication around the world. <span class="vi">(Nghĩ về giáo dục và giao tiếp trên thế giới.)</span></li>
+          <li>❓ What language do most international businesses and universities use? <span class="vi">(Ngôn ngữ nào được doanh nghiệp và đại học quốc tế sử dụng?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 2: Definition / Định nghĩa</h3>
+      <p>Define the same key terms from your side&rsquo;s perspective.</p>
+      <p class="vi">Định nghĩa các từ khóa từ góc nhìn phe em.</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-2">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-2" hidden>
+        <ul>
+          <li>❓ Does &ldquo;prioritize STEM over ESL&rdquo; mean children will have less time for English? <span class="vi">(Ưu tiên STEM hơn ESL có nghĩa con sẽ ít thời gian học tiếng Anh?)</span></li>
+          <li>❓ What could be the problem with that? <span class="vi">(Vấn đề có thể là gì?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 3: Declaration of Interests / Tuyên bố lợi ích</h3>
+      <p>As Vietnamese parents, what do you care about that makes ESL more important?</p>
+      <p class="vi">Là phụ huynh VN, em quan tâm điều gì khiến ESL quan trọng hơn?</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-3">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-3" hidden>
+        <ul>
+          <li>❓ Think about what parents want for their children&rsquo;s education and future opportunities. <span class="vi">(Nghĩ về điều phụ huynh muốn cho giáo dục và cơ hội tương lai.)</span></li>
+          <li>❓ Where can English take children that STEM alone cannot? <span class="vi">(Tiếng Anh có thể đưa con đến đâu mà chỉ STEM không thể?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 4: Goals &amp; Metrics / Mục tiêu &amp; Thước đo</h3>
+      <p>What do you want to achieve by prioritizing ESL?</p>
+      <p class="vi">Em muốn đạt được gì khi ưu tiên ESL?</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-4">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-4" hidden>
+        <ul>
+          <li>❓ Think about access to education, communication with the world, and career opportunities. <span class="vi">(Nghĩ về tiếp cận giáo dục, giao tiếp với thế giới, và cơ hội nghề nghiệp.)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Step 5: Argumentation / Lập luận</h3>
+      <p>Give 2&ndash;3 strong reasons with reasoning chains! Don&rsquo;t forget negative arguments.</p>
+      <p class="vi">Đưa ra 2&ndash;3 lý do mạnh với chuỗi lập luận! Đừng quên lập luận phản bác.</p>
+      <button class="hint-btn" type="button" data-hint="hint-opp-5">🔑 Gợi ý</button>
+      <div class="hint-content" id="hint-opp-5" hidden>
+        <ul>
+          <li>❓ Think about how English opens doors to international universities and jobs. <span class="vi">(Nghĩ về cách tiếng Anh mở cửa đại học và việc làm quốc tế.)</span></li>
+          <li>❓ What problems might happen if children don&rsquo;t learn English well? <span class="vi">(Vấn đề gì xảy ra nếu trẻ không giỏi tiếng Anh?)</span></li>
+        </ul>
+      </div>
+      <p class="hint-error" hidden></p>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: VOCABULARY ════════ -->
+  <section class="page" id="vocab" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Vocabulary / Từ vựng</span>
+      <h2>Debate Vocabulary</h2>
+      <p>Key English words you need to remember from today&rsquo;s lesson!</p>
+    </div>
+
+    <div class="vocab-controls">
+      <input class="vocab-search" id="vocabSearch" type="text" placeholder="Search vocabulary...">
+    </div>
+
+    <div class="vocab-wrap">
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Word</th><th>American IPA</th><th>SOUND IT OUT</th><th>Type</th><th>English meaning + Vietnamese</th><th>Audio</th></tr>
+        </thead>
+        <tbody id="vocabBody"></tbody>
+      </table>
+    </div>
+    <p class="api-key-status" id="mwApiStatus">Checking audio configuration&hellip;</p>
+  </section>
+
+  <!-- ════════ PAGE: QUIZ ════════ -->
+  <section class="page" id="quiz" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Quiz</span>
+      <h2>Day 6 Quiz Challenge</h2>
+      <p>Nothing is graded while you work &mdash; results only appear after you submit all answers.</p>
+    </div>
+
+    <div class="quiz-intro">
+      <p class="quiz-rule">10 concept questions &middot; 8 picture word puzzles &middot; Optional audio hints</p>
+      <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
+    </div>
+
+    <form id="quizForm" novalidate>
+      <section class="quiz-group" aria-labelledby="conceptQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129504;</span>
+          <div>
+            <p>Part A</p>
+            <h3 id="conceptQuizTitle">Concept Quiz</h3>
+            <span>Tick one answer for each lesson concept.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="conceptQuizList"></div>
+      </section>
+
+      <section class="quiz-group" aria-labelledby="vocabularyQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129513;</span>
+          <div>
+            <p>Part B</p>
+            <h3 id="vocabularyQuizTitle">Vocabulary Picture Quiz</h3>
+            <span>Use the first letter and picture. Tick the audio hint only when needed.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="vocabularyQuizList"></div>
+      </section>
+
+      <div class="quiz-actions">
+        <button class="submit-quiz" type="submit">SUBMIT ALL ANSWERS</button>
+        <button class="reset-quiz" id="resetQuiz" type="button">TRY AGAIN</button>
+        <p class="quiz-message" id="quizMessage" role="alert"></p>
+      </div>
+    </form>
+
+    <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
+      <div class="quiz-score" id="quizScore">0 / 18</div>
+      <h3 id="quizHeadline">Nice effort!</h3>
+      <p id="quizResultText"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="../index.html">&larr; Back to Home</a> &nbsp;|&nbsp; English Debate Club &copy; 2025
+</footer>
+
+<script src="../config.js"></script>
+<script>
+// ═══════ TAB NAVIGATION ═══════
+const navButtons = document.querySelectorAll('#mainNav button[data-page]');
+const pages = document.querySelectorAll('.page');
+
+function showPage(id) {
+  pages.forEach(p => p.hidden = (p.id !== id));
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.page === id));
+  window.scrollTo(0, 0);
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+
+// ═══════ VOCABULARY DATA ═══════
+const vocabulary = [
+  ["prioritize", "/praɪˈɔːrɪˌtaɪz/", "pry-OR-ih-tyz", "verb", "to put something first because it is most important", "ưu tiên"],
+  ["priority", "/praɪˈɔːrɪti/", "pry-OR-ih-tee", "noun", "something that is more important than other things", "sự ưu tiên"],
+  ["contribute", "/kənˈtrɪbjuːt/", "kuhn-TRIH-byoot", "verb", "to give or add something to help", "đóng góp"],
+  ["contribution", "/ˌkɑːntrɪˈbjuːʃən/", "kahn-trih-BYOO-shuhn", "noun", "something you give or do to help", "sự đóng góp"],
+  ["declaration", "/ˌdeklərˈeɪʃən/", "dek-luh-RAY-shuhn", "noun", "an official statement about something", "sự tuyên bố / khẳng định"],
+  ["foreign", "/ˈfɔːrən/", "FOR-uhn", "adjective", "from another country", "nước ngoài"],
+  ["investment", "/ɪnˈvestmənt/", "in-VEST-muhnt", "noun", "money or time put into something to make it better", "sự đầu tư / khoản đầu tư"],
+  ["career", "/kəˈrɪr/", "kuh-REER", "noun", "the job or work you do for a long time", "sự nghiệp"],
+  ["crisis", "/ˈkraɪsɪs/", "KRY-sis", "noun", "a very difficult or dangerous situation", "khủng hoảng"],
+  ["character", "/ˈkærɪktər/", "KAR-ik-ter", "noun", "a person in a story, play, or debate role", "nhân vật"],
+  ["mentality", "/menˈtæləti/", "men-TAL-ih-tee", "noun", "the way someone thinks about things", "tư duy / cách nghĩ"],
+  ["innovation", "/ˌɪnəˈveɪʃən/", "in-uh-VAY-shuhn", "noun", "a new idea, method, or invention", "sự đổi mới / sáng tạo"],
+  ["infrastructure", "/ˈɪnfrəˌstrʌktʃər/", "IN-fruh-struk-cher", "noun", "basic systems a country needs like roads and internet", "cơ sở hạ tầng"],
+  ["stable", "/ˈsteɪbəl/", "STAY-buhl", "adjective", "not changing; safe and reliable", "ổn định"],
+  ["opportunity", "/ˌɑːpərˈtuːnɪti/", "ah-per-TOO-nih-tee", "noun", "a chance to do something good", "cơ hội"],
+  ["technology", "/tekˈnɑːlədʒi/", "tek-NAH-luh-jee", "noun", "machines and systems made by science", "công nghệ"],
+  ["engineering", "/ˌendʒɪˈnɪrɪŋ/", "en-jih-NEER-ing", "noun", "using science to design and build things", "kỹ thuật"],
+  ["funding", "/ˈfʌndɪŋ/", "FUN-ding", "noun", "money given for a special purpose", "nguồn tài trợ"],
+  ["major", "/ˈmeɪdʒər/", "MAY-jer", "noun / adjective", "a main subject at university; very important", "chuyên ngành / quan trọng"],
+  ["top-tier", "", "TOP TEER", "adjective", "the very best level or quality", "hàng đầu / đẳng cấp cao"],
+];
+
+// ═══════ MERRIAM-WEBSTER AUDIO ═══════
+const audioCache = new Map();
+const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
+const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
+const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
+const mwApiStatus = document.getElementById("mwApiStatus");
+
+mwApiStatus.textContent = hasMwApiKey
+  ? "✓ API key loaded from config.js. Merriam-Webster audio is ready."
+  : "⚙ Add your Intermediate Dictionary key to MW_API_KEY in config.js to enable audio.";
+
+function findAudioFile(value) {
+  if (!value || typeof value !== "object") return "";
+  if (typeof value.audio === "string" && value.audio) return value.audio;
+  for (const child of Object.values(value)) {
+    const found = findAudioFile(child);
+    if (found) return found;
+  }
+  return "";
+}
+
+function audioSubdirectory(filename) {
+  if (filename.startsWith("bix")) return "bix";
+  if (filename.startsWith("gg")) return "gg";
+  if (/^[^a-zA-Z]/.test(filename)) return "number";
+  return filename[0].toLowerCase();
+}
+
+async function getMerriamWebsterAudioUrl(word) {
+  if (audioCache.has(word)) return audioCache.get(word);
+  const endpoint = `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
+  const response = await fetch(endpoint);
+  if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
+  const entries = await response.json();
+  const filename = findAudioFile(entries);
+  if (!filename) throw new Error("No Merriam-Webster recording was found for this word.");
+  const folder = audioSubdirectory(filename);
+  const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
+  audioCache.set(word, url);
+  return url;
+}
+
+async function speakWord(word) {
+  if (!hasMwApiKey) {
+    mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
+    showPage('vocab');
+    throw new Error("API key missing");
+  }
+  mwApiStatus.textContent = `Loading "${word}" from Merriam-Webster…`;
+  try {
+    const url = await getMerriamWebsterAudioUrl(word);
+    const audio = new Audio(url);
+    await audio.play();
+    mwApiStatus.textContent = `▶ Playing "${word}" with Merriam-Webster audio.`;
+  } catch (error) {
+    if (error.message === "API key missing") throw error;
+    mwApiStatus.textContent = `Could not play "${word}". Check that the key is for the Intermediate Dictionary (sd3) and try again.`;
+    throw error;
+  }
+}
+
+// ═══════ RENDER VOCABULARY TABLE ═══════
+const vocabBody = document.getElementById("vocabBody");
+const vocabSearch = document.getElementById("vocabSearch");
+
+function renderVocabulary() {
+  const query = vocabSearch.value.trim().toLowerCase();
+  const matches = vocabulary.filter(row =>
+    row.join(" ").toLowerCase().includes(query)
+  );
+  vocabBody.innerHTML = "";
+  matches.forEach(([word, ipa, soundOut, type, en, vi]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="word">${word}</td>
+      <td class="ipa">${ipa}</td>
+      <td class="sound-it-out">${soundOut}</td>
+      <td>${type}</td>
+      <td><div class="meaning-en">${en}</div><div class="meaning-vi">${vi}</div></td>
+      <td>${ipa ? `<button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button>` : ''}</td>`;
+    const btn = row.querySelector("button");
+    if (btn) btn.addEventListener("click", () => speakWord(word.split(" ")[0]).catch(() => {}));
+    vocabBody.appendChild(row);
+  });
+}
+
+vocabSearch.addEventListener("input", renderVocabulary);
+renderVocabulary();
+
+// ═══════ QUIZ DATA ═══════
+const quizQuestions = [
+  { type: "choice", kind: "Concept", prompt: "What type of motion is 'TH, as Vietnamese parents, would prioritize STEM over ESL'?",
+    options: ["Policy motion (THW)", "Value motion (THBT)", "Actor motion (TH, as X)", "Speaker motion"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "What SPECIAL step does an actor motion have that other types don't?",
+    options: ["Policy / Model", "Declaration of Interests", "Punishment", "Voting"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "In a Declaration of Interests, you need to explain…",
+    options: ["What the judge wants", "What the actor (X) cares about most", "What the rules say", "What the audience likes"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What are the 3 things you need to understand about an actor?",
+    options: ["Name, age, and job", "Mentality, motivation, and interests", "Height, weight, and speed", "Past, present, and future"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What does STEM stand for?",
+    options: ["Science, Teaching, English, Math", "Science, Technology, Engineering, Math", "Sports, Technology, Education, Music", "Science, Testing, Engineering, Medicine"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What does ESL stand for?",
+    options: ["Every Student Learns", "English as a Second Language", "Education for Smart Leaders", "English Skills Level"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Why did the Proposition say STEM should come first?",
+    options: ["Because English is too easy", "Because Vietnam needs technology and STEM creates more jobs", "Because parents don't like English", "Because STEM is cheaper to learn"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Why did the Opposition say ESL should come first?",
+    options: ["Because English is fun", "Because good universities teach in English", "Because STEM is boring", "Because parents speak English"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "How many case building steps does an actor motion need?",
+    options: ["3 steps", "4 steps", "5 steps", "6 steps"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "When X is 'parents', what else must you care about?",
+    options: ["Only the parents themselves", "The judge and audience", "Their children and family (community)", "The teacher"], answer: 2 },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "prioritize",
+    emoji: "⭐", imageLabel: "Star for prioritize" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "contribute",
+    emoji: "🤝", imageLabel: "Handshake for contribute" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "investment",
+    emoji: "💰", imageLabel: "Money bag for investment" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "innovation",
+    emoji: "💡", imageLabel: "Light bulb for innovation" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "technology",
+    emoji: "💻", imageLabel: "Laptop for technology" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "opportunity",
+    emoji: "🚪", imageLabel: "Door for opportunity" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "mentality",
+    emoji: "🧠", imageLabel: "Brain for mentality" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "engineering",
+    emoji: "⚙️", imageLabel: "Gear for engineering" },
+];
+
+// ═══════ RENDER QUIZ ═══════
+const quizForm = document.getElementById("quizForm");
+const conceptQuizList = document.getElementById("conceptQuizList");
+const vocabularyQuizList = document.getElementById("vocabularyQuizList");
+const quizProgress = document.getElementById("quizProgress");
+const quizMessage = document.getElementById("quizMessage");
+const quizResult = document.getElementById("quizResult");
+const quizScore = document.getElementById("quizScore");
+const quizHeadline = document.getElementById("quizHeadline");
+const quizResultText = document.getElementById("quizResultText");
+
+quizQuestions.forEach((question, index) => {
+  const card = document.createElement("article");
+  card.className = "quiz-card";
+  card.dataset.question = String(index);
+
+  const answerArea = question.type === "choice"
+    ? `<div class="quiz-options" role="radiogroup" aria-labelledby="prompt-${index}">
+        ${question.options.map((option, oi) => `
+          <label class="quiz-option">
+            <input type="radio" name="quiz-${index}" value="${oi}">
+            <span>${String.fromCharCode(65 + oi)}. ${option}</span>
+          </label>`).join("")}
+       </div>`
+    : `<div class="spelling-card">
+        <div class="quiz-picture" role="img" aria-label="${question.imageLabel}">${question.emoji}</div>
+        <div>
+          <div class="word-starter" aria-label="Starts with ${question.word[0]} and has ${question.word.length} letters">
+            <span class="first-letter">${question.word[0].toUpperCase()}</span>
+            <span class="word-blanks">${"_ ".repeat(question.word.length - 1).trim()}</span>
+          </div>
+          <label for="quiz-${index}">Type the remaining letters</label>
+          <input class="letter-answer" id="quiz-${index}" name="quiz-${index}"
+            type="text" maxlength="${question.word.length - 1}" inputmode="text" autocomplete="off" spellcheck="false"
+            placeholder="Complete the word">
+          <label class="audio-hint">
+            <input class="audio-hint-toggle" type="checkbox" data-word="${question.word}">
+            <span>🔊 Tick to hear an audio hint</span>
+          </label>
+        </div>
+       </div>`;
+
+  card.innerHTML = `
+    <div class="quiz-topline">
+      <span class="quiz-number">${index + 1}</span>
+      <span class="quiz-kind">${question.kind}</span>
+    </div>
+    <div id="prompt-${index}" class="quiz-prompt">${question.prompt}</div>
+    ${answerArea}
+    <p class="question-status" id="status-${index}" aria-live="polite"></p>`;
+  (question.type === "choice" ? conceptQuizList : vocabularyQuizList).appendChild(card);
+});
+
+let quizHasBeenGraded = false;
+
+function isQuestionAnswered(question, index) {
+  if (question.type === "choice") return Boolean(document.querySelector(`input[name="quiz-${index}"]:checked`));
+  return Boolean(document.getElementById(`quiz-${index}`).value.trim());
+}
+
+function clearQuizFeedback() {
+  if (!quizHasBeenGraded) return;
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizHasBeenGraded = false;
+}
+
+function updateQuizProgress() {
+  const answered = quizQuestions.filter(isQuestionAnswered).length;
+  quizProgress.textContent = `${answered} of ${quizQuestions.length} answered`;
+  quizMessage.textContent = "";
+}
+
+quizForm.addEventListener("input", event => {
+  if (event.target.matches(".letter-answer")) {
+    event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "").toUpperCase();
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("change", event => {
+  if (event.target.matches(".audio-hint-toggle")) {
+    if (event.target.checked) {
+      speakWord(event.target.dataset.word).catch(() => { event.target.checked = false; });
+    }
+    return;
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const firstUnanswered = quizQuestions.findIndex((q, i) => !isQuestionAnswered(q, i));
+  if (firstUnanswered !== -1) {
+    quizMessage.textContent = `Please answer all ${quizQuestions.length} questions before submitting.`;
+    const q = quizQuestions[firstUnanswered];
+    const target = q.type === "choice"
+      ? document.querySelector(`input[name="quiz-${firstUnanswered}"]`)
+      : document.getElementById(`quiz-${firstUnanswered}`);
+    target.focus();
+    quizResult.hidden = true;
+    return;
+  }
+
+  let score = 0;
+  quizQuestions.forEach((question, index) => {
+    const card = document.querySelector(`[data-question="${index}"]`);
+    const status = document.getElementById(`status-${index}`);
+    const isCorrect = question.type === "choice"
+      ? Number(document.querySelector(`input[name="quiz-${index}"]:checked`).value) === question.answer
+      : `${question.word[0]}${document.getElementById(`quiz-${index}`).value.trim().toLowerCase()}` === question.word;
+
+    card.classList.toggle("correct", isCorrect);
+    card.classList.toggle("incorrect", !isCorrect);
+    status.textContent = isCorrect ? "✓ Correct" : "↻ Review this one";
+    status.style.color = isCorrect ? "#18885d" : "#d94f68";
+    if (isCorrect) score += 1;
+  });
+
+  const percentage = Math.round((score / quizQuestions.length) * 100);
+  quizScore.textContent = `${score} / ${quizQuestions.length}`;
+  quizHeadline.textContent =
+    percentage === 100 ? "Outstanding work! 🌟" :
+    percentage >= 75 ? "Great job! 🎉" :
+    percentage >= 50 ? "Good effort—keep practising! 💪" :
+    "Let's review and try again! 📚";
+  quizResultText.textContent = `You scored ${percentage}%. Correct answers are not revealed — review the lesson and try again!`;
+  quizResult.hidden = false;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = true;
+  quizResult.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+document.getElementById("resetQuiz").addEventListener("click", () => {
+  quizForm.reset();
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = false;
+  updateQuizProgress();
+  document.querySelector('input[name="quiz-0"]').focus();
+});
+
+// ═══════ HOMEWORK HINT PASSWORD GATE ═══════
+document.querySelectorAll(".hint-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const hintId = btn.dataset.hint;
+    const hintDiv = document.getElementById(hintId);
+    const errorP = btn.parentElement.querySelector(".hint-error");
+    if (!hintDiv || btn.classList.contains("unlocked")) return;
+
+    const pass = prompt("Nhập mật khẩu (dành cho phụ huynh):");
+    if (pass === null) return;
+
+    if (pass === "000000") {
+      hintDiv.hidden = false;
+      btn.textContent = "✓ Đã mở";
+      btn.classList.add("unlocked");
+      errorP.hidden = true;
+    } else {
+      errorP.textContent = "Sai mật khẩu. Hãy nhờ ba mẹ nhập giúp nhé!";
+      errorP.hidden = false;
+    }
+  });
+});
+</script>
+
+</body>
+</html>
