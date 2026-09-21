@@ -4,7 +4,7 @@ Use this workflow when creating a debate lesson for Vietnamese ESL learners aged
 
 ## Core rule: source first
 
-The files in `datainput/buoi N/` are the sole authority for curricular content.
+The files in the directory matching `datainput/buoi N*/` are the sole authority for curricular content. Date suffixes such as `buoi 7 15092026` are valid. If more than one directory matches the same session, ask the user which source is authoritative.
 
 Every item in the lesson must be one of these:
 
@@ -15,21 +15,27 @@ Every item in the lesson must be one of these:
 
 Do not add debate rules, motion types, examples, metaphors, model answers, factual claims, homework clues, or teaching frameworks that are absent from the source. If useful new content is genuinely needed, ask the user first.
 
+Preserve the strength and attribution of every claim:
+
+- Do not strengthen “supports” or “protects” into “proves better” unless the source says so.
+- Keep student drafts, teacher feedback, and sample-speech claims visibly attributed.
+- A simpler paraphrase may shorten wording, but it must not add certainty, causation, scope, or evaluation.
+
 ## Required input
 
 Confirm:
 
 1. Session number N.
-2. Source files in `datainput/buoi N/`.
+2. Source files in the single matching `datainput/buoi N*/` directory.
 3. Output file `lessons/dayN.html`.
 
 ## Workflow
 
 ### Phase 1 — Extract the complete source
 
-Read every relevant file, including all paragraphs, tables, text boxes, speaker notes, and slide text.
+Read every relevant file, including all paragraphs, tables, embedded text boxes, headers, footers, footnotes, endnotes, speaker notes, and slide text.
 
-For DOCX, extract both paragraphs and tables. For PPTX, extract slide text and only create slide images when the lesson needs them.
+For DOCX, extract paragraphs, tables, embedded text boxes, headers, footers, footnotes, and endnotes. For PPTX, extract slide text and speaker notes, and only create slide images when the lesson needs them.
 
 Build a source outline with stable references such as paragraph, table, row, or slide number. Include:
 
@@ -81,7 +87,7 @@ Typical source-driven structure:
 
 Create a pure static, single-file SPA in `lessons/dayN.html`. Preserve the established design system, tab navigation, responsive layout, and working interaction patterns from existing lessons.
 
-Use short A2/B1 English and concise Vietnamese support. Simplify wording without changing the teacher’s meaning.
+Use short A2/B1 English and concise Vietnamese support. Translate each teaching component closely enough that a Vietnamese ESL learner can follow its distinct meaning; do not replace several detailed source points with one vague Vietnamese summary. Simplify wording without changing the teacher’s meaning.
 
 For partial source samples:
 
@@ -127,6 +133,8 @@ When two motions are offered and the learner must complete the unpractised one, 
 Every question, correct answer, and meaningful distractor must use concepts or vocabulary found in the source-backed lesson.
 
 - Do not use untaught motion categories as distractors.
+- Match distractors to the question form. If the question asks for a team, all options should be teams or complete team-role statements; if it asks for an ordered structure, use plausible alternative structures.
+- Avoid filler such as “only X” or category-mismatched options that make the answer obvious.
 - Do not force a fixed number of questions.
 - Prefer a shorter faithful quiz to filler.
 - Word puzzles may use source or source-prose vocabulary.
@@ -159,8 +167,10 @@ Technical checks:
 - Vocabulary search and audio controls initialise safely.
 - Quiz totals are derived from the question array.
 - Submit, feedback, and reset controls work.
+- Audio failures stay beside the control that triggered them and never move the learner to another tab.
+- Every form control has a visible label or accessible name.
 - No console errors.
-- At desktop and mobile widths, content is readable and the page has no horizontal overflow.
+- At desktop and mobile widths, content is readable and the page has no horizontal overflow; wide navigation scrolls within its own row instead of widening the page.
 
 Fix every discovered issue before reporting completion.
 
@@ -172,7 +182,7 @@ Keep the project conventions:
 - Use the existing CSS variables and components.
 - Keep semantic headings, labels, and accessible button text.
 - Preserve the recursive Merriam-Webster audio lookup and the `sd3` reference used by existing lessons.
-- Update `index.html` only so the session card title and description accurately match the finished lesson.
+- Update `index.html` so the session card exists and is reachable: add or activate its link, `active` class, completion badge, title, and source-faithful description.
 
 ## Completion report
 

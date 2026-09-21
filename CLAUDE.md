@@ -9,7 +9,7 @@ Bài học tranh biện tiếng Anh (ESL) cho trẻ Việt Nam 8-9 tuổi. Pure 
 ## Quy tắc quan trọng (KHÔNG ĐƯỢC VI PHẠM)
 
 ### Nội dung phải bám sát source data
-- Mọi nội dung lấy từ `datainput/buoi N/` (docx/pptx), KHÔNG tự bịa concept/rule
+- Mọi nội dung lấy từ đúng một thư mục khớp `datainput/buoi N*/` (có thể có hậu tố ngày), KHÔNG tự bịa concept/rule
 - Chỉ được bổ sung bản dịch, giải nghĩa vocabulary có trong source, nhãn UI và hướng dẫn thao tác trung lập
 - KHÔNG tự thêm metaphor, ví dụ, motion type, model answer, factual claim hoặc teaching framework nếu source không có
 - Feedback cá nhân: bỏ tên/đánh giá học sinh, nhưng giữ feedback của thầy nếu nó dạy một điểm kiến thức có thể tái sử dụng
@@ -41,7 +41,7 @@ Bài học tranh biện tiếng Anh (ESL) cho trẻ Việt Nam 8-9 tuổi. Pure 
 index.html              — Landing page (session grid)
 config.js               — MW API key config
 lessons/dayN.html       — Bài học (single-file SPA)
-datainput/buoi N/       — Source material (docx/pptx)
+datainput/buoi N*/      — Source material (có thể có hậu tố ngày; docx/pptx)
 assets/slides/buoiN/    — Slide images (nếu có pptx)
 .claude/commands/       — Skills (genDebateESL.md)
 ```

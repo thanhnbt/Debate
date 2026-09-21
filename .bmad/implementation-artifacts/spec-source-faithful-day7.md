@@ -2,7 +2,7 @@
 title: 'Source-faithful Day 7 ESL debate lesson'
 type: 'refactor'
 created: '2026-09-21'
-status: 'in-review'
+status: 'done'
 review_loop_iteration: 0
 baseline_commit: '09d5fc67125bf3a5bb26280840ae35e7248227df'
 context:
@@ -73,3 +73,45 @@ Use one shared homework worksheet after motion selection instead of duplicating 
 - `rg` source-provenance checks -- expected: forbidden sections and phrases absent, required source concepts present.
 - HTML/JavaScript structural check -- expected: balanced sections, valid script syntax, expected tab targets and quiz totals.
 - Browser review at desktop and mobile widths -- expected: no console errors, clipped content, broken navigation, or unusable controls.
+
+Browser interaction and visual responsive review were attempted, but no browser instance was connected. The HTML therefore passed structural, JavaScript-syntax, provenance, navigation-target, dynamic-total, and static responsive-guard checks only.
+
+## Suggested Review Order
+
+**Source-first contract**
+
+- Start with the provenance boundary that prevents invented teaching content.
+  [genDebateESL.md:5](../../.claude/commands/genDebateESL.md#L5)
+
+- Project rules now reinforce the same source-only boundary.
+  [CLAUDE.md:11](../../CLAUDE.md#L11)
+
+**Lesson content**
+
+- Core THR/THP teaching now contains only source-backed rules.
+  [day7.html:557](../../lessons/day7.html#L557)
+
+- Class drafts, teacher feedback, and partial samples remain explicitly separated.
+  [day7.html:677](../../lessons/day7.html#L677)
+
+- Homework uses one neutral worksheet without answer-leading hints.
+  [day7.html:765](../../lessons/day7.html#L765)
+
+**Interaction and layout**
+
+- Quiz questions and distractors stay within source-backed concepts.
+  [day7.html:1021](../../lessons/day7.html#L1021)
+
+- Displayed quiz totals derive from the actual question array.
+  [day7.html:1072](../../lessons/day7.html#L1072)
+
+- Quiz audio failures remain local instead of changing tabs.
+  [day7.html:1152](../../lessons/day7.html#L1152)
+
+- Mobile navigation wraps safely and scrolls within its own row.
+  [day7.html:523](../../lessons/day7.html#L523)
+
+**Landing page**
+
+- Day 7 is reachable through an active completed-session card.
+  [index.html:270](../../index.html#L270)

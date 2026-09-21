@@ -521,6 +521,10 @@
     .footer a { color: var(--teal-dark); font-weight: 700; }
 
     @media (max-width: 768px) {
+      .topbar-inner { flex-wrap: wrap; padding: 10px 0; gap: 8px; }
+      .brand { white-space: normal; }
+      .nav { width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .nav a, .nav button { flex: 0 0 auto; }
       .two-teams, .world-card { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr 1fr; }
       .spelling-card { flex-direction: column; align-items: flex-start; }
@@ -617,9 +621,8 @@
           <p class="en">ALWAYS supports the <strong>factual world</strong> (the current reality).</p>
           <ul>
             <li>Protects the world we live in now</li>
-            <li>Proves reality is BETTER than the imagined world</li>
           </ul>
-          <p class="vi">LUÔN bảo vệ thế giới <strong>thực</strong>. Chứng minh thực tế TỐT HƠN thế giới tưởng tượng.</p>
+          <p class="vi">LUÔN bảo vệ thế giới <strong>thực</strong> mà chúng ta đang sống.</p>
         </div>
       </div>
 
@@ -687,10 +690,13 @@
 
       <h4>Class draft / Bài làm trên lớp</h4>
       <p><strong>Context:</strong> Beauty pageants can make people feel jealous of contestants seen as beautiful. People can feel insecure or negative about their own appearance. Jealousy may also lead to negative behaviour toward people who stand out.</p>
+      <p class="vi"><strong>Bối cảnh:</strong> Các cuộc thi sắc đẹp có thể khiến mọi người ghen tị với thí sinh được xem là xinh đẹp. Họ có thể thiếu tự tin hoặc suy nghĩ tiêu cực về ngoại hình của mình. Sự ghen tị cũng có thể dẫn tới hành vi tiêu cực với người nổi bật.</p>
       <p><strong>Definition:</strong> Beauty contests are competitions where participants are judged on appearance and other qualities, such as talent, personality, and communication skills.</p>
+      <p class="vi"><strong>Định nghĩa:</strong> Cuộc thi sắc đẹp là cuộc thi đánh giá thí sinh dựa trên ngoại hình và các phẩm chất khác như tài năng, tính cách và kỹ năng giao tiếp.</p>
       <p><strong>Goal:</strong> Create a society with less jealousy. People feel confident and do not focus too much on appearance.</p>
+      <p class="vi"><strong>Mục tiêu:</strong> Tạo một xã hội ít ghen tị hơn, nơi mọi người tự tin và không quá tập trung vào ngoại hình.</p>
       <p><strong>Counterfactual:</strong> Without beauty contests, people would focus more on talent, personality, and achievements.</p>
-      <p class="vi">Bài làm đã nêu bối cảnh, định nghĩa, mục tiêu và thế giới không có thi sắc đẹp.</p>
+      <p class="vi"><strong>Thế giới phản chứng:</strong> Nếu không có các cuộc thi sắc đẹp, mọi người sẽ chú ý hơn tới tài năng, tính cách và thành tích.</p>
       <div class="highlight-box">
         <p><strong>Teacher&rsquo;s feedback:</strong> Add more consequences to the context. Jealousy can lead to harmful behaviour. Make the counterfactual clearer: explain how and why attention would move to talent, personality, and other qualities. One possible example is that knowledge and talent contests could receive more attention.</p>
         <p class="vi"><strong>Nhận xét của thầy:</strong> Thêm hậu quả của sự ghen tị. Làm rõ vì sao mọi người sẽ chú ý hơn tới tài năng, tính cách và các phẩm chất khác. Có thể tự nghĩ ví dụ giả định như các cuộc thi tri thức, tài năng được quan tâm hơn.</p>
@@ -723,9 +729,12 @@
 
       <h4>Class draft / Bài làm trên lớp</h4>
       <p><strong>Context:</strong> Lies can be harmful. Sometimes people lie on purpose to hurt others or cause negative consequences.</p>
+      <p class="vi"><strong>Bối cảnh:</strong> Lời nói dối có thể gây hại. Đôi khi người ta cố ý nói dối để làm tổn thương người khác hoặc gây ra hậu quả tiêu cực.</p>
       <p><strong>Definition:</strong> A lie is something a person tells you even though it is not true.</p>
+      <p class="vi"><strong>Định nghĩa:</strong> Lời nói dối là điều một người nói với em dù điều đó không đúng sự thật.</p>
       <p><strong>Goal:</strong> Protect people from harmful consequences caused by lies.</p>
-      <p class="vi">Bài làm đã nêu bối cảnh, định nghĩa và mục tiêu. Tài liệu không ghi phần Counterfactual World trong bài làm này.</p>
+      <p class="vi"><strong>Mục tiêu:</strong> Bảo vệ mọi người khỏi những hậu quả có hại do lời nói dối gây ra.</p>
+      <p class="vi">Tài liệu không ghi phần Counterfactual World trong bài làm này.</p>
       <div class="highlight-box">
         <p><strong>Teacher&rsquo;s feedback:</strong> Organise the speech with clear section labels. Characterise the issue more deeply: some people lie on purpose to harm others, such as hackers and scammers. Describe the counterfactual clearly: people tell the truth, or refuse to answer instead of lying. This can increase trust and reduce harm.</p>
         <p class="vi"><strong>Nhận xét của thầy:</strong> Gắn nhãn từng phần rõ ràng. Đặc tính hoá sâu hơn về người cố ý nói dối để gây hại, như hacker và kẻ lừa đảo. Mô tả rõ thế giới phản chứng: nói thật hoặc từ chối trả lời thay vì nói dối, từ đó tăng lòng tin và giảm gây hại.</p>
@@ -807,7 +816,7 @@
     </div>
 
     <div class="vocab-controls">
-      <input class="vocab-search" id="vocabSearch" type="text" placeholder="Search vocabulary...">
+      <input class="vocab-search" id="vocabSearch" type="search" aria-label="Search vocabulary" placeholder="Search vocabulary...">
     </div>
 
     <div class="vocab-wrap">
@@ -830,8 +839,8 @@
     </div>
 
     <div class="quiz-intro">
-      <p class="quiz-rule">10 concept questions &middot; 8 picture word puzzles &middot; Optional audio hints</p>
-      <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
+      <p class="quiz-rule" id="quizRule">Loading quiz&hellip;</p>
+      <span class="quiz-progress" id="quizProgress">0 answered</span>
     </div>
 
     <form id="quizForm" novalidate>
@@ -867,7 +876,7 @@
     </form>
 
     <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
-      <div class="quiz-score" id="quizScore">0 / 18</div>
+      <div class="quiz-score" id="quizScore">0 / 0</div>
       <h3 id="quizHeadline">Nice effort!</h3>
       <p id="quizResultText"></p>
     </div>
@@ -965,7 +974,6 @@ async function getMerriamWebsterAudioUrl(word) {
 async function speakWord(word) {
   if (!hasMwApiKey) {
     mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
-    showPage('vocab');
     throw new Error("API key missing");
   }
   mwApiStatus.textContent = `Loading "${word}" from Merriam-Webster…`;
@@ -1001,7 +1009,7 @@ function renderVocabulary() {
       <td><div class="meaning-en">${en}</div><div class="meaning-vi">${vi}</div></td>
       <td>${ipa ? `<button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button>` : ''}</td>`;
     const btn = row.querySelector("button");
-    if (btn) btn.addEventListener("click", () => speakWord(word.split(" ")[0]).catch(() => {}));
+    if (btn) btn.addEventListener("click", () => speakWord(word).catch(() => {}));
     vocabBody.appendChild(row);
   });
 }
@@ -1011,24 +1019,24 @@ renderVocabulary();
 
 // ═══════ QUIZ DATA ═══════
 const quizQuestions = [
-  { type: "choice", kind: "Concept", prompt: "What type of motion uses 'This House Regrets' or 'This House Prefers'?",
-    options: ["Context / Definition", "Proposition / Opposition", "Counterfactual motion (THR / THP)", "Goal / Metrics"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "Which pair of words starts counterfactual motions?",
+    options: ["Context / Definition", "Proposition / Opposition", "This House Regrets / This House Prefers", "Goal / Metrics"], answer: 2 },
   { type: "choice", kind: "Concept", prompt: "What does 'counterfactual' mean in debate?",
     options: ["The current factual world", "A world that is opposite to reality", "The goal of a case", "The definition of a word"], answer: 1 },
-  { type: "choice", kind: "Concept", prompt: "In a THR/THP motion, which team supports the counterfactual (imagined) world?",
-    options: ["Opposition", "The factual world", "Proposition", "The status quo"], answer: 2 },
-  { type: "choice", kind: "Concept", prompt: "In a THR/THP motion, which team defends the current (factual) world?",
-    options: ["Proposition", "Opposition", "The counterfactual world", "The goal"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Which statement about Proposition is correct?",
+    options: ["It supports the factual world", "It protects the status quo", "It supports the counterfactual world", "It avoids comparing the worlds"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "Which statement about Opposition is correct?",
+    options: ["It supports the counterfactual world", "It protects the factual world", "It writes the Proposition goal", "It avoids the current world"], answer: 1 },
   { type: "choice", kind: "Concept", prompt: "What are the 4 case setup steps for a counterfactual motion?",
     options: ["Context, Definition, Goal, Counterfactual World", "Definition, Goal, Context, Metrics", "Factual World, Context, Goal, Definition", "Goal, Context, Counterfactual World, Definition"], answer: 0 },
-  { type: "choice", kind: "Concept", prompt: "What special thing must Proposition include in their case setup for counterfactual motions?",
-    options: ["Only the factual world", "Only advantages", "A description of the counterfactual world", "Only disadvantages"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "Which part does the lesson specifically say Proposition must have?",
+    options: ["Context", "Definition", "A description of the counterfactual world", "Goal / Metrics"], answer: 2 },
   { type: "choice", kind: "Concept", prompt: "Besides debating advantages and disadvantages, what must both teams do?",
-    options: ["Only describe the factual world", "Actively compare the two worlds", "Only define keywords", "Only write the goal"], answer: 1 },
+    options: ["Describe one world only", "Actively compare the two worlds", "Repeat the definition", "Write the same goal"], answer: 1 },
   { type: "choice", kind: "Concept", prompt: "What does 'status quo' mean?",
     options: ["The opposite world", "The current situation we live in", "A goal or metric", "A definition"], answer: 1 },
-  { type: "choice", kind: "Concept", prompt: "In 'This house regrets beauty contests,' what does Proposition argue?",
-    options: ["Protect the current world", "The world would be better WITHOUT beauty contests", "Only define beauty contests", "Only list disadvantages"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "Which world does Proposition support for the beauty-contest motion?",
+    options: ["The current world with beauty contests", "A world without beauty contests", "A world where people can lie", "A world with more beauty standards"], answer: 1 },
   { type: "choice", kind: "Concept", prompt: "What is the opposite of 'optimistic'?",
     options: ["Arrogant", "Pessimistic", "Factual", "Counterfactual"], answer: 1 },
   { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "regret",
@@ -1059,6 +1067,13 @@ const quizResult = document.getElementById("quizResult");
 const quizScore = document.getElementById("quizScore");
 const quizHeadline = document.getElementById("quizHeadline");
 const quizResultText = document.getElementById("quizResultText");
+const quizRule = document.getElementById("quizRule");
+
+const conceptQuestionCount = quizQuestions.filter(question => question.type === "choice").length;
+const wordQuestionCount = quizQuestions.filter(question => question.type === "word").length;
+quizRule.textContent = `${conceptQuestionCount} concept questions · ${wordQuestionCount} picture word puzzles · Optional audio hints`;
+quizProgress.textContent = `0 of ${quizQuestions.length} answered`;
+quizScore.textContent = `0 / ${quizQuestions.length}`;
 
 quizQuestions.forEach((question, index) => {
   const card = document.createElement("article");
@@ -1136,7 +1151,15 @@ quizForm.addEventListener("input", event => {
 quizForm.addEventListener("change", event => {
   if (event.target.matches(".audio-hint-toggle")) {
     if (event.target.checked) {
-      speakWord(event.target.dataset.word).catch(() => { event.target.checked = false; });
+      const status = event.target.closest(".quiz-card").querySelector(".question-status");
+      status.textContent = "";
+      speakWord(event.target.dataset.word).catch(error => {
+        event.target.checked = false;
+        status.textContent = error.message === "API key missing"
+          ? "Audio hints are not configured. You can still complete the word."
+          : "Audio is unavailable right now. You can still complete the word.";
+        status.style.color = "#d94f68";
+      });
     }
     return;
   }
