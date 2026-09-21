@@ -10,10 +10,12 @@ Bài học tranh biện tiếng Anh (ESL) cho trẻ Việt Nam 8-9 tuổi. Pure 
 
 ### Nội dung phải bám sát source data
 - Mọi nội dung lấy từ `datainput/buoi N/` (docx/pptx), KHÔNG tự bịa concept/rule
-- Bổ sung vocabulary, metaphor, ví dụ minh họa là OK — nhưng không bịa kiến thức mới
+- Chỉ được bổ sung bản dịch, giải nghĩa vocabulary có trong source, nhãn UI và hướng dẫn thao tác trung lập
+- KHÔNG tự thêm metaphor, ví dụ, motion type, model answer, factual claim hoặc teaching framework nếu source không có
+- Feedback cá nhân: bỏ tên/đánh giá học sinh, nhưng giữ feedback của thầy nếu nó dạy một điểm kiến thức có thể tái sử dụng
 
 ### Sub-steps phải đầy đủ cho TẤT CẢ mục
-- Khi liệt kê case building steps, PHẢI ghi đầy đủ sub-steps cho TẤT CẢ motion types, không chỉ 1 loại
+- Chỉ liệt kê sub-steps thật sự xuất hiện trong source; không tự điền phần còn thiếu
 - Luôn đối chiếu source data cho TỪNG mục, TỪNG loại motion
 - Các sub-steps thường gặp:
   - Context: `1a. Identify problems`, `1b. Consequences`
@@ -22,12 +24,15 @@ Bài học tranh biện tiếng Anh (ESL) cho trẻ Việt Nam 8-9 tuổi. Pure 
   - Declaration of Interests (Actor): `Point out and explain the main interests of X`
 
 ### Homework: trẻ phải tự tư duy
-- Hints chỉ gợi ý chung chung, KHÔNG cho sẵn đáp án cụ thể
-- Hints ẩn sau nút "🔑 Gợi ý" + password `000000` (dành cho phụ huynh nhập)
-- Highlight từ khóa trong motion để trẻ tự nhận diện loại kiến nghị
+- Giữ nguyên yêu cầu, motion choice và cấu trúc bài tập trong source
+- Không tự thêm Detective Step, password gate hoặc hints nếu source không yêu cầu
+- Không lấy ý từ class draft/sample speech làm gợi ý, vì như vậy sẽ lộ hướng trả lời
+- Có thể highlight từ khóa trong motion nếu việc highlight không thêm claim mới
 
 ### QA bắt buộc trước khi hoàn thành
-- Phase 7 trong skill: rà soát HTML vs source data line-by-line
+- Phase 8 trong skill: rà soát HTML vs source data theo cả hai chiều
+- Source → HTML: không bỏ sót vocabulary, concept, rule, example, teacher feedback, sample excerpt hoặc homework
+- HTML → Source: mọi curricular claim phải truy được về source; ngoại lệ chỉ gồm dịch thuật, vocabulary definition và UI trung lập
 - Phải cover TẤT CẢ sections/motion types, không assume cái nào đúng
 - Phát hiện thiếu → fix ngay, không báo rồi để đó
 

@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Day 7: Counterfactual Motions — learn THR/THP motions, compare factual vs counterfactual worlds, and build strong case setups.">
+  <meta name="theme-color" content="#4ed6bd">
+  <title>Day 7 · Counterfactual Motions</title>
+  <style>
+    :root {
+      --ink: #26335d;
+      --ink-2: #40517f;
+      --paper: #fffaf0;
+      --card: #ffffff;
+      --muted: #65739a;
+      --line: #dfe8f6;
+      --teal: #4ed6bd;
+      --teal-dark: #138f86;
+      --orange: #ff9b62;
+      --orange-dark: #c06a2f;
+      --yellow: #ffd84d;
+      --sky: #55c8ff;
+      --coral: #ff7085;
+      --coral-dark: #c4405a;
+      --purple: #8c7cff;
+      --purple-dark: #5a4fcf;
+      --mint: #a9efcb;
+      --shadow: 0 18px 48px rgba(78, 103, 159, .16);
+      --radius: 28px;
+      --accent: var(--teal);
+      --accent-dark: var(--teal-dark);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 6%, rgba(78,214,189,.22), transparent 26rem),
+        radial-gradient(circle at 90% 22%, rgba(85,200,255,.18), transparent 24rem),
+        radial-gradient(circle at 50% 68%, rgba(169,239,203,.15), transparent 28rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(223,229,236,.85);
+      background: rgba(255,250,240,.92);
+      backdrop-filter: blur(18px);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, var(--teal), #2ab3a0);
+      box-shadow: 0 8px 24px rgba(78,214,189,.3);
+      font-weight: 950;
+      font-size: .8rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav a, .nav button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav a:hover, .nav button:hover { background: rgba(78,214,189,.12); color: var(--ink); }
+    .nav button.active { background: var(--teal); color: white; }
+    .nav .home-link { color: var(--teal-dark); font-weight: 800; }
+
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: auto; }
+
+    .page { padding: 50px 0 80px; }
+    .page[hidden] { display: none; }
+
+    .page-header { margin-bottom: 36px; }
+    .page-header .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(78,214,189,.12);
+      color: var(--teal-dark);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .page-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 920;
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0 0 10px;
+    }
+    .page-header p { max-width: 600px; margin: 0; color: var(--muted); font-size: .95rem; }
+    .vi { color: var(--muted); font-style: italic; }
+    .vi-hint { display: block; font-size: .85rem; color: var(--muted); font-style: italic; }
+
+    .info-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .info-card h3 { font-size: 1.2rem; font-weight: 850; margin: 0 0 14px; }
+    .info-card p, .info-card li { font-size: .93rem; color: var(--ink-2); line-height: 1.7; }
+    .info-card ul { padding-left: 20px; margin: 10px 0; }
+    .info-card li { margin-bottom: 6px; }
+
+    .highlight-box {
+      padding: 18px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(78,214,189,.1), rgba(85,200,255,.1));
+      border-left: 4px solid var(--teal);
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-weight: 600; color: var(--ink); }
+
+    .motion-box {
+      padding: 20px 28px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(78,214,189,.1), rgba(169,239,203,.1));
+      border: 2px solid var(--teal);
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .two-teams {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .team-card {
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid;
+    }
+    .team-card.prop { border-color: var(--sky); background: linear-gradient(145deg, rgba(85,200,255,.08), white); }
+    .team-card.opp { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.08), white); }
+    .team-card h4 { font-size: 1.05rem; font-weight: 850; margin: 0 0 4px; }
+    .team-card .en { font-size: .82rem; color: var(--muted); margin: 0 0 10px; }
+    .team-card ul { padding-left: 16px; margin: 0; }
+    .team-card li { font-size: .88rem; margin-bottom: 4px; color: var(--ink-2); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .step {
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .step-num {
+      width: 34px; height: 34px;
+      margin: 0 auto 8px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-weight: 900;
+      font-size: .85rem;
+    }
+    .step h4 { margin: 0 0 5px; font-size: .9rem; font-weight: 800; }
+    .step p { margin: 0; font-size: .8rem; color: var(--muted); }
+    .step.special { border-color: var(--teal); background: linear-gradient(145deg, rgba(78,214,189,.06), white); }
+
+    .world-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 18px 0;
+    }
+    .world-item {
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid;
+      text-align: center;
+    }
+    .world-item.factual { border-color: var(--coral); background: linear-gradient(145deg, rgba(255,112,133,.06), white); }
+    .world-item.counterfactual { border-color: var(--teal); background: linear-gradient(145deg, rgba(78,214,189,.06), white); }
+    .world-item .world-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .world-item h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 850; }
+    .world-item p { margin: 0; font-size: .86rem; color: var(--ink-2); }
+
+    .model-speech {
+      padding: 28px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(78,214,189,.06), rgba(85,200,255,.04));
+      border: 2px solid var(--teal);
+      margin: 20px 0;
+    }
+    .model-speech h4 { margin: 0 0 12px; font-size: 1.05rem; font-weight: 850; }
+    .model-speech p { font-size: .9rem; color: var(--ink-2); margin: 0 0 10px; line-height: 1.7; }
+    .model-speech .speech-label {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .model-speech .speech-label.ctx { background: rgba(85,200,255,.15); color: #1a7fae; }
+    .model-speech .speech-label.def { background: rgba(140,124,255,.15); color: var(--purple-dark); }
+    .model-speech .speech-label.goal { background: rgba(78,214,189,.15); color: var(--teal-dark); }
+    .model-speech .speech-label.cf { background: rgba(255,155,98,.15); color: var(--orange-dark); }
+
+    .homework-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #fff8e6, #fff3bf);
+      border: 2px solid var(--yellow);
+      box-shadow: 0 12px 35px rgba(255,184,81,.15);
+    }
+    .homework-card h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 850; }
+    .homework-card p { font-size: .93rem; color: var(--ink-2); margin: 0 0 10px; }
+    .homework-card .motion-text {
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: rgba(78,214,189,.08);
+      font-weight: 750;
+      font-size: 1rem;
+      color: var(--teal-dark);
+      margin: 14px 0;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .vocab-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .vocab-search {
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      font-size: .9rem;
+      width: 240px;
+      max-width: 100%;
+      transition: border-color .2s;
+    }
+    .vocab-search:focus { outline: none; border-color: var(--teal); }
+    .vocab-wrap { overflow-x: auto; }
+    .vocab-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .vocab-table th {
+      padding: 12px 14px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .vocab-table td {
+      padding: 11px 14px;
+      font-size: .86rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:nth-child(even) td { background: rgba(223,232,246,.15); }
+    .vocab-table .word { font-weight: 750; color: var(--ink); }
+    .vocab-table .ipa { font-family: monospace; font-size: .78rem; color: var(--muted); }
+    .vocab-table .sound-it-out { font-weight: 700; font-size: .8rem; color: var(--teal-dark); letter-spacing: .02em; }
+    .vocab-table .meaning-en { font-size: .84rem; }
+    .vocab-table .meaning-vi { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .sound-btn {
+      width: 32px; height: 32px;
+      border: none; border-radius: 50%;
+      background: var(--teal); color: white;
+      display: inline-grid; place-items: center;
+      font-size: .8rem;
+      transition: transform .15s;
+    }
+    .sound-btn:hover { transform: scale(1.15); }
+    .api-key-status { margin-top: 12px; font-size: .82rem; color: var(--muted); }
+
+    .quiz-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quiz-rule { margin: 0; font-size: .9rem; color: var(--ink-2); }
+    .quiz-progress { font-size: .82rem; font-weight: 800; color: var(--teal-dark); white-space: nowrap; }
+
+    .quiz-group { margin-bottom: 36px; }
+    .quiz-group-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(78,214,189,.08), rgba(169,239,203,.08));
+    }
+    .quiz-group-icon { font-size: 1.8rem; }
+    .quiz-group-head p { margin: 0; font-size: .75rem; font-weight: 800; color: var(--teal-dark); text-transform: uppercase; letter-spacing: .1em; }
+    .quiz-group-head h3 { margin: 2px 0 4px; font-size: 1.1rem; font-weight: 850; }
+    .quiz-group-head span { font-size: .84rem; color: var(--muted); }
+
+    .quiz-list { display: grid; gap: 16px; }
+    .quiz-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(11,19,36,.05);
+      transition: border-color .2s, background .2s;
+    }
+    .quiz-card.correct { border-color: var(--teal); background: rgba(78,214,189,.06); }
+    .quiz-card.incorrect { border-color: var(--coral); background: rgba(255,112,133,.06); }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .quiz-number {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .quiz-kind {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quiz-prompt { font-weight: 700; font-size: .92rem; margin-bottom: 14px; }
+
+    .quiz-options { display: grid; gap: 8px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .quiz-option:hover { background: rgba(78,214,189,.06); border-color: var(--teal); }
+    .quiz-option input { margin: 0; }
+
+    .spelling-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quiz-picture {
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(78,214,189,.15), rgba(169,239,203,.15));
+      font-size: 1.8rem;
+    }
+    .word-starter {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .first-letter {
+      font-size: 1.4rem;
+      font-weight: 950;
+      color: var(--teal-dark);
+    }
+    .word-blanks {
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+    }
+    .letter-answer {
+      display: block;
+      width: 180px;
+      padding: 8px 14px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: border-color .2s;
+    }
+    .letter-answer:focus { outline: none; border-color: var(--teal); }
+    .audio-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: .8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .audio-hint input { margin: 0; }
+
+    .question-status { margin: 8px 0 0; font-size: .82rem; font-weight: 700; }
+
+    .quiz-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .submit-quiz {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--teal), #2ab3a0);
+      color: white;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 8px 24px rgba(78,214,189,.3);
+      transition: transform .15s;
+    }
+    .submit-quiz:hover { transform: translateY(-2px); }
+    .reset-quiz {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 14px;
+      background: var(--line);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .quiz-message { margin: 0; font-size: .85rem; color: var(--coral); font-weight: 700; }
+
+    .quiz-result {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(78,214,189,.1), rgba(169,239,203,.1));
+      text-align: center;
+    }
+    .quiz-score { font-size: 2.2rem; font-weight: 950; color: var(--teal-dark); }
+    .quiz-result h3 { margin: 8px 0 6px; font-size: 1.1rem; }
+    .quiz-result p { margin: 0; font-size: .88rem; color: var(--muted); }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+    .footer a { color: var(--teal-dark); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .two-teams, .world-card { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .spelling-card { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 2px; }
+      .nav a, .nav button { padding: 6px 9px; font-size: .72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">D7</span>
+      <span>English Debate Club</span>
+    </a>
+    <nav class="nav" id="mainNav">
+      <a href="../index.html" class="home-link">&larr; Home</a>
+      <button class="active" data-page="lesson">Lesson</button>
+      <button data-page="practice">Class Practice</button>
+      <button data-page="homework">Homework</button>
+      <button data-page="vocab">Vocabulary</button>
+      <button data-page="quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ════════ PAGE: LESSON ════════ -->
+  <section class="page" id="lesson">
+    <div class="page-header">
+      <span class="eyebrow">New Motion Type / Loại kiến nghị mới</span>
+      <h2>Counterfactual Motions (THR / THP)</h2>
+      <p>Learn the rules and the four parts of a case setup.</p>
+      <span class="vi-hint">Học quy tắc và bốn phần của case setup.</span>
+    </div>
+
+    <div class="info-card">
+      <h3>🌍 What is a Counterfactual Motion?</h3>
+      <span class="vi-hint">Kiến nghị phản chứng là gì?</span>
+
+      <p><strong>&ldquo;This House Regrets&rdquo; (THR)</strong> and <strong>&ldquo;This House Prefers&rdquo; (THP)</strong> are counterfactual motions.</p>
+      <p class="vi"><strong>&ldquo;This House Regrets&rdquo; (THR)</strong> và <strong>&ldquo;This House Prefers&rdquo; (THP)</strong> là kiến nghị phản chứng.</p>
+
+      <div class="world-card">
+        <div class="world-item factual">
+          <span class="world-icon">🏠</span>
+          <h4>Factual World</h4>
+          <p>The current world we live in. This is the <strong>status quo</strong>.</p>
+          <p class="vi">Thế giới THỰC chúng ta đang sống. Đây là <strong>hiện trạng</strong>.</p>
+        </div>
+        <div class="world-item counterfactual">
+          <span class="world-icon">✨</span>
+          <h4>Counterfactual World</h4>
+          <p>An IMAGINED world that is the <strong>opposite</strong> of reality.</p>
+          <p class="vi">Thế giới TƯỞNG TƯỢNG, <strong>trái ngược</strong> với thực tế.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>📝 Example Motions</h3>
+      <span class="vi-hint">Kiến nghị mẫu</span>
+
+      <div class="motion-box">
+        Motion 1: &ldquo;This house <mark style="background:rgba(78,214,189,.25); padding:2px 6px; border-radius:6px; font-weight:900;">regrets</mark> beauty contests.&rdquo;
+      </div>
+
+      <div class="motion-box">
+        Motion 2: &ldquo;This house <mark style="background:rgba(140,124,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">prefers</mark> a world where people can&rsquo;t lie.&rdquo;
+      </div>
+
+      <p>Both motions use <strong>THR</strong> or <strong>THP</strong> &rarr; they are <strong>Counterfactual Motions</strong>!</p>
+      <p class="vi">Cả hai kiến nghị dùng <strong>THR</strong> hoặc <strong>THP</strong> &rarr; đây là <strong>Kiến nghị Phản chứng</strong>!</p>
+    </div>
+
+    <div class="info-card">
+      <h3>⚔️ Prop vs Opp &mdash; Who does what?</h3>
+      <span class="vi-hint">Phe ủng hộ vs Phe phản đối &mdash; Ai làm gì?</span>
+
+      <div class="two-teams">
+        <div class="team-card prop">
+          <h4>🟦 Proposition</h4>
+          <p class="en">ALWAYS supports the <strong>counterfactual world</strong> (the imagined world).</p>
+          <ul>
+            <li>Describes a new, different world</li>
+            <li>Proves it is BETTER than reality</li>
+          </ul>
+          <p class="vi">LUÔN ủng hộ thế giới <strong>tưởng tượng</strong>. Mô tả và chứng minh nó TỐT HƠN thực tế.</p>
+        </div>
+        <div class="team-card opp">
+          <h4>🟥 Opposition</h4>
+          <p class="en">ALWAYS supports the <strong>factual world</strong> (the current reality).</p>
+          <ul>
+            <li>Protects the world we live in now</li>
+            <li>Proves reality is BETTER than the imagined world</li>
+          </ul>
+          <p class="vi">LUÔN bảo vệ thế giới <strong>thực</strong>. Chứng minh thực tế TỐT HƠN thế giới tưởng tượng.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>🔑 <strong>Key Rule:</strong> Prop team must have a <strong>counterfactual</strong> in their case setup &mdash; they must describe the imagined world clearly!</p>
+        <p class="vi">Phe ủng hộ PHẢI có <strong>phản chứng</strong> trong mở bài &mdash; phải mô tả thế giới tưởng tượng rõ ràng!</p>
+      </div>
+
+      <div class="highlight-box">
+        <p>⚖️ <strong>Important:</strong> Besides debating about advantages and disadvantages, both teams must <strong>actively compare the 2 worlds</strong>!</p>
+        <p class="vi">Ngoài tranh luận về ưu và nhược điểm, cả hai đội phải <strong>chủ động so sánh 2 thế giới</strong>!</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Case Setup for Counterfactual Motions</h3>
+      <span class="vi-hint">Mở bài cho kiến nghị phản chứng</span>
+
+      <p>A counterfactual case setup has <strong>4 parts</strong>.</p>
+      <p class="vi">Case setup cho kiến nghị phản chứng có <strong>4 phần</strong>.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Context</h4>
+          <p>What is happening now?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Definition</h4>
+          <p>Explain important words.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Goal / Metrics</h4>
+          <p>What do you want to achieve?</p>
+        </div>
+        <div class="step special">
+          <div class="step-num">4</div>
+          <h4>Counterfactual World</h4>
+          <p>How does the opposite world look?</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>⭐ Prop must include a <strong>counterfactual world</strong> in its case setup. Both teams must compare the two worlds.</p>
+        <p class="vi">Prop phải có <strong>thế giới phản chứng</strong> trong case setup. Cả hai đội phải so sánh hai thế giới.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: PRACTICE ════════ -->
+  <section class="page" id="practice" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Practice / Thực hành</span>
+      <h2>Building Case Setups</h2>
+      <p>Read the class drafts, teacher feedback, and sample speech excerpts.</p>
+      <span class="vi-hint">Đọc bài làm trên lớp, nhận xét của thầy và các đoạn bài mẫu.</span>
+    </div>
+
+    <!-- Motion 1: Beauty Contests -->
+    <div class="info-card">
+      <h3>🌸 Motion 1: Beauty Contests</h3>
+      <div class="motion-box">&ldquo;This house <mark style="background:rgba(78,214,189,.25); padding:2px 6px; border-radius:6px; font-weight:900;">regrets</mark> beauty contests.&rdquo;</div>
+
+      <h4>Class draft / Bài làm trên lớp</h4>
+      <p><strong>Context:</strong> Beauty pageants can make people feel jealous of contestants seen as beautiful. People can feel insecure or negative about their own appearance. Jealousy may also lead to negative behaviour toward people who stand out.</p>
+      <p><strong>Definition:</strong> Beauty contests are competitions where participants are judged on appearance and other qualities, such as talent, personality, and communication skills.</p>
+      <p><strong>Goal:</strong> Create a society with less jealousy. People feel confident and do not focus too much on appearance.</p>
+      <p><strong>Counterfactual:</strong> Without beauty contests, people would focus more on talent, personality, and achievements.</p>
+      <p class="vi">Bài làm đã nêu bối cảnh, định nghĩa, mục tiêu và thế giới không có thi sắc đẹp.</p>
+      <div class="highlight-box">
+        <p><strong>Teacher&rsquo;s feedback:</strong> Add more consequences to the context. Jealousy can lead to harmful behaviour. Make the counterfactual clearer: explain how and why attention would move to talent, personality, and other qualities. One possible example is that knowledge and talent contests could receive more attention.</p>
+        <p class="vi"><strong>Nhận xét của thầy:</strong> Thêm hậu quả của sự ghen tị. Làm rõ vì sao mọi người sẽ chú ý hơn tới tài năng, tính cách và các phẩm chất khác. Có thể tự nghĩ ví dụ giả định như các cuộc thi tri thức, tài năng được quan tâm hơn.</p>
+      </div>
+    </div>
+
+    <div class="model-speech">
+      <h4>Sample speech excerpt / Đoạn bài mẫu</h4>
+      <p><strong>Parts provided:</strong> Context, Definition + Characterization, Goal. The source does not provide a Counterfactual World section in this excerpt.</p>
+      <p class="vi"><strong>Các phần có trong tài liệu:</strong> Context, Definition + Characterization, Goal. Đoạn này không có phần Counterfactual World.</p>
+
+      <span class="speech-label ctx">Context</span>
+      <p>&ldquo;We are living under many <strong>beauty standards</strong>. For example, men are expected to be tall, while women are expected to be skinny. People often judge others based on their <strong>appearance</strong> rather than other qualities. &rarr; People become <strong>obsessed</strong> with others&rsquo; opinions about their looks and become constantly critical and hyper-aware of their appearance. &rarr; This can make people <strong>lose confidence</strong> in themselves.&rdquo;</p>
+      <p class="vi">Chúng ta sống dưới nhiều chuẩn mực sắc đẹp. Người ta đánh giá nhau qua ngoại hình thay vì phẩm chất khác &rarr; ám ảnh với ý kiến người khác, liên tục tự chỉ trích và lo lắng về ngoại hình &rarr; mất tự tin.</p>
+
+      <span class="speech-label def">Definition + Characterization</span>
+      <p>&ldquo;A <strong>beauty contest</strong> is a competition where participants are judged based on their appearance and other qualities. A crown is simply a title, and beauty pageants don&rsquo;t contribute much to the society. Appearance is not something people can simply <strong>choose or control</strong> for themselves. So judging others by their looks is <strong>shallow and unfair</strong>.&rdquo;</p>
+      <p class="vi">Cuộc thi sắc đẹp đánh giá ngoại hình và phẩm chất khác. Vương miện chỉ là danh hiệu, thi sắc đẹp không đóng góp nhiều cho xã hội. Ngoại hình không phải thứ ta tự chọn hay kiểm soát được &rarr; đánh giá qua vẻ ngoài là nông cạn và bất công.</p>
+
+      <span class="speech-label goal">Goal</span>
+      <p>&ldquo;People will no longer be judged based on their appearance or strict beauty standards. &rarr; They will become <strong>more confident</strong> in themselves. People will be valued for their <strong>talents and performance</strong> &mdash; things they have worked hard to achieve. &rarr; This creates a <strong>fairer world</strong> where people are appreciated for what they can do, rather than how they look.&rdquo;</p>
+      <p class="vi">Người ta không còn bị đánh giá qua ngoại hình hay chuẩn mực sắc đẹp khắt khe &rarr; tự tin hơn. Được coi trọng nhờ tài năng và thành tích &rarr; thế giới công bằng hơn, nơi người ta được đánh giá vì năng lực chứ không phải vẻ bề ngoài.</p>
+
+    </div>
+
+    <!-- Motion 2: Can't Lie -->
+    <div class="info-card" style="margin-top:30px;">
+      <h3>🤥 Motion 2: A World Without Lies</h3>
+      <div class="motion-box">&ldquo;This house <mark style="background:rgba(140,124,255,.25); padding:2px 6px; border-radius:6px; font-weight:900;">prefers</mark> a world where people can&rsquo;t lie.&rdquo;</div>
+
+      <h4>Class draft / Bài làm trên lớp</h4>
+      <p><strong>Context:</strong> Lies can be harmful. Sometimes people lie on purpose to hurt others or cause negative consequences.</p>
+      <p><strong>Definition:</strong> A lie is something a person tells you even though it is not true.</p>
+      <p><strong>Goal:</strong> Protect people from harmful consequences caused by lies.</p>
+      <p class="vi">Bài làm đã nêu bối cảnh, định nghĩa và mục tiêu. Tài liệu không ghi phần Counterfactual World trong bài làm này.</p>
+      <div class="highlight-box">
+        <p><strong>Teacher&rsquo;s feedback:</strong> Organise the speech with clear section labels. Characterise the issue more deeply: some people lie on purpose to harm others, such as hackers and scammers. Describe the counterfactual clearly: people tell the truth, or refuse to answer instead of lying. This can increase trust and reduce harm.</p>
+        <p class="vi"><strong>Nhận xét của thầy:</strong> Gắn nhãn từng phần rõ ràng. Đặc tính hoá sâu hơn về người cố ý nói dối để gây hại, như hacker và kẻ lừa đảo. Mô tả rõ thế giới phản chứng: nói thật hoặc từ chối trả lời thay vì nói dối, từ đó tăng lòng tin và giảm gây hại.</p>
+      </div>
+    </div>
+
+    <div class="model-speech">
+      <h4>Sample speech excerpt / Đoạn bài mẫu</h4>
+      <p><strong>Parts provided:</strong> Context, Goal, Counterfactual World. The source does not provide a Definition section in this excerpt.</p>
+      <p class="vi"><strong>Các phần có trong tài liệu:</strong> Context, Goal, Counterfactual World. Đoạn này không có phần Definition.</p>
+
+      <span class="speech-label ctx">Context</span>
+      <p>&ldquo;With the development of <strong>technology</strong>, such as AI and social media, it has become easier for people to communicate with each other. However, some people use these technologies to <strong>trick or manipulate</strong> others and take their money. &rarr; As a result, people become more <strong>cautious and suspicious</strong> of others. &rarr; This makes it harder to <strong>build trust</strong> and communicate with each other.&rdquo;</p>
+      <p class="vi">Công nghệ (AI, mạng xã hội) giúp giao tiếp dễ hơn. Nhưng có người lợi dụng để lừa đảo, lấy tiền &rarr; người ta trở nên cảnh giác và nghi ngờ hơn &rarr; khó xây dựng lòng tin và giao tiếp với nhau.</p>
+
+      <span class="speech-label goal">Goal</span>
+      <p>&ldquo;Create a world where people can <strong>trust each other</strong> and communicate more openly without worrying about being <strong>deceived</strong>.&rdquo;</p>
+      <p class="vi">Tạo thế giới nơi người ta có thể tin tưởng nhau và giao tiếp cởi mở mà không sợ bị lừa.</p>
+
+      <span class="speech-label cf">Counterfactual World</span>
+      <p>&ldquo;People would always <strong>tell the truth</strong> when they choose to speak. If they do not want to answer something, they can simply <strong>stay silent</strong> or refuse to answer. &rarr; People would be able to <strong>trust information</strong> from others more easily and build <strong>stronger relationships</strong>.&rdquo;</p>
+      <p class="vi">Người ta luôn nói thật khi chọn nói. Nếu không muốn trả lời, có thể im lặng hoặc từ chối &rarr; tin tưởng thông tin dễ hơn và xây dựng mối quan hệ bền chặt hơn.</p>
+
+    </div>
+
+  </section>
+
+  <!-- ════════ PAGE: HOMEWORK ════════ -->
+  <section class="page" id="homework" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Homework / Bài tập về nhà</span>
+      <h2>Build the Remaining Case Setup</h2>
+      <p>Choose the motion your team did not practise in class.</p>
+      <span class="vi-hint">Chọn kiến nghị mà nhóm em chưa làm trên lớp.</span>
+    </div>
+
+    <div class="homework-card">
+      <h3>Choose one motion / Chọn một kiến nghị</h3>
+      <p class="motion-text">Motion 1: &ldquo;This house regrets beauty contests.&rdquo;</p>
+      <p class="motion-text">Motion 2: &ldquo;This house prefers a world where people can&rsquo;t lie.&rdquo;</p>
+      <p>Use the same four-part structure from the lesson.</p>
+      <p class="vi">Dùng đúng cấu trúc bốn phần trong bài học.</p>
+    </div>
+
+    <div class="steps" style="margin-top:22px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Context</h4>
+        <p>What is the status quo? What problems are we facing? Why are they important or urgent?</p>
+        <p class="vi">Hiện trạng là gì? Chúng ta đang gặp vấn đề gì? Vì sao vấn đề quan trọng hoặc cấp bách?</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Definition + Characterization</h4>
+        <p>Define the important words. How does a stakeholder think or act?</p>
+        <p class="vi">Định nghĩa từ quan trọng. Một bên liên quan suy nghĩ hoặc hành động thế nào?</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Goal / Metrics</h4>
+        <p>Write the goal or metrics for your case.</p>
+        <p class="vi">Viết mục tiêu hoặc tiêu chí cho case của em.</p>
+      </div>
+      <div class="step special">
+        <div class="step-num">4</div>
+        <h4>Counterfactual World</h4>
+        <p>Imagine and describe what the opposite world looks like.</p>
+        <p class="vi">Hãy tưởng tượng và miêu tả thế giới đối lập trông như thế nào.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE: VOCABULARY ════════ -->
+  <section class="page" id="vocab" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Vocabulary / Từ vựng</span>
+      <h2>Debate Vocabulary</h2>
+      <p>Key English words you need to remember from today&rsquo;s lesson!</p>
+    </div>
+
+    <div class="vocab-controls">
+      <input class="vocab-search" id="vocabSearch" type="text" placeholder="Search vocabulary...">
+    </div>
+
+    <div class="vocab-wrap">
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Word</th><th>American IPA</th><th>SOUND IT OUT</th><th>Type</th><th>English meaning + Vietnamese</th><th>Audio</th></tr>
+        </thead>
+        <tbody id="vocabBody"></tbody>
+      </table>
+    </div>
+    <p class="api-key-status" id="mwApiStatus">Checking audio configuration&hellip;</p>
+  </section>
+
+  <!-- ════════ PAGE: QUIZ ════════ -->
+  <section class="page" id="quiz" hidden>
+    <div class="page-header">
+      <span class="eyebrow">Quiz</span>
+      <h2>Day 7 Quiz Challenge</h2>
+      <p>Nothing is graded while you work &mdash; results only appear after you submit all answers.</p>
+    </div>
+
+    <div class="quiz-intro">
+      <p class="quiz-rule">10 concept questions &middot; 8 picture word puzzles &middot; Optional audio hints</p>
+      <span class="quiz-progress" id="quizProgress">0 of 18 answered</span>
+    </div>
+
+    <form id="quizForm" novalidate>
+      <section class="quiz-group" aria-labelledby="conceptQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129504;</span>
+          <div>
+            <p>Part A</p>
+            <h3 id="conceptQuizTitle">Concept Quiz</h3>
+            <span>Tick one answer for each lesson concept.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="conceptQuizList"></div>
+      </section>
+
+      <section class="quiz-group" aria-labelledby="vocabularyQuizTitle">
+        <div class="quiz-group-head">
+          <span class="quiz-group-icon">&#129513;</span>
+          <div>
+            <p>Part B</p>
+            <h3 id="vocabularyQuizTitle">Vocabulary Picture Quiz</h3>
+            <span>Use the first letter and picture. Tick the audio hint only when needed.</span>
+          </div>
+        </div>
+        <div class="quiz-list" id="vocabularyQuizList"></div>
+      </section>
+
+      <div class="quiz-actions">
+        <button class="submit-quiz" type="submit">SUBMIT ALL ANSWERS</button>
+        <button class="reset-quiz" id="resetQuiz" type="button">TRY AGAIN</button>
+        <p class="quiz-message" id="quizMessage" role="alert"></p>
+      </div>
+    </form>
+
+    <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
+      <div class="quiz-score" id="quizScore">0 / 18</div>
+      <h3 id="quizHeadline">Nice effort!</h3>
+      <p id="quizResultText"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="../index.html">&larr; Back to Home</a> &nbsp;|&nbsp; English Debate Club &copy; 2025
+</footer>
+
+<script src="../config.js"></script>
+<script>
+// ═══════ TAB NAVIGATION ═══════
+const navButtons = document.querySelectorAll('#mainNav button[data-page]');
+const pages = document.querySelectorAll('.page');
+
+function showPage(id) {
+  pages.forEach(p => p.hidden = (p.id !== id));
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.page === id));
+  window.scrollTo(0, 0);
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+
+// ═══════ VOCABULARY DATA ═══════
+const vocabulary = [
+  ["counter", "/ˈkaʊntər/", "KOWN-ter", "adjective", "opposite or against something", "trái ngược / phản đối"],
+  ["fact", "/fækt/", "FAKT", "noun", "something that is true and can be proven", "sự thật"],
+  ["factual", "/ˈfæktʃuəl/", "FAK-choo-uhl", "adjective", "based on facts; true and real", "thật / dựa trên sự thật"],
+  ["counterfactual", "/ˌkaʊntərˈfæktʃuəl/", "kown-ter-FAK-choo-uhl", "adjective", "opposite of what is true; an imagined world", "phản chứng / trái với sự thật"],
+  ["regret", "/rɪˈɡret/", "rih-GRET", "noun / verb", "to feel sorry about something that happened", "hối tiếc / sự hối tiếc"],
+  ["optimistic", "/ˌɑːptɪˈmɪstɪk/", "ahp-tih-MIS-tik", "adjective", "believing that good things will happen", "lạc quan"],
+  ["pessimistic", "/ˌpesɪˈmɪstɪk/", "pes-ih-MIS-tik", "adjective", "believing that bad things will happen", "bi quan"],
+  ["arrogance", "/ˈærəɡəns/", "AR-uh-guhns", "noun", "thinking you are better than others", "sự kiêu ngạo"],
+  ["arrogant", "/ˈærəɡənt/", "AR-uh-guhnt", "adjective", "acting like you are better than others", "kiêu ngạo"],
+  ["pageant", "/ˈpædʒənt/", "PAJ-uhnt", "noun", "a contest where people are judged on looks and talent", "cuộc thi (sắc đẹp)"],
+  ["jealousy", "/ˈdʒeləsi/", "JEL-uh-see", "noun", "the feeling when you want what someone else has", "sự ghen tị"],
+  ["insecure", "/ˌɪnsɪˈkjʊr/", "in-sih-KYOOR", "adjective", "not feeling sure about yourself", "bất an / thiếu tự tin"],
+  ["appearance", "/əˈpɪrəns/", "uh-PEER-uhns", "noun", "the way someone or something looks", "ngoại hình / vẻ bề ngoài"],
+  ["confidence", "/ˈkɑːnfɪdəns/", "KAHN-fih-duhns", "noun", "a strong feeling that you believe in yourself", "sự tự tin"],
+  ["deceive", "/dɪˈsiːv/", "dih-SEEV", "verb", "to make someone believe something that is not true", "lừa dối"],
+  ["status quo", "/ˌstætəs ˈkwoʊ/", "STAT-uhs KWOH", "noun phrase", "the current situation; the way things are now", "hiện trạng / tình trạng hiện tại"],
+  ["consequence", "/ˈkɑːnsɪkwens/", "KAHN-sih-kwens", "noun", "what happens because of something else", "hậu quả"],
+  ["compare", "/kəmˈper/", "kuhm-PAIR", "verb", "to look at two things to see how they are the same or different", "so sánh"],
+  ["shallow", "/ˈʃæloʊ/", "SHAL-oh", "adjective", "not deep; not thinking carefully", "nông cạn"],
+  ["manipulate", "/məˈnɪpjəˌleɪt/", "muh-NIP-yoo-layt", "verb", "to control someone in a sneaky way", "thao túng"],
+  ["obsessed", "/əbˈsest/", "uhb-SEST", "adjective", "thinking about something too much", "ám ảnh"],
+];
+
+// ═══════ MERRIAM-WEBSTER AUDIO ═══════
+const audioCache = new Map();
+const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
+const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
+const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
+const mwApiStatus = document.getElementById("mwApiStatus");
+
+mwApiStatus.textContent = hasMwApiKey
+  ? "✓ API key loaded from config.js. Merriam-Webster audio is ready."
+  : "⚙ Add your Intermediate Dictionary key to MW_API_KEY in config.js to enable audio.";
+
+function findAudioFile(value) {
+  if (!value || typeof value !== "object") return "";
+  if (typeof value.audio === "string" && value.audio) return value.audio;
+  for (const child of Object.values(value)) {
+    const found = findAudioFile(child);
+    if (found) return found;
+  }
+  return "";
+}
+
+function audioSubdirectory(filename) {
+  if (filename.startsWith("bix")) return "bix";
+  if (filename.startsWith("gg")) return "gg";
+  if (/^[^a-zA-Z]/.test(filename)) return "number";
+  return filename[0].toLowerCase();
+}
+
+async function getMerriamWebsterAudioUrl(word) {
+  if (audioCache.has(word)) return audioCache.get(word);
+  const endpoint = `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
+  const response = await fetch(endpoint);
+  if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
+  const entries = await response.json();
+  const filename = findAudioFile(entries);
+  if (!filename) throw new Error("No Merriam-Webster recording was found for this word.");
+  const folder = audioSubdirectory(filename);
+  const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
+  audioCache.set(word, url);
+  return url;
+}
+
+async function speakWord(word) {
+  if (!hasMwApiKey) {
+    mwApiStatus.textContent = "Add your Intermediate Dictionary key to MW_API_KEY in config.js first.";
+    showPage('vocab');
+    throw new Error("API key missing");
+  }
+  mwApiStatus.textContent = `Loading "${word}" from Merriam-Webster…`;
+  try {
+    const url = await getMerriamWebsterAudioUrl(word);
+    const audio = new Audio(url);
+    await audio.play();
+    mwApiStatus.textContent = `▶ Playing "${word}" with Merriam-Webster audio.`;
+  } catch (error) {
+    if (error.message === "API key missing") throw error;
+    mwApiStatus.textContent = `Could not play "${word}". Check that the key is for the Intermediate Dictionary (sd3) and try again.`;
+    throw error;
+  }
+}
+
+// ═══════ RENDER VOCABULARY TABLE ═══════
+const vocabBody = document.getElementById("vocabBody");
+const vocabSearch = document.getElementById("vocabSearch");
+
+function renderVocabulary() {
+  const query = vocabSearch.value.trim().toLowerCase();
+  const matches = vocabulary.filter(row =>
+    row.join(" ").toLowerCase().includes(query)
+  );
+  vocabBody.innerHTML = "";
+  matches.forEach(([word, ipa, soundOut, type, en, vi]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="word">${word}</td>
+      <td class="ipa">${ipa}</td>
+      <td class="sound-it-out">${soundOut}</td>
+      <td>${type}</td>
+      <td><div class="meaning-en">${en}</div><div class="meaning-vi">${vi}</div></td>
+      <td>${ipa ? `<button class="sound-btn" type="button" aria-label="Hear ${word}">▶</button>` : ''}</td>`;
+    const btn = row.querySelector("button");
+    if (btn) btn.addEventListener("click", () => speakWord(word.split(" ")[0]).catch(() => {}));
+    vocabBody.appendChild(row);
+  });
+}
+
+vocabSearch.addEventListener("input", renderVocabulary);
+renderVocabulary();
+
+// ═══════ QUIZ DATA ═══════
+const quizQuestions = [
+  { type: "choice", kind: "Concept", prompt: "What type of motion uses 'This House Regrets' or 'This House Prefers'?",
+    options: ["Context / Definition", "Proposition / Opposition", "Counterfactual motion (THR / THP)", "Goal / Metrics"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "What does 'counterfactual' mean in debate?",
+    options: ["The current factual world", "A world that is opposite to reality", "The goal of a case", "The definition of a word"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "In a THR/THP motion, which team supports the counterfactual (imagined) world?",
+    options: ["Opposition", "The factual world", "Proposition", "The status quo"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "In a THR/THP motion, which team defends the current (factual) world?",
+    options: ["Proposition", "Opposition", "The counterfactual world", "The goal"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What are the 4 case setup steps for a counterfactual motion?",
+    options: ["Context, Definition, Goal, Counterfactual World", "Definition, Goal, Context, Metrics", "Factual World, Context, Goal, Definition", "Goal, Context, Counterfactual World, Definition"], answer: 0 },
+  { type: "choice", kind: "Concept", prompt: "What special thing must Proposition include in their case setup for counterfactual motions?",
+    options: ["Only the factual world", "Only advantages", "A description of the counterfactual world", "Only disadvantages"], answer: 2 },
+  { type: "choice", kind: "Concept", prompt: "Besides debating advantages and disadvantages, what must both teams do?",
+    options: ["Only describe the factual world", "Actively compare the two worlds", "Only define keywords", "Only write the goal"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What does 'status quo' mean?",
+    options: ["The opposite world", "The current situation we live in", "A goal or metric", "A definition"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "In 'This house regrets beauty contests,' what does Proposition argue?",
+    options: ["Protect the current world", "The world would be better WITHOUT beauty contests", "Only define beauty contests", "Only list disadvantages"], answer: 1 },
+  { type: "choice", kind: "Concept", prompt: "What is the opposite of 'optimistic'?",
+    options: ["Arrogant", "Pessimistic", "Factual", "Counterfactual"], answer: 1 },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "regret",
+    emoji: "😔", imageLabel: "Sad face for regret" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "factual",
+    emoji: "📋", imageLabel: "Clipboard for factual" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "compare",
+    emoji: "⚖️", imageLabel: "Balance scale for compare" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "jealousy",
+    emoji: "💚", imageLabel: "Green heart for jealousy" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "deceive",
+    emoji: "🎭", imageLabel: "Masks for deceive" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "arrogant",
+    emoji: "👑", imageLabel: "Crown for arrogant" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "counter",
+    emoji: "🔄", imageLabel: "Cycle arrows for counter" },
+  { type: "word", kind: "Word puzzle", prompt: "Use the picture and first letter to complete the word.", word: "pageant",
+    emoji: "👸", imageLabel: "Princess for pageant" },
+];
+
+// ═══════ RENDER QUIZ ═══════
+const quizForm = document.getElementById("quizForm");
+const conceptQuizList = document.getElementById("conceptQuizList");
+const vocabularyQuizList = document.getElementById("vocabularyQuizList");
+const quizProgress = document.getElementById("quizProgress");
+const quizMessage = document.getElementById("quizMessage");
+const quizResult = document.getElementById("quizResult");
+const quizScore = document.getElementById("quizScore");
+const quizHeadline = document.getElementById("quizHeadline");
+const quizResultText = document.getElementById("quizResultText");
+
+quizQuestions.forEach((question, index) => {
+  const card = document.createElement("article");
+  card.className = "quiz-card";
+  card.dataset.question = String(index);
+
+  const answerArea = question.type === "choice"
+    ? `<div class="quiz-options" role="radiogroup" aria-labelledby="prompt-${index}">
+        ${question.options.map((option, oi) => `
+          <label class="quiz-option">
+            <input type="radio" name="quiz-${index}" value="${oi}">
+            <span>${String.fromCharCode(65 + oi)}. ${option}</span>
+          </label>`).join("")}
+       </div>`
+    : `<div class="spelling-card">
+        <div class="quiz-picture" role="img" aria-label="${question.imageLabel}">${question.emoji}</div>
+        <div>
+          <div class="word-starter" aria-label="Starts with ${question.word[0]} and has ${question.word.length} letters">
+            <span class="first-letter">${question.word[0].toUpperCase()}</span>
+            <span class="word-blanks">${"_ ".repeat(question.word.length - 1).trim()}</span>
+          </div>
+          <label for="quiz-${index}">Type the remaining letters</label>
+          <input class="letter-answer" id="quiz-${index}" name="quiz-${index}"
+            type="text" maxlength="${question.word.length - 1}" inputmode="text" autocomplete="off" spellcheck="false"
+            placeholder="Complete the word">
+          <label class="audio-hint">
+            <input class="audio-hint-toggle" type="checkbox" data-word="${question.word}">
+            <span>🔊 Tick to hear an audio hint</span>
+          </label>
+        </div>
+       </div>`;
+
+  card.innerHTML = `
+    <div class="quiz-topline">
+      <span class="quiz-number">${index + 1}</span>
+      <span class="quiz-kind">${question.kind}</span>
+    </div>
+    <div id="prompt-${index}" class="quiz-prompt">${question.prompt}</div>
+    ${answerArea}
+    <p class="question-status" id="status-${index}" aria-live="polite"></p>`;
+  (question.type === "choice" ? conceptQuizList : vocabularyQuizList).appendChild(card);
+});
+
+let quizHasBeenGraded = false;
+
+function isQuestionAnswered(question, index) {
+  if (question.type === "choice") return Boolean(document.querySelector(`input[name="quiz-${index}"]:checked`));
+  return Boolean(document.getElementById(`quiz-${index}`).value.trim());
+}
+
+function clearQuizFeedback() {
+  if (!quizHasBeenGraded) return;
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizHasBeenGraded = false;
+}
+
+function updateQuizProgress() {
+  const answered = quizQuestions.filter(isQuestionAnswered).length;
+  quizProgress.textContent = `${answered} of ${quizQuestions.length} answered`;
+  quizMessage.textContent = "";
+}
+
+quizForm.addEventListener("input", event => {
+  if (event.target.matches(".letter-answer")) {
+    event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "").toUpperCase();
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("change", event => {
+  if (event.target.matches(".audio-hint-toggle")) {
+    if (event.target.checked) {
+      speakWord(event.target.dataset.word).catch(() => { event.target.checked = false; });
+    }
+    return;
+  }
+  clearQuizFeedback();
+  updateQuizProgress();
+});
+
+quizForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const firstUnanswered = quizQuestions.findIndex((q, i) => !isQuestionAnswered(q, i));
+  if (firstUnanswered !== -1) {
+    quizMessage.textContent = `Please answer all ${quizQuestions.length} questions before submitting.`;
+    const q = quizQuestions[firstUnanswered];
+    const target = q.type === "choice"
+      ? document.querySelector(`input[name="quiz-${firstUnanswered}"]`)
+      : document.getElementById(`quiz-${firstUnanswered}`);
+    target.focus();
+    quizResult.hidden = true;
+    return;
+  }
+
+  let score = 0;
+  quizQuestions.forEach((question, index) => {
+    const card = document.querySelector(`[data-question="${index}"]`);
+    const status = document.getElementById(`status-${index}`);
+    const isCorrect = question.type === "choice"
+      ? Number(document.querySelector(`input[name="quiz-${index}"]:checked`).value) === question.answer
+      : `${question.word[0]}${document.getElementById(`quiz-${index}`).value.trim().toLowerCase()}` === question.word;
+
+    card.classList.toggle("correct", isCorrect);
+    card.classList.toggle("incorrect", !isCorrect);
+    status.textContent = isCorrect ? "✓ Correct" : "↻ Review this one";
+    status.style.color = isCorrect ? "#18885d" : "#d94f68";
+    if (isCorrect) score += 1;
+  });
+
+  const percentage = Math.round((score / quizQuestions.length) * 100);
+  quizScore.textContent = `${score} / ${quizQuestions.length}`;
+  quizHeadline.textContent =
+    percentage === 100 ? "Outstanding work! 🌟" :
+    percentage >= 75 ? "Great job! 🎉" :
+    percentage >= 50 ? "Good effort—keep practising! 💪" :
+    "Let's review and try again! 📚";
+  quizResultText.textContent = `You scored ${percentage}%. Correct answers are not revealed — review the lesson and try again!`;
+  quizResult.hidden = false;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = true;
+  quizResult.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+document.getElementById("resetQuiz").addEventListener("click", () => {
+  quizForm.reset();
+  document.querySelectorAll(".quiz-card").forEach(card => {
+    card.classList.remove("correct", "incorrect");
+    card.querySelector(".question-status").textContent = "";
+  });
+  quizResult.hidden = true;
+  quizMessage.textContent = "";
+  quizHasBeenGraded = false;
+  updateQuizProgress();
+  document.querySelector('input[name="quiz-0"]').focus();
+});
+
+</script>
+
+</body>
+</html>

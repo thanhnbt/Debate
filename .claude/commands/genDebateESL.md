@@ -1,416 +1,185 @@
-# /genDebateESL — Generate Debate Lesson for ESL Children (8-9 years old)
-
-Khi user gọi skill này, thực hiện workflow generate bài học debate hoàn chỉnh cho trẻ 8-9 tuổi (Vietnamese native, English L2).
-
----
-
-## INPUT YÊU CẦU
-
-Hỏi user (nếu chưa cung cấp):
-1. **Số buổi (N)** — ví dụ: 3
-2. **Source material** — confirm file có trong `datainput/buoi N/` (pptx hoặc docx)
-3. **Chủ đề** — hoặc tự extract từ source material
-
----
-
-## WORKFLOW (7 PHASES)
-
-### Phase 1: Extract Source Material
-
-1. Đọc tất cả files trong `datainput/buoi N/`
-2. Nếu có `.pptx`:
-   - Dùng python với `python-pptx` để extract text content
-   - Extract slide images: `python -X utf8 -c "from pptx import Presentation; ..."` → save to `assets/slides/buoiN/source-slide-XX.png`
-3. Nếu có `.docx`:
-   - Dùng python với `python-docx`: `python -X utf8 -c "from docx import Document; ..."`
-4. **BỎ QUA**: phần nhận xét/đánh giá học sinh, feedback cá nhân — chỉ lấy nội dung bài học
-5. Tóm tắt nội dung đã extract thành outline cho user review trước khi generate
-
-### Phase 2: Design Lesson Structure
-
-Xác định tabs/pages dựa trên nội dung. Mỗi lesson **BẮT BUỘC** có:
-- **Vocabulary** tab
-- **Quiz** tab
-- **Summary** tab (nếu đủ nội dung, 3-5 sections)
-
-Tùy chọn thêm (dựa trên source):
-- **Slides** tab (nếu có pptx/images)
-- **Topic-specific tabs** (ví dụ: "WSDC", "Speaker Roles", "History"...)
-- **Review** tab (ôn bài buổi trước)
-
-### Phase 3: Generate HTML — Single-File SPA
-
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Day N: [Topic]">
-  <meta name="theme-color" content="#55c8ff">
-  <title>Day N · [Topic]</title>
-  <style>
-    /* TOÀN BỘ CSS inline — copy design system từ lessons/day1.html hoặc day2.html */
-  </style>
-</head>
-<body>
-
-<header class="topbar">
-  <div class="topbar-inner">
-    <a href="../index.html" class="brand">
-      <span class="brand-mark">D{N}</span>
-      <span>English Debate Club</span>
-    </a>
-    <nav class="nav" id="mainNav">
-      <a href="../index.html" class="home-link">← Trang chủ</a>
-      <button class="active" data-page="[first-page]">[Label]</button>
-      <button data-page="[page2]">[Label]</button>
-      <!-- ... more tabs ... -->
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="page" id="[first-page]">...</section>
-  <section class="page" id="[page2]" hidden>...</section>
-  <!-- ... -->
-</main>
-
-<footer class="footer">
-  <a href="../index.html">← Về trang chủ</a> &nbsp;|&nbsp; English Debate Club &copy; 2025
-</footer>
-
-<script src="../config.js"></script>
-<script>
-  // Tab navigation
-  // Vocabulary rendering + MW Audio
-  // Quiz form
-  // Slides viewer (if applicable)
-</script>
-</body>
-</html>
-```
-
-### Phase 4: Generate Vocabulary (BẮT BUỘC)
-
-**Data format** — mảng 6 phần tử:
-```javascript
-const vocabulary = [
-  ["word", "/American IPA/", "SOUND-IT-OUT", "type", "English meaning", "Vietnamese meaning"],
-  // 15-25 entries
-];
-```
-
-**Rules KHÔNG ĐƯỢC VI PHẠM:**
-- 15-25 từ liên quan TRỰC TIẾP đến bài học
-- IPA: American English notation (ví dụ: `/dɪˈbeɪt/`)
-- SOUND IT OUT: viết HOA, ngắt âm bằng gạch ngang (ví dụ: `dih-BAYT`)
-- Type: `noun`, `verb`, `adjective`, `phrase`, `noun / verb`
-- English meaning: 1 câu ĐƠN GIẢN, A2/B1 level, trẻ 8-9 tuổi hiểu được
-- Vietnamese meaning: dịch tự nhiên + giải thích context nếu cần
-
-**UI Components BẮT BUỘC:**
-- Search input: `<input class="vocab-search" type="search">`
-- Filter buttons: All / Nouns / Verbs / Adjectives / Phrases
-- Table: Word | IPA | SOUND IT OUT | Type | Meaning (EN+VI) | Audio button
-- Audio: Merriam-Webster API qua `config.js` (endpoint `sd3`)
-
-**JS Audio pattern (COPY CHÍNH XÁC):**
-```javascript
-const mwApiKey = window.MW_CONFIG?.MW_API_KEY?.trim() || "";
-const mwReference = window.MW_CONFIG?.REFERENCE || "sd3";
-const hasMwApiKey = Boolean(mwApiKey && !mwApiKey.includes("PASTE_YOUR"));
-
-function findAudioFile(value) {
-  if (!value || typeof value !== "object") return "";
-  if (typeof value.audio === "string" && value.audio) return value.audio;
-  for (const child of Object.values(value)) {
-    const found = findAudioFile(child);
-    if (found) return found;
-  }
-  return "";
-}
-
-function audioSubdirectory(filename) {
-  if (filename.startsWith("bix")) return "bix";
-  if (filename.startsWith("gg")) return "gg";
-  if (/^[^a-zA-Z]/.test(filename)) return "number";
-  return filename[0].toLowerCase();
-}
-
-async function getMerriamWebsterAudioUrl(word) {
-  if (audioCache.has(word)) return audioCache.get(word);
-  const endpoint = `https://www.dictionaryapi.com/api/v3/references/${encodeURIComponent(mwReference)}/json/${encodeURIComponent(word)}?key=${encodeURIComponent(mwApiKey)}`;
-  const response = await fetch(endpoint);
-  if (!response.ok) throw new Error(`Dictionary request failed (${response.status}).`);
-  const entries = await response.json();
-  const filename = findAudioFile(entries);
-  if (!filename) throw new Error("No recording found.");
-  const folder = audioSubdirectory(filename);
-  const url = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${folder}/${filename}.mp3`;
-  audioCache.set(word, url);
-  return url;
-}
-```
-
-### Phase 5: Generate Quiz (BẮT BUỘC)
-
-**Format:**
-```javascript
-const quizQuestions = [
-  // 10 concept questions
-  { type: "choice", kind: "Concept", prompt: "Question?",
-    options: ["A", "B", "C", "D"], answer: 0 },
-  // 8 word puzzles
-  { type: "word", kind: "Word puzzle",
-    prompt: "Use the picture and first letter to complete the word.",
-    word: "debate", emoji: "🎤", imageLabel: "Microphone for debate" }
-];
-```
-
-**Rules KHÔNG ĐƯỢC VI PHẠM:**
-- Tổng 18 câu: 10 choice + 8 word puzzles
-- Choice: 4 options, chỉ 1 đáp án đúng, câu hỏi VỀ NỘI DUNG BÀI HỌC
-- Word puzzles: chọn 8 từ quan trọng nhất từ vocabulary, có emoji liên quan
-- KHÔNG reveal đáp án khi trả lời sai — chỉ nói "Review this one"
-- Submit ALL trước khi grade — không grade từng câu
-- Progress counter: "X of 18 answered"
-- Audio hint checkbox cho word puzzles
-- Reset button clear mọi thứ
-
-**Quiz grading logic:**
-```javascript
-quizForm.addEventListener("submit", event => {
-  event.preventDefault();
-  // Check all answered
-  // Grade: choice → check radio value vs answer index
-  //        word → check first letter + typed letters === full word
-  // Show score, headline based on percentage
-  // Mark cards .correct/.incorrect
-  // NEVER show correct answer
-});
-```
-
-### Phase 6: Generate Summary (BẮT BUỘC)
-
-**Structure: 3-5 sections**
-```html
-<section class="page" id="summary" hidden>
-  <div class="page-header">
-    <span class="eyebrow">Day N summary / Tóm tắt buổi N</span>
-    <h2>[Engaging Title]</h2>
-    <p>[Vietnamese subtitle + instruction]</p>
-  </div>
-
-  <div class="summary-section">
-    <span class="section-label">EMOJI Part 1 — English Title / Tiếng Việt</span>
-    <!-- Content: .info-card, .summary-grid, .takeaway, .highlight-box, .two-teams -->
-  </div>
-  <!-- More sections... -->
-</section>
-```
-
-**Rules KHÔNG ĐƯỢC VI PHẠM:**
-1. **SONG NGỮ**: Mọi concept → English chính + Vietnamese dưới
-   - Tiêu đề: `<h3>English Title</h3>`
-   - Hint: `<span class="vi-hint">Vietnamese subtitle</span>`
-   - Nội dung: `<p>English explanation</p>`
-   - Dịch: `<p class="vi">Vietnamese translation</p>`
-
-2. **ĐƠN GIẢN**: A2/B1 English, câu ngắn (max 15 từ/câu nếu có thể)
-
-3. **CỤ THỂ**: MỖI concept PHẢI có ít nhất 1 metaphor/ví dụ trẻ 8-9 tuổi hiểu:
-   - Đội bóng đá (teamwork)
-   - Nấu ăn (content/ingredients)
-   - Hát bài hát (style/delivery)
-   - Chơi cờ (strategy)
-   - Vẽ bản đồ (planning)
-   - Thám tử (critical thinking/investigation)
-   - Xây nhà (building arguments)
-   - Siêu anh hùng (defending/protecting)
-   - Bình luận viên (summarizing/comparing)
-
-4. **HIGHLIGHT BOXES** cho rules quan trọng:
-   ```html
-   <div class="highlight-box">
-     <p>IMPORTANT RULE in English</p>
-     <p class="vi">QUY TẮC QUAN TRỌNG bằng tiếng Việt</p>
-   </div>
-   ```
-
-5. **COMPONENTS** sử dụng:
-   - `.info-card` — thông tin chi tiết có heading + list
-   - `.highlight-box` — callout quan trọng
-   - `.two-teams` + `.team-card.prop/.opp` — so sánh 2 phía
-   - `.summary-grid` + `.takeaway` — grid cards tóm tắt
-   - `.takeaway-icon` — emoji hoặc text icon trong card
-
-### Phase 6b: Generate Homework (BẮT BUỘC nếu source có BTVN)
-
-**Rules KHÔNG ĐƯỢC VI PHẠM:**
-
-1. **Highlight từ khóa** trong motion để học sinh tự nhận diện loại kiến nghị:
-   ```html
-   <mark style="background:rgba(255,112,133,.25); padding:2px 6px; border-radius:6px; font-weight:900;">as parents</mark>
-   ```
-
-2. **Detective Step** — Hướng dẫn trẻ tự tư duy xác định loại motion:
-   - Hiển thị motion với keyword được highlight
-   - Đặt câu hỏi "What type is this motion?" để trẻ tự tìm manh mối
-   - Giải thích tại sao (ví dụ: "as X" → Actor Motion)
-
-3. **Case Building Steps** — Liệt kê các bước, mỗi bước có:
-   - Instruction chung chung (luôn hiển thị) — KHÔNG gợi ý đáp án cụ thể
-   - Nút `🔑 Gợi ý` có password gate (mật khẩu: `000000`, dành cho phụ huynh)
-   - Hint ẩn chỉ hiện khi nhập đúng mật khẩu — chỉ gợi ý chung, KHÔNG cho đáp án
-
-4. **Sub-steps phải đầy đủ** theo source data:
-   - Context: `1a. Identify problems`, `1b. Consequences`
-   - Definition: `2a. Define keywords`, `2b. Characterisation`
-   - Policy/Model (THW): `4a. What would you do?`, `4b. Punishment (Optional)`
-   - Declaration of Interests (Actor): `Point out and explain the main interests of X`
-
-5. **Password gate JS pattern:**
-   ```javascript
-   document.querySelectorAll(".hint-btn").forEach(btn => {
-     btn.addEventListener("click", () => {
-       const hintId = btn.dataset.hint;
-       const hintDiv = document.getElementById(hintId);
-       const errorP = btn.parentElement.querySelector(".hint-error");
-       if (!hintDiv || btn.classList.contains("unlocked")) return;
-       const pass = prompt("Nhập mật khẩu (dành cho phụ huynh):");
-       if (pass === null) return;
-       if (pass === "000000") {
-         hintDiv.hidden = false;
-         btn.textContent = "✓ Đã mở";
-         btn.classList.add("unlocked");
-         errorP.hidden = true;
-       } else {
-         errorP.textContent = "Sai mật khẩu. Hãy nhờ ba mẹ nhập giúp nhé!";
-         errorP.hidden = false;
-       }
-     });
-   });
-   ```
-
-6. **CSS cho hint system:**
-   ```css
-   .hint-btn {
-     margin-top: 12px; padding: 8px 18px;
-     border: 2px solid var(--coral); border-radius: 12px;
-     background: white; color: var(--coral-dark);
-     font-weight: 800; font-size: .82rem;
-   }
-   .hint-btn.unlocked { border-color: var(--teal); color: var(--teal-dark); pointer-events: none; }
-   .hint-content { margin-top: 12px; }
-   .hint-error { color: var(--coral); font-size: .8rem; font-weight: 700; margin-top: 6px; }
-   ```
-
-### Phase 7: QA — Rà soát nội dung HTML vs Source Data (BẮT BUỘC)
-
-**Mục đích:** Đảm bảo KHÔNG thiếu sót, KHÔNG sai lệch nội dung so với tài liệu đầu vào.
-
-**Quy trình:**
-
-1. **Re-extract source data** — Đọc lại toàn bộ `datainput/buoi N/data.docx` (hoặc `.pptx`)
-2. **So sánh từng mục** — Đối chiếu line-by-line giữa source và HTML đã generate:
-
-   | Hạng mục | Kiểm tra |
-   |----------|----------|
-   | **Vocabulary** | Mọi từ trong source đều có trong `const vocabulary`? Nghĩa VI khớp? |
-   | **Nội dung bài học** | Mọi concept/rule/step trong source đều xuất hiện trong HTML? |
-   | **Sub-steps** | Các bước con (1a/1b, 2a/2b, 4a/4b…) đầy đủ cho TẤT CẢ mục, không bỏ sót loại nào? |
-   | **Ví dụ** | Mọi example/motion mẫu trong source đều được liệt kê? |
-   | **Homework/BTVN** | Đề bài khớp chính xác? Hướng dẫn đúng loại motion? |
-   | **Ghi chú đặc biệt** | Các note/warning trong source (ví dụ: special cases cho actor) đều có? |
-
-3. **Liệt kê kết quả QA** — Output checklist ngắn gọn cho user review:
-   ```
-   QA RESULT:
-   ✅ Vocabulary: 10/10 từ từ source + 8 từ bổ sung liên quan
-   ✅ Motion types: 3/3 loại đầy đủ (THW, THBT/THS/THO, TH as X)
-   ✅ Case building sub-steps: đầy đủ cho cả 3 loại
-   ✅ Examples: 5/5 motion mẫu từ source
-   ✅ Homework: đề bài khớp, đúng loại Actor Motion
-   ✅ Special notes: community care cho parents/leaders
-   ⚠️ [Nếu có thiếu sót — ghi rõ cái gì thiếu và fix ngay]
-   ```
-
-4. **Fix ngay** nếu phát hiện thiếu — KHÔNG báo xong rồi để đó
-
-**Rules KHÔNG ĐƯỢC VI PHẠM:**
-- PHẢI chạy QA TRƯỚC khi báo hoàn thành cho user
-- Nếu source có mà HTML không có → đó là bug, phải fix
-- Nếu HTML có mà source không có → OK nếu là bổ sung hợp lý (vocab mở rộng, metaphor…), nhưng KHÔNG được bịa concept/rule mới
-- QA phải cover TẤT CẢ motion types / sections, không chỉ kiểm tra 1 loại rồi assume các loại khác đúng
-
-### Phase 8: Update Landing Page
-
-Trong `index.html`:
-1. Tìm session card number N (đang `class="session-card coming-soon"`)
-2. Đổi thành: `<a href="lessons/dayN.html" class="session-card active">`
-3. Update title và description nếu cần
-4. Đổi badge: `<span class="badge">Đã hoàn thành</span>`
-5. Nếu chưa có card cho session N → thêm mới
-
----
-
-## DESIGN RULES TỔNG QUÁT (KHÔNG BAO GIỜ VI PHẠM)
-
-| # | Rule | Lý do |
-|---|------|-------|
-| 1 | Target: trẻ 8-9 tuổi, Vietnamese native, English L2 | Mọi quyết định content phải filter qua lens này |
-| 2 | Ngôn ngữ A2/B1, câu ngắn, từ đơn giản | Trẻ không đọc được câu phức tạp |
-| 3 | SONG NGỮ bắt buộc cho MỌI concept | Đảm bảo trẻ hiểu 100% |
-| 4 | Không jargon chưa giải thích | Từ debate phải được define ngay lần đầu dùng |
-| 5 | Concrete > Abstract: LUÔN có ví dụ/metaphor | Trẻ học qua hình ảnh cụ thể |
-| 6 | Visual: emoji + color cards + highlight | Giữ attention của trẻ |
-| 7 | Interactive: quiz engaging, word puzzles | Gamification tăng retention |
-| 8 | CSS consistent: dùng design system variables | Thống nhất visual language |
-| 9 | MW API audio: `sd3` endpoint qua config.js | Pronunciation model chuẩn |
-| 10 | Mobile responsive: collapse ở 768px | Trẻ có thể dùng tablet |
-| 11 | No build tools: pure static HTML | Deploy GitHub Pages trực tiếp |
-| 12 | Folder: `lessons/dayN.html`, `assets/slides/buoiN/` | Convention đã set |
-
----
-
-## CSS DESIGN SYSTEM VARIABLES
-
-```css
-:root {
-  --ink: #26335d;       /* Primary text */
-  --ink-2: #40517f;     /* Secondary text */
-  --paper: #fffaf0;     /* Background */
-  --card: #ffffff;      /* Card bg */
-  --muted: #65739a;     /* De-emphasized */
-  --line: #dfe8f6;      /* Borders */
-  --teal: #4ed6bd;      /* Accent 1 */
-  --teal-dark: #138f86; /* Dark teal text */
-  --orange: #ff9b62;    /* Accent */
-  --yellow: #ffd84d;    /* Highlight */
-  --sky: #55c8ff;       /* Primary action */
-  --coral: #ff7085;     /* Error/Opposition */
-  --purple: #8c7cff;    /* Accent */
-  --mint: #a9efcb;      /* Accent */
-  --shadow: 0 18px 48px rgba(78,103,159,.16);
-  --radius: 28px;
-}
-```
-
----
-
-## CHECKLIST TRƯỚC KHI HOÀN THÀNH
-
-- [ ] File `lessons/dayN.html` tạo xong, SPA navigation hoạt động
-- [ ] Vocabulary: 15-25 entries, IPA + SOUND IT OUT + bilingual meanings
-- [ ] Quiz: 10 choice + 8 word puzzles, form-based, no answer reveal
-- [ ] Summary: 3-5 sections, song ngữ, có metaphors cụ thể
-- [ ] Audio: MW API integration đúng pattern (sd3, findAudioFile recursive)
-- [ ] Landing page `index.html` updated (card activated)
-- [ ] Mobile responsive tested (768px breakpoint)
-- [ ] Slides (nếu có pptx): images extracted to `assets/slides/buoiN/`
-- [ ] Homework (nếu có): keyword highlight, detective step, password-gated hints (000000)
-- [ ] Sub-steps đầy đủ: 1a/1b (Context), 2a/2b (Definition), 4a/4b (Policy nếu THW)
-- [ ] Homework hints chỉ gợi ý chung, KHÔNG cho đáp án cụ thể — trẻ phải tự tư duy
-- [ ] Không có từ/câu nào vượt quá trình độ A2/B1
-- [ ] Mọi thuật ngữ debate đều có Vietnamese translation
+# /genDebateESL — Generate a source-faithful ESL debate lesson
+
+Use this workflow when creating a debate lesson for Vietnamese ESL learners aged 8–9.
+
+## Core rule: source first
+
+The files in `datainput/buoi N/` are the sole authority for curricular content.
+
+Every item in the lesson must be one of these:
+
+1. A teaching claim stated in the source.
+2. A simpler paraphrase that keeps the same meaning.
+3. A Vietnamese translation of source-backed content.
+4. Vocabulary or neutral UI support that is traceable to source words or source prose.
+
+Do not add debate rules, motion types, examples, metaphors, model answers, factual claims, homework clues, or teaching frameworks that are absent from the source. If useful new content is genuinely needed, ask the user first.
+
+## Required input
+
+Confirm:
+
+1. Session number N.
+2. Source files in `datainput/buoi N/`.
+3. Output file `lessons/dayN.html`.
+
+## Workflow
+
+### Phase 1 — Extract the complete source
+
+Read every relevant file, including all paragraphs, tables, text boxes, speaker notes, and slide text.
+
+For DOCX, extract both paragraphs and tables. For PPTX, extract slide text and only create slide images when the lesson needs them.
+
+Build a source outline with stable references such as paragraph, table, row, or slide number. Include:
+
+- Original vocabulary.
+- Lesson concepts and rules.
+- Motion examples.
+- Case-setup parts and sub-parts exactly as supplied.
+- Class drafts or exercises.
+- Teacher instructional feedback.
+- Sample speeches.
+- Homework wording.
+
+Student handling:
+
+- Remove all student names and personal assessment.
+- Keep teacher comments that teach a reusable lesson point.
+- Label anonymized work as “Class draft” or “Class example”.
+- Label comments as “Teacher’s feedback”.
+- Never present a student or sample speech claim as a neutral fact.
+
+Show the source outline to the user before generation when they requested a review step.
+
+### Phase 2 — Create a provenance ledger
+
+Before writing HTML, map each planned section to the exact source location.
+
+Use two lists:
+
+- Source → lesson: every source teaching section that must appear.
+- Lesson → source: every planned curricular claim and its source.
+
+Allowed additions do not need a curricular source only when they are translations, short accessibility labels, interaction instructions, or vocabulary definitions for words found in the source.
+
+### Phase 3 — Design only the sections the source supports
+
+Choose tabs from the source. Vocabulary and Quiz may be included as study tools. Homework is included only when the source assigns it.
+
+Do not require a Review or Summary tab. Do not import previous-session content unless the current source explicitly reviews it.
+
+Typical source-driven structure:
+
+- Lesson.
+- Class Practice.
+- Homework, if assigned.
+- Vocabulary.
+- Quiz.
+
+### Phase 4 — Build the static lesson
+
+Create a pure static, single-file SPA in `lessons/dayN.html`. Preserve the established design system, tab navigation, responsive layout, and working interaction patterns from existing lessons.
+
+Use short A2/B1 English and concise Vietnamese support. Simplify wording without changing the teacher’s meaning.
+
+For partial source samples:
+
+- Render only the components actually supplied.
+- Call them “Sample speech excerpt”, not a complete case setup.
+- State which components are present.
+- Never invent a missing component.
+
+### Phase 5 — Vocabulary
+
+The source vocabulary list must be complete.
+
+Supplemental vocabulary is optional and may be added only when the word appears in source prose, class drafts, teacher feedback, homework, or sample speeches. Do not force a fixed word count.
+
+For every entry include:
+
+- Word.
+- American IPA.
+- SOUND-IT-OUT.
+- Part of speech.
+- Simple English meaning.
+- Natural Vietnamese meaning.
+
+Keep the existing vocabulary search and Merriam-Webster audio integration through `config.js`. Filters are optional unless already present in the chosen lesson template.
+
+### Phase 6 — Homework
+
+Follow the source assignment exactly.
+
+- Preserve the required motion choice and required case-setup structure.
+- A neutral worksheet may restate source questions.
+- Do not add a Detective Step.
+- Do not add password-gated hints.
+- Do not reuse sample-speech ideas as clues.
+- Do not define extra motion words or ask extra leading questions unless the source does.
+- Do not provide model answers.
+- Do not fabricate sub-steps missing from the source.
+
+When two motions are offered and the learner must complete the unpractised one, show both motions once and use one shared worksheet.
+
+### Phase 7 — Quiz
+
+Every question, correct answer, and meaningful distractor must use concepts or vocabulary found in the source-backed lesson.
+
+- Do not use untaught motion categories as distractors.
+- Do not force a fixed number of questions.
+- Prefer a shorter faithful quiz to filler.
+- Word puzzles may use source or source-prose vocabulary.
+- Grade only after submission.
+- Do not reveal correct answers after a wrong response.
+- Keep progress and reset controls.
+
+### Phase 8 — Two-way QA
+
+Re-extract the source and audit both directions.
+
+Source → HTML:
+
+- All original vocabulary is present.
+- All concepts, rules, examples, setup parts, teacher instructional feedback, sample excerpts, and homework requirements are represented.
+- Student names and personal evaluation are absent.
+- Missing sample sections have not been filled in.
+
+HTML → Source:
+
+- Every curricular claim maps to a source location.
+- Supplemental vocabulary appears in source prose.
+- No imported recap, metaphor, model answer, homework hint, or motion category lacks a source.
+- Translations do not add new claims.
+
+Technical checks:
+
+- Every nav target has one matching section.
+- The first tab is visible and active.
+- Vocabulary search and audio controls initialise safely.
+- Quiz totals are derived from the question array.
+- Submit, feedback, and reset controls work.
+- No console errors.
+- At desktop and mobile widths, content is readable and the page has no horizontal overflow.
+
+Fix every discovered issue before reporting completion.
+
+## HTML baseline
+
+Keep the project conventions:
+
+- `lessons/dayN.html` is self-contained except for `../config.js`.
+- Use the existing CSS variables and components.
+- Keep semantic headings, labels, and accessible button text.
+- Preserve the recursive Merriam-Webster audio lookup and the `sd3` reference used by existing lessons.
+- Update `index.html` only so the session card title and description accurately match the finished lesson.
+
+## Completion report
+
+Report:
+
+- Files changed.
+- Source coverage checklist.
+- Removed unsupported content.
+- Structural and interaction checks run.
+- Any browser or manual verification still needed.
